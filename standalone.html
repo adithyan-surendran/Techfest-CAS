@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TECH FEST 2026 | Retro Arcade Tech Festival</title>
+    <meta name="description" content="Official website for TECH FEST 2026. Code. Innovate. Elevate. August 29 - 31, 2026." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              arcade: {
+                dark: '#0a0a14',
+                card: '#121226',
+                cyan: '#00f0ff',
+                pink: '#ff007f',
+                green: '#39ff14',
+                yellow: '#ffe600',
+                purple: '#9d4edd',
+              }
+            },
+            fontFamily: {
+              pixel: ['"Press Start 2P"', 'monospace'],
+              retro: ['"Silkscreen"', 'monospace'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- React 18 & Babel CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      body {
+        background-color: #0a0a14;
+        color: #e2e8f0;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .font-pixel { font-family: 'Press Start 2P', monospace; }
+      .font-retro { font-family: 'Silkscreen', monospace; }
+
+      .pixel-box {
+        background: #121226;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0px #000;
+      }
+
+      .pixel-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        border: 4px solid #000;
+        background-color: #00f0ff;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 4px 4px 0px #000;
+        transition: all 0.1s ease;
+      }
+      .pixel-btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px #000;
+      }
+
+      .scanlines {
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+
+      .glow-cyan { text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 2px 2px 0px #000; }
+      .glow-pink { text-shadow: 0 0 8px rgba(255, 0, 127, 0.8), 2px 2px 0px #000; }
+    </style>
+  </head>
+  <body class="bg-[#0a0a14] text-slate-100 antialiased overflow-x-hidden selection:bg-[#ff007f] selection:text-white">
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+
+      // Web Audio API Synth
+      let audioCtx = null;
+      function playBeep(freq = 440, type = 'square', duration = 0.1) {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {}
+      }
+
+      const EVENTS_DATA = [
+        {
+          id: 'code-sprint',
+          title: 'CODE SPRINT',
+          category: 'Coding',
+          description: 'Competitive programming challenge testing speed and algorithm optimization.',
+          date: 'August 30, 2026',
+          time: '10:00 AM – 12:00 PM',
+          teamSize: '1–2 Members',
+          registrationUrl: 'https://forms.google.com/example-code-sprint',
+          venue: 'Lab 3 (CS Wing)',
+          prizes: '🏆 $500 1st Prize'
+        },
+        {
+          id: 'hackathon',
+          title: 'HACKATHON',
+          category: 'Development',
+          description: '36-Hour hackathon building innovative solutions to real-world problems.',
+          date: 'August 29–31, 2026',
+          time: '09:00 AM – 05:00 PM',
+          teamSize: '2–4 Members',
+          registrationUrl: 'https://forms.google.com/example-hackathon',
+          venue: 'Main Innovation Hub',
+          prizes: '🏆 $1,500 Grand Winner'
+        },
+        {
+          id: 'robotics-arena',
+          title: 'ROBOTICS ARENA',
+          category: 'Robotics',
+          description: 'Design. Build. Compete. Bot racing and combat arena showdown.',
+          date: 'August 30, 2026',
+          time: '01:00 PM – 04:00 PM',
+          teamSize: '2–5 Members',
+          registrationUrl: 'https://forms.google.com/example-robotics-arena',
+          venue: 'Outdoor Arena',
+          prizes: '🏆 $800 Arena Champion'
+        },
+        {
+          id: 'game-on',
+          title: 'GAME ON',
+          category: 'Gaming',
+          description: 'Gaming tournament for champions! Arcade fighting and esports showdown.',
+          date: 'August 30, 2026',
+          time: '02:00 PM – 06:00 PM',
+          teamSize: '1–2 Members',
+          registrationUrl: 'https://forms.google.com/example-game-on',
+          venue: 'Esports Lounge',
+          prizes: '🏆 Esports Trophy + $600'
+        },
+        {
+          id: 'tech-quiz',
+          title: 'TECH QUIZ',
+          category: 'Quiz',
+          description: 'Test your technology knowledge in preliminary written and live buzzer rounds.',
+          date: 'August 31, 2026',
+          time: '10:00 AM – 11:30 AM',
+          teamSize: '1–2 Members',
+          registrationUrl: 'https://forms.google.com/example-tech-quiz',
+          venue: 'Auditorium B',
+          prizes: '🏆 Quiz Master Trophy + $400'
+        }
+      ];
+
+      function ArcadeCabinet() {
+        const [muted, setMuted] = useState(true);
+        const [score, setScore] = useState(4250);
+        const [isJumping, setIsJumping] = useState(false);
+        const [showBurst, setShowBurst] = useState(false);
+        const [obstaclePos, setObstaclePos] = useState(100);
+        const [coinPos, setCoinPos] = useState(80);
+
+        useEffect(() => {
+          let reqId;
+          let last = performance.now();
+          const loop = (now) => {
+            const dt = (now - last) / 1000;
+            last = now;
+            setObstaclePos(p => (p - dt * 45 < -10 ? 110 : p - dt * 45));
+            setCoinPos(p => (p - dt * 45 < -10 ? 120 : p - dt * 45));
+            reqId = requestAnimationFrame(loop);
+          };
+          reqId = requestAnimationFrame(loop);
+          return () => cancelAnimationFrame(reqId);
+        }, []);
+
+        useEffect(() => {
+          if (obstaclePos > 20 && obstaclePos < 42 && !isJumping) {
+            setIsJumping(true);
+            if (!muted) playBeep(300, 'square', 0.15);
+            setTimeout(() => setIsJumping(false), 600);
+          }
+        }, [obstaclePos, isJumping, muted]);
+
+        useEffect(() => {
+          if (coinPos > 20 && coinPos < 32 && !showBurst) {
+            setShowBurst(true);
+            if (!muted) playBeep(988, 'square', 0.2);
+            setScore(s => s + 100);
+            setTimeout(() => setShowBurst(false), 500);
+          }
+        }, [coinPos, showBurst, muted]);
+
+        return (
+          <div className="w-full flex flex-col items-center my-4">
+            <div className="text-center mb-4">
+              <h2 className="font-pixel text-lg sm:text-2xl text-[#00f0ff] glow-cyan uppercase">🎮 TECH FEST ARCADE</h2>
+              <p className="font-mono text-xs text-[#ffe600] mt-1">&quot;THE MACHINE IS ALWAYS RUNNING...&quot;</p>
+              <button
+                onClick={() => setMuted(!muted)}
+                className={`mt-2 px-3 py-1 border-2 border-black font-pixel text-[10px] uppercase shadow-[2px_2px_0_#000] ${
+                  muted ? 'bg-[#121226] text-slate-400' : 'bg-[#39ff14] text-black'
+                }`}
+              >
+                {muted ? 'SOUND: OFF 🔇' : 'SOUND: ON 🔊'}
+              </button>
+            </div>
+
+            <div className="w-full max-w-[480px] bg-[#0c0c1a] border-4 border-black p-4 shadow-[10px_10px_0_rgba(0,0,0,0.8)] relative rounded-t-xl">
+              <div className="absolute top-0 bottom-0 -left-2 w-2 bg-gradient-to-b from-[#00f0ff] to-[#ff007f]"></div>
+              <div className="absolute top-0 bottom-0 -right-2 w-2 bg-gradient-to-b from-[#ff007f] to-[#39ff14]"></div>
+
+              <div className="bg-[#181832] border-4 border-black p-3 text-center mb-3">
+                <p className="font-pixel text-xs text-white uppercase glow-cyan">TECH FEST 2026</p>
+                <p className="font-pixel text-[10px] text-[#ffe600] uppercase mt-1 animate-pulse">★ ARCADE RUNNER ★</p>
+              </div>
+
+              <div className="bg-[#05050b] border-4 border-black p-3 relative overflow-hidden">
+                <div className="scanlines absolute inset-0 opacity-40 pointer-events-none"></div>
+                <div className="flex justify-between font-pixel text-[10px] text-[#ffe600] mb-2 border-b border-slate-800 pb-1">
+                  <span>SCORE: {String(score).padStart(6, '0')}</span>
+                  <span className="text-[#ff007f]">HI-SCORE: 012500</span>
+                </div>
+
+                <div className="relative h-44 bg-[#0a0a1a] border-2 border-black overflow-hidden">
+                  <div className="absolute bottom-10 w-5 h-5 bg-[#ffe600] border-2 border-black flex items-center justify-center font-pixel text-[9px] text-black" style={{ left: `${coinPos}%` }}>$</div>
+                  {showBurst && <div className="absolute bottom-20 left-[25%] font-pixel text-xs text-[#ffe600] glow-yellow">+100</div>}
+                  <div className="absolute bottom-3 w-5 h-6 bg-[#ff2a2a] border-2 border-black" style={{ left: `${obstaclePos}%` }}></div>
+                  <div className={`absolute left-[20%] bottom-3 transition-transform duration-300 ${isJumping ? '-translate-y-14' : ''}`}>
+                    <div className="w-8 h-10 bg-[#ff007f] border-2 border-black flex items-center justify-center font-pixel text-[10px] text-white">🤖</div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-3 bg-[#39ff14]/30 border-t-2 border-black"></div>
+                </div>
+                <p className="text-[8px] font-pixel text-[#39ff14] text-center mt-1">AUTONOMOUS DEMO MODE • NO GAME OVER</p>
+              </div>
+
+              <div className="bg-[#181832] border-4 border-black p-3 mt-3 shadow-[0_4px_0_#000]">
+                <div className="flex justify-between items-center px-4">
+                  <div className="w-6 h-6 rounded-full bg-[#ff007f] border-2 border-black shadow-[2px_2px_0_#000]"></div>
+                  <div className="flex gap-1 font-pixel text-[8px] text-slate-400">
+                    <span className="bg-[#222244] px-1 border border-black">SELECT</span>
+                    <span className="bg-[#ff007f]/20 text-[#ff007f] px-1 border border-[#ff007f]">START</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <div className="w-6 h-6 rounded-full bg-red-600 border-2 border-black"></div>
+                    <div className="w-6 h-6 rounded-full bg-yellow-400 border-2 border-black"></div>
+                    <div className="w-6 h-6 rounded-full bg-cyan-400 border-2 border-black"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#101020] border-4 border-black p-2 mt-2 flex items-center justify-between text-[9px] font-pixel">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-5 bg-black border border-slate-700 flex items-center justify-center">
+                    <div className="w-1 h-3 bg-[#ffe600] animate-pulse"></div>
+                  </div>
+                  <span className="text-[#ffe600]">INSERT COIN 🪙 25¢</span>
+                </div>
+                <span className="text-slate-500">TF2026</span>
+              </div>
+            </div>
+
+            <div className="mt-3 font-pixel text-xs text-slate-400 uppercase tracking-widest">
+              INSERT COIN TO WATCH
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        const [activeModal, setActiveModal] = useState(null);
+        const [activeDay, setActiveDay] = useState(1);
+        const scheduleRef = useRef(null);
+        const eventsMobileRef = useRef(null);
+
+        const handleScheduleLeft = () => {
+          if (scheduleRef.current) scheduleRef.current.scrollBy({ left: -280, behavior: 'smooth' });
+        };
+        const handleScheduleRight = () => {
+          if (scheduleRef.current) scheduleRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+        };
+
+        const handleEventsMobileLeft = () => {
+          if (eventsMobileRef.current) eventsMobileRef.current.scrollBy({ left: -280, behavior: 'smooth' });
+        };
+        const handleEventsMobileRight = () => {
+          if (eventsMobileRef.current) eventsMobileRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+        };
+
+        return (
+          <div className="min-h-screen relative pb-16">
+            <div className="fixed inset-0 scanlines opacity-30 z-30 pointer-events-none"></div>
+
+            {/* HEADER */}
+            <header className="fixed top-0 left-0 right-0 z-40 bg-[#0a0a14]/90 border-b-4 border-black p-4 backdrop-blur-md">
+              <div className="max-w-7xl mx-auto flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-[#00f0ff] border-2 border-black flex items-center justify-center font-pixel text-xs text-black font-bold">👾</div>
+                  <span className="font-pixel text-xs sm:text-sm text-white">TECH FEST <span className="text-[#ff007f]">2026</span></span>
+                </div>
+                <nav className="hidden md:flex gap-6 font-pixel text-xs text-slate-300">
+                  <a href="#home" className="hover:text-[#00f0ff]">HOME</a>
+                  <a href="#events" className="hover:text-[#00f0ff]">EVENTS</a>
+                  <a href="#schedule" className="hover:text-[#00f0ff]">SCHEDULE</a>
+                  <a href="#register" className="hover:text-[#00f0ff]">REGISTER</a>
+                  <a href="#contact" className="hover:text-[#00f0ff]">CONTACT</a>
+                </nav>
+                <button onClick={() => window.location.href='#events'} className="pixel-btn text-[10px] bg-[#ff007f] text-white">PRESS START 🎮</button>
+              </div>
+            </header>
+
+            {/* HERO */}
+            <section id="home" className="pt-28 pb-16 px-4 max-w-7xl mx-auto border-b-4 border-black">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-6 text-center lg:text-left">
+                  <h1 className="font-pixel text-2xl sm:text-4xl lg:text-5xl uppercase leading-tight text-white mb-4">
+                    LEVEL UP AT <br/>
+                    <span className="text-[#00f0ff] glow-cyan">TECH FEST</span> <br/>
+                    <span className="text-[#ff007f] glow-pink">2026</span>
+                  </h1>
+                  <p className="font-pixel text-xs text-[#39ff14] mb-6">&gt; CODE. INNOVATE. ELEVATE.</p>
+                  <p className="font-mono text-sm text-slate-300 mb-8">August 29 – 31, 2026 | College Campus, Your City</p>
+                  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                    <button onClick={() => window.location.href='#events'} className="pixel-btn">🎮 EXPLORE EVENTS</button>
+                    <button onClick={() => window.location.href='#schedule'} className="pixel-btn bg-[#121226] text-[#00f0ff] border-[#00f0ff]">⏱ VIEW SCHEDULE</button>
+                  </div>
+                </div>
+                <div className="lg:col-span-6 flex justify-center">
+                  <ArcadeCabinet />
+                </div>
+              </div>
+            </section>
+
+            {/* EVENTS WITH MOBILE SLIDE ARROWS */}
+            <section id="events" className="py-16 px-4 max-w-7xl mx-auto border-b-4 border-black">
+              <h2 className="font-pixel text-xl sm:text-3xl text-center text-[#00f0ff] uppercase mb-6">🎮 EVENTS / COMPETITIONS</h2>
+
+              {/* Mobile Slide Controls Bar */}
+              <div className="sm:hidden flex items-center justify-between mb-4">
+                <span className="font-pixel text-[10px] text-[#00f0ff]">QUEST CAROUSEL</span>
+                <div className="flex gap-2">
+                  <button onClick={handleEventsMobileLeft} className="px-2.5 py-1 bg-[#121226] border-2 border-black font-pixel text-xs text-[#00f0ff]">◀</button>
+                  <button onClick={handleEventsMobileRight} className="px-2.5 py-1 bg-[#121226] border-2 border-black font-pixel text-xs text-[#00f0ff]">▶</button>
+                </div>
+              </div>
+
+              {/* Desktop/Tablet Grid */}
+              <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {EVENTS_DATA.map(ev => (
+                  <div key={ev.id} className="bg-[#121226] border-4 border-black p-5 shadow-[4px_4px_0_#000] flex flex-col justify-between">
+                    <div>
+                      <span className="font-pixel text-[10px] text-[#00f0ff] bg-[#00f0ff]/10 px-2 py-0.5 border border-[#00f0ff] mb-2 inline-block">{ev.category}</span>
+                      <h3 className="font-pixel text-base text-white mb-2">{ev.title}</h3>
+                      <p className="font-mono text-xs text-slate-300 mb-4">{ev.description}</p>
+                      <div className="text-[11px] font-mono text-slate-400 space-y-1 mb-4">
+                        <p>📅 {ev.date}</p>
+                        <p>⏰ {ev.time}</p>
+                        <p>👥 {ev.teamSize}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <a href={ev.registrationUrl} target="_blank" className="pixel-btn text-[10px] flex-1 bg-[#ff007f] text-white">REGISTER NOW ↗</a>
+                      <button onClick={() => setActiveModal(ev)} className="px-3 py-2 bg-[#0a0a14] border-2 border-black text-xs font-mono text-[#00f0ff]">ℹ</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile Swipe / Slide Container */}
+              <div className="sm:hidden">
+                <div ref={eventsMobileRef} className="flex gap-4 overflow-x-auto pb-4 scroll-smooth">
+                  {EVENTS_DATA.map(ev => (
+                    <div key={ev.id} className="min-w-[85vw] bg-[#121226] border-4 border-black p-4 shadow-[4px_4px_0_#000] flex flex-col justify-between">
+                      <div>
+                        <span className="font-pixel text-[10px] text-[#00f0ff] bg-[#00f0ff]/10 px-2 py-0.5 border border-[#00f0ff] mb-2 inline-block">{ev.category}</span>
+                        <h3 className="font-pixel text-base text-white mb-2">{ev.title}</h3>
+                        <p className="font-mono text-xs text-slate-300 mb-4">{ev.description}</p>
+                        <div className="text-[11px] font-mono text-slate-400 space-y-1 mb-4">
+                          <p>📅 {ev.date}</p>
+                          <p>⏰ {ev.time}</p>
+                          <p>👥 {ev.teamSize}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <a href={ev.registrationUrl} target="_blank" className="pixel-btn text-[10px] flex-1 bg-[#ff007f] text-white">REGISTER NOW ↗</a>
+                        <button onClick={() => setActiveModal(ev)} className="px-3 py-2 bg-[#0a0a14] border-2 border-black text-xs font-mono text-[#00f0ff]">ℹ</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] font-pixel text-slate-400 text-center mt-2">◀ USE SLIDE ARROWS OR SWIPE ▶</p>
+              </div>
+            </section>
+
+            {/* SCHEDULE WITH SLIDE ARROWS */}
+            <section id="schedule" className="py-16 px-4 max-w-7xl mx-auto border-b-4 border-black text-center">
+              <h2 className="font-pixel text-xl sm:text-3xl text-[#ffe600] uppercase mb-6">⏱ SCHEDULE</h2>
+              
+              <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+                <button onClick={handleScheduleLeft} className="px-3 py-2 bg-[#121226] border-2 border-black font-pixel text-xs text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black">◀ SLIDE</button>
+                <div className="flex gap-2">
+                  <button onClick={() => setActiveDay(1)} className={`px-3 py-2 border-2 border-black font-pixel text-xs ${activeDay === 1 ? 'bg-[#ffe600] text-black font-bold' : 'bg-[#121226] text-slate-300'}`}>DAY 1</button>
+                  <button onClick={() => setActiveDay(2)} className={`px-3 py-2 border-2 border-black font-pixel text-xs ${activeDay === 2 ? 'bg-[#ffe600] text-black font-bold' : 'bg-[#121226] text-slate-300'}`}>DAY 2</button>
+                  <button onClick={() => setActiveDay(3)} className={`px-3 py-2 border-2 border-black font-pixel text-xs ${activeDay === 3 ? 'bg-[#ffe600] text-black font-bold' : 'bg-[#121226] text-slate-300'}`}>DAY 3</button>
+                </div>
+                <button onClick={handleScheduleRight} className="px-3 py-2 bg-[#121226] border-2 border-black font-pixel text-xs text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black">SLIDE ▶</button>
+              </div>
+
+              <div ref={scheduleRef} className="overflow-x-auto pb-4 scroll-smooth">
+                <div className="flex gap-4 min-w-max px-2">
+                  {activeDay === 1 && (
+                    <>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">09:00 AM</span><p className="font-bold text-white">Registration</p><p className="text-slate-400">Main Campus Desk</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">10:00 AM</span><p className="font-bold text-white">Grand Inauguration</p><p className="text-slate-400">Main Auditorium</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">11:00 AM</span><p className="font-bold text-white">Tech Keynote</p><p className="text-slate-400">Main Auditorium</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">01:00 PM</span><p className="font-bold text-white">Hackathon Kickoff</p><p className="text-slate-400">Innovation Hub</p></div>
+                    </>
+                  )}
+                  {activeDay === 2 && (
+                    <>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">10:00 AM</span><p className="font-bold text-white">Code Sprint</p><p className="text-slate-400">Lab 3</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">01:00 PM</span><p className="font-bold text-white">Robotics Arena</p><p className="text-slate-400">Outdoor Arena</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">02:00 PM</span><p className="font-bold text-white">Esports Tournament</p><p className="text-slate-400">Esports Lounge</p></div>
+                    </>
+                  )}
+                  {activeDay === 3 && (
+                    <>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">10:00 AM</span><p className="font-bold text-white">Tech Quiz Finals</p><p className="text-slate-400">Auditorium B</p></div>
+                      <div className="w-64 bg-[#121226] border-4 border-black p-4 text-left font-mono text-xs"><span className="font-pixel text-[#ffe600] block mb-1">03:00 PM</span><p className="font-bold text-white">Prize Distribution</p><p className="text-slate-400">Main Auditorium</p></div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <p className="text-[10px] font-pixel text-slate-400 mt-2">◀ USE SLIDE ARROWS TO SCROLL ▶</p>
+            </section>
+
+            {/* CONTACT */}
+            <section id="contact" className="py-16 px-4 max-w-7xl mx-auto text-center">
+              <h2 className="font-pixel text-xl sm:text-3xl text-[#39ff14] uppercase mb-8">💬 CONTACT US</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-2xl mx-auto font-mono text-xs">
+                <div className="bg-[#121226] border-4 border-black p-4">
+                  <p className="font-pixel text-xs text-[#00f0ff] mb-2">FACULTY COORDINATOR</p>
+                  <p className="text-white font-bold">Dr. Alex John</p>
+                  <p className="text-slate-300">📞 +91 98765 00001</p>
+                  <p className="text-slate-300">✉ techfest@example.com</p>
+                </div>
+                <div className="bg-[#121226] border-4 border-black p-4">
+                  <p className="font-pixel text-xs text-[#ff007f] mb-2">STUDENT COORDINATORS</p>
+                  <p className="text-white font-bold">Rahul R. (+91 98765 12345)</p>
+                  <p className="text-white font-bold">Ananya P. (+91 98765 67890)</p>
+                </div>
+              </div>
+            </section>
+
+            {/* FOOTER */}
+            <footer className="border-t-4 border-black bg-[#05050e] p-6 text-center font-pixel text-xs text-slate-400">
+              <p>🏆 TECH FEST 2026 — CODE. INNOVATE. ELEVATE.</p>
+              <p className="mt-2 text-[10px] font-mono text-slate-500">© 2026 Tech Fest. All Rights Reserved.</p>
+            </footer>
+
+            {/* MODAL */}
+            {activeModal && (
+              <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+                <div className="bg-[#121226] border-4 border-black p-6 max-w-lg w-full text-left">
+                  <h3 className="font-pixel text-lg text-[#00f0ff] mb-2">{activeModal.title}</h3>
+                  <p className="font-mono text-xs text-slate-300 mb-4">{activeModal.description}</p>
+                  <p className="font-mono text-xs text-[#ffe600] mb-4">Venue: {activeModal.venue} | Prizes: {activeModal.prizes}</p>
+                  <div className="flex justify-between items-center">
+                    <button onClick={() => setActiveModal(null)} className="font-pixel text-xs text-slate-400">CLOSE</button>
+                    <a href={activeModal.registrationUrl} target="_blank" className="pixel-btn bg-[#ff007f] text-white">REGISTER NOW ↗</a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+  </body>
+</html>

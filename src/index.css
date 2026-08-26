@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0a0a14;
+    color: #e2e8f0;
+    font-family: 'JetBrains Mono', monospace;
+    image-rendering: pixelated;
+  }
+
+  h1, h2, h3, .font-pixel {
+    font-family: 'Press Start 2P', cursive, monospace;
+    letter-spacing: -0.05em;
+  }
+
+  .font-retro {
+    font-family: 'Silkscreen', monospace;
+  }
+}
+
+/* 8-Bit Pixelated Borders & UI Utility Classes */
+.pixel-box {
+  background: #121226;
+  border: 4px solid #000;
+  box-shadow: 
+    inset -4px -4px 0px 0px rgba(0, 0, 0, 0.5),
+    inset 4px 4px 0px 0px rgba(255, 255, 255, 0.15),
+    4px 4px 0px 0px #000;
+  position: relative;
+}
+
+.pixel-box-cyan {
+  background: #121226;
+  border: 4px solid #000;
+  box-shadow: 
+    inset -4px -4px 0px 0px rgba(0, 240, 255, 0.2),
+    inset 4px 4px 0px 0px rgba(0, 240, 255, 0.4),
+    4px 4px 0px 0px #000,
+    0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.pixel-box-pink {
+  background: #121226;
+  border: 4px solid #000;
+  box-shadow: 
+    inset -4px -4px 0px 0px rgba(255, 0, 127, 0.2),
+    inset 4px 4px 0px 0px rgba(255, 0, 127, 0.4),
+    4px 4px 0px 0px #000,
+    0 0 15px rgba(255, 0, 127, 0.3);
+}
+
+.pixel-box-green {
+  background: #121226;
+  border: 4px solid #000;
+  box-shadow: 
+    inset -4px -4px 0px 0px rgba(57, 255, 20, 0.2),
+    inset 4px 4px 0px 0px rgba(57, 255, 20, 0.4),
+    4px 4px 0px 0px #000,
+    0 0 15px rgba(57, 255, 20, 0.3);
+}
+
+.pixel-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive, monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.75rem 1.25rem;
+  border: 4px solid #000;
+  background-color: #00f0ff;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 4px 4px 0px #000, inset -2px -2px 0px rgba(0, 0, 0, 0.4), inset 2px 2px 0px rgba(255, 255, 255, 0.7);
+  transition: all 0.1s ease;
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000, inset -2px -2px 0px rgba(0, 0, 0, 0.4), inset 2px 2px 0px rgba(255, 255, 255, 0.9);
+  filter: brightness(1.1);
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000, inset 2px 2px 0px rgba(0, 0, 0, 0.6);
+}
+
+.pixel-btn-pink {
+  background-color: #ff007f;
+  color: #fff;
+  text-shadow: 1px 1px 0px #000;
+}
+
+.pixel-btn-yellow {
+  background-color: #ffe600;
+  color: #000;
+}
+
+.pixel-btn-green {
+  background-color: #39ff14;
+  color: #000;
+}
+
+.pixel-btn-purple {
+  background-color: #9d4edd;
+  color: #fff;
+}
+
+.pixel-btn-outline {
+  background-color: #121226;
+  color: #00f0ff;
+  border-color: #00f0ff;
+  box-shadow: 4px 4px 0px #000, 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.pixel-btn-outline:hover {
+  background-color: #00f0ff;
+  color: #000;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a14;
+  border-left: 2px solid #2a2a4e;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff007f;
+  border: 2px solid #000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* Subtle CRT Scanline Filter */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Glowing text effects */
+.glow-cyan {
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 2px 2px 0px #000;
+}
+.glow-pink {
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.8), 2px 2px 0px #000;
+}
+.glow-yellow {
+  text-shadow: 0 0 8px rgba(255, 230, 0, 0.8), 2px 2px 0px #000;
+}
