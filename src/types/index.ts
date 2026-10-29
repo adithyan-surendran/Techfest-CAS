@@ -36,6 +36,6 @@ export interface ContactPerson {
   name: string;
   role: string;
   phone: string;
-  email: string;
+  email?: string;
   avatarIcon?: string;
 }

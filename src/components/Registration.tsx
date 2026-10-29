@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Users, QrCode, Sparkles, CheckCircle2, Trophy, Maximize2, X } from 'lucide-react';
+import { Calendar, Users, Sparkles, CheckCircle2, Trophy, Maximize2, X, ExternalLink } from 'lucide-react';
 import { PixelHeading } from './PixelHeading';
 import { PixelButton } from './PixelButton';
 import { PixelCard } from './PixelCard';
@@ -10,10 +10,7 @@ export const Registration: React.FC = () => {
 
   const handleRegisterClick = () => {
     playSelectSound();
-    const eventsEl = document.querySelector('#events');
-    if (eventsEl) {
-      eventsEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.open('https://forms.gle/uTT3CkMsFMK68Pve9', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -23,7 +20,7 @@ export const Registration: React.FC = () => {
         {/* SECTION HEADING */}
         <PixelHeading
           title="REGISTRATION HUB"
-          subtitle="Secure your slot for TECH FEST 2026 before registration closes!"
+          subtitle="Secure your slot for YUGA'26 before registration closes!"
           icon="⭐"
           accentColor="pink"
         />
@@ -78,7 +75,7 @@ export const Registration: React.FC = () => {
               <div className="space-y-2 mb-6 text-xs font-mono text-slate-300 bg-[#0a0a14]/60 p-4 border border-slate-800">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#39ff14]" />
-                  <span>Official Tech Fest Swag Kit & Digital Badges</span>
+                  <span>Official YUGA'26 Swag Kit & Digital Badges</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#39ff14]" />
@@ -114,59 +111,37 @@ export const Registration: React.FC = () => {
                   playSelectSound();
                   setQrModalOpen(true);
                 }}
-                className="relative bg-white p-4 border-4 border-black inline-block shadow-[4px_4px_0_#000] cursor-pointer group mb-4"
+                className="relative bg-white p-3 border-4 border-black inline-block shadow-[4px_4px_0_#000] cursor-pointer group mb-3"
                 title="Click to view enlarged QR Code"
               >
-                {/* SVG Pixel QR Code Graphic */}
-                <svg className="w-44 h-44 sm:w-48 sm:h-48" viewBox="0 0 100 100" fill="none">
-                  {/* Outer corner finders */}
-                  <rect x="5" y="5" width="25" height="25" fill="black" />
-                  <rect x="9" y="9" width="17" height="17" fill="white" />
-                  <rect x="13" y="13" width="9" height="9" fill="black" />
-
-                  <rect x="70" y="5" width="25" height="25" fill="black" />
-                  <rect x="74" y="9" width="17" height="17" fill="white" />
-                  <rect x="78" y="13" width="9" height="9" fill="black" />
-
-                  <rect x="5" y="70" width="25" height="25" fill="black" />
-                  <rect x="9" y="74" width="17" height="17" fill="white" />
-                  <rect x="13" y="78" width="9" height="9" fill="black" />
-
-                  {/* Pixel dots matrix */}
-                  <rect x="35" y="10" width="6" height="6" fill="black" />
-                  <rect x="45" y="10" width="6" height="6" fill="#ff007f" />
-                  <rect x="55" y="10" width="6" height="6" fill="black" />
-                  
-                  <rect x="35" y="20" width="6" height="6" fill="black" />
-                  <rect x="55" y="20" width="6" height="6" fill="#00f0ff" />
-                  
-                  <rect x="10" y="35" width="6" height="6" fill="black" />
-                  <rect x="25" y="35" width="6" height="6" fill="black" />
-                  <rect x="40" y="35" width="6" height="6" fill="black" />
-                  <rect x="60" y="35" width="6" height="6" fill="black" />
-                  <rect x="80" y="35" width="6" height="6" fill="black" />
-
-                  <rect x="40" y="45" width="20" height="20" fill="#0a0a14" />
-                  <circle cx="50" cy="55" r="5" fill="#00f0ff" />
-
-                  <rect x="10" y="55" width="6" height="6" fill="black" />
-                  <rect x="25" y="55" width="6" height="6" fill="#ff007f" />
-                  <rect x="65" y="55" width="6" height="6" fill="black" />
-                  <rect x="85" y="55" width="6" height="6" fill="black" />
-
-                  <rect x="35" y="75" width="6" height="6" fill="black" />
-                  <rect x="45" y="75" width="6" height="6" fill="black" />
-                  <rect x="65" y="75" width="6" height="6" fill="black" />
-                  <rect x="80" y="75" width="6" height="6" fill="black" />
-                </svg>
+                <img
+                  src="/registration-qr.png"
+                  alt="YUGA'26 Registration QR Code"
+                  className="w-48 h-48 sm:w-52 sm:h-52 object-contain"
+                />
 
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                   <Maximize2 className="w-8 h-8 text-[#00f0ff]" />
                 </div>
               </div>
 
+              {/* DIRECT REGISTRATION BUTTON UNDER QR */}
+              <div className="w-full mt-3 mb-3">
+                <PixelButton
+                  variant="yellow"
+                  size="sm"
+                  asLink={true}
+                  href="https://forms.gle/uTT3CkMsFMK68Pve9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                >
+                  ⚡ OPEN GOOGLE FORM <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                </PixelButton>
+              </div>
+
               <p className="text-[11px] font-mono text-slate-400">
-                Direct link to event catalog & Google Forms portal.
+                Scan with camera or click the button above to register.
               </p>
             </div>
           </div>
@@ -182,34 +157,29 @@ export const Registration: React.FC = () => {
             <button
               onClick={() => setQrModalOpen(false)}
               className="absolute top-2 right-2 p-1 bg-[#0a0a14] border border-black text-slate-300 hover:text-[#ff007f]"
+              aria-label="Close QR Modal"
             >
               <X className="w-5 h-5" />
             </button>
             <h3 className="font-pixel text-sm text-[#00f0ff] uppercase mb-4">REGISTRATION QR CODE</h3>
             <div className="bg-white p-4 border-4 border-black inline-block mb-4">
-              <svg className="w-64 h-64" viewBox="0 0 100 100" fill="none">
-                <rect x="5" y="5" width="25" height="25" fill="black" />
-                <rect x="9" y="9" width="17" height="17" fill="white" />
-                <rect x="13" y="13" width="9" height="9" fill="black" />
-
-                <rect x="70" y="5" width="25" height="25" fill="black" />
-                <rect x="74" y="9" width="17" height="17" fill="white" />
-                <rect x="78" y="13" width="9" height="9" fill="black" />
-
-                <rect x="5" y="70" width="25" height="25" fill="black" />
-                <rect x="9" y="74" width="17" height="17" fill="white" />
-                <rect x="13" y="78" width="9" height="9" fill="black" />
-
-                <rect x="35" y="10" width="6" height="6" fill="black" />
-                <rect x="45" y="10" width="6" height="6" fill="#ff007f" />
-                <rect x="55" y="10" width="6" height="6" fill="black" />
-
-                <rect x="40" y="45" width="20" height="20" fill="#0a0a14" />
-                <circle cx="50" cy="55" r="5" fill="#00f0ff" />
-              </svg>
+              <img
+                src="/registration-qr.png"
+                alt="YUGA'26 Registration QR Code"
+                className="w-64 h-64 object-contain mx-auto"
+              />
             </div>
+            <a
+              href="https://forms.gle/uTT3CkMsFMK68Pve9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 w-full py-2.5 bg-[#00f0ff] text-black font-pixel text-xs border-2 border-black shadow-[2px_2px_0_#000] hover:bg-[#39ff14] mb-3 transition-colors"
+            >
+              <span>OPEN GOOGLE FORM</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
             <p className="text-xs font-mono text-slate-300">
-              Scan using any mobile camera or Google Lens to open the portal.
+              Scan with any mobile camera or Google Lens to register.
             </p>
           </div>
         </div>

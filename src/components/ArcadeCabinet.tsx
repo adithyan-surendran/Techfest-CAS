@@ -83,7 +83,7 @@ export const ArcadeCabinet: React.FC = () => {
         <div className="inline-flex items-center gap-2 mb-2">
           <span className="text-2xl animate-pulse">🎮</span>
           <h2 className="text-xl sm:text-3xl font-pixel uppercase text-[#00f0ff] glow-cyan">
-            TECH FEST ARCADE
+            YUGA'26 ARCADE
           </h2>
         </div>
         <p className="text-xs sm:text-sm font-mono text-[#ffe600] tracking-wider mb-4">
@@ -123,7 +123,7 @@ export const ArcadeCabinet: React.FC = () => {
             <span className="absolute bottom-1 right-1.5 w-1.5 h-1.5 rounded-full bg-slate-500 border border-black"></span>
 
             <div className="font-pixel text-xs sm:text-base text-white tracking-widest uppercase mb-0.5 glow-cyan">
-              TECH FEST <span className="text-[#ff007f]">2026</span>
+              YUGA <span className="text-[#ff007f]">'26</span>
             </div>
             <div className="font-pixel text-[10px] sm:text-xs text-[#ffe600] tracking-widest uppercase animate-pulse">
               ★ ARCADE RUNNER ★
@@ -295,7 +295,7 @@ export const ArcadeCabinet: React.FC = () => {
             </div>
 
             <div className="font-mono text-[10px] text-slate-500">
-              SERIAL: TF2026-8BIT
+              SERIAL: YUGA26-8BIT
             </div>
           </div>
 

@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             </div>
             <div className="flex flex-col">
               <span className="font-pixel text-xs sm:text-sm tracking-wider text-white group-hover:text-[#00f0ff] transition-colors">
-                TECH FEST <span className="text-[#ff007f]">2026</span>
+                YUGA<span className="text-[#ff007f]">'26</span>
               </span>
               <span className="text-[9px] font-mono text-[#39ff14] tracking-widest hidden sm:inline-block">
                 SYS.ONLINE v8.0

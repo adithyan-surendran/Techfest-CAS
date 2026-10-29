@@ -47,8 +47,7 @@ export const Hero: React.FC = () => {
 
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-pixel uppercase tracking-tight leading-tight text-white mb-4">
               LEVEL UP AT <br />
-              <span className="text-[#00f0ff] glow-cyan">TECH FEST</span> <br />
-              <span className="text-[#ff007f] glow-pink">2026</span>
+              <span className="text-[#00f0ff] glow-cyan">YUGA</span><span className="text-[#ff007f] glow-pink">'26</span>
             </h1>
 
             <div className="bg-[#121226] border-2 border-[#39ff14] p-3 inline-block mb-6 shadow-[3px_3px_0_#000]">
@@ -65,7 +64,7 @@ export const Hero: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 bg-[#121226] px-3 py-2 border-2 border-black shadow-[2px_2px_0_#000]">
                 <MapPin className="w-4 h-4 text-[#00f0ff]" />
-                <span>College Campus, Your City</span>
+                <span>CAS Vazhakkad, Malappuram</span>
               </div>
             </div>
 

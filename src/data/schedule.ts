@@ -19,7 +19,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     dayTitle: 'DAY 1 — AUG 29',
     time: '10:00 AM',
     title: 'Grand Inauguration Ceremony',
-    description: 'Keynote by Chief Guest, torch lighting, and official kickoff of TECH FEST 2026.',
+    description: 'Keynote by Chief Guest, torch lighting, and official kickoff of YUGA\'26.',
     venue: 'Main Auditorium',
     category: 'Ceremony',
     icon: 'Sparkles'

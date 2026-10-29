@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trophy, Instagram, Linkedin, Youtube, Github, Bot } from 'lucide-react';
+import { Trophy, Instagram, Bot } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data/contacts';
 import { playSelectSound } from '../utils/sound';
 
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
                 <Trophy className="w-5 h-5 text-black" />
               </div>
               <h3 className="font-pixel text-sm sm:text-base text-white tracking-wider">
-                TECH FEST <span className="text-[#ff007f]">2026</span>
+                YUGA <span className="text-[#ff007f]">'26</span>
               </h3>
             </div>
             <p className="font-pixel text-xs text-[#39ff14] tracking-widest mb-4">
@@ -84,44 +84,15 @@ export const Footer: React.FC = () => {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 bg-[#121226] border-2 border-black text-[#ff007f] hover:bg-[#ff007f] hover:text-white shadow-[2px_2px_0_#000] transition-colors"
+                className="flex items-center gap-2 px-3 py-2 bg-[#121226] border-2 border-black text-[#ff007f] hover:bg-[#ff007f] hover:text-white shadow-[2px_2px_0_#000] transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5" />
-              </a>
-
-              <a
-                href={SOCIAL_LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-[#121226] border-2 border-black text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[2px_2px_0_#000] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-
-              <a
-                href={SOCIAL_LINKS.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-[#121226] border-2 border-black text-[#ff2a2a] hover:bg-[#ff2a2a] hover:text-white shadow-[2px_2px_0_#000] transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
-
-              <a
-                href={SOCIAL_LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 bg-[#121226] border-2 border-black text-[#39ff14] hover:bg-[#39ff14] hover:text-black shadow-[2px_2px_0_#000] transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
+                <Instagram className="w-4 h-4" />
+                <span className="font-pixel text-[10px]">@{SOCIAL_LINKS.instagramHandle}</span>
               </a>
             </div>
             <p className="text-[11px] font-mono text-slate-500">
-              Stay connected for real-time leaderboards & announcements.
+              Stay connected for real-time announcements & updates.
             </p>
           </div>
 
@@ -129,7 +100,7 @@ export const Footer: React.FC = () => {
 
         {/* BOTTOM COPYRIGHT */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
-          <p>© 2026 Tech Fest. All Rights Reserved.</p>
+          <p>© 2026 YUGA'26. All Rights Reserved.</p>
           <p className="flex items-center gap-1.5 text-slate-400">
             Made with <Bot className="w-4 h-4 text-[#00f0ff]" /> 8-Bit Arcade Passion
           </p>

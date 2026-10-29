@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, MapPin, ExternalLink, Instagram, Linkedin, Youtube, Github, User, ShieldCheck } from 'lucide-react';
+import { Phone, MapPin, ExternalLink, Instagram, User, ShieldCheck } from 'lucide-react';
 import { FACULTY_COORDINATORS, STUDENT_COORDINATORS, VENUE_INFO, SOCIAL_LINKS } from '../data/contacts';
 import { PixelHeading } from './PixelHeading';
 import { PixelCard } from './PixelCard';
@@ -31,11 +31,11 @@ export const Contact: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-4 text-[#00f0ff] font-pixel text-xs border-b border-slate-800 pb-2">
                 <ShieldCheck className="w-4 h-4" />
-                <span>FACULTY COORDINATOR</span>
+                <span>FACULTY COORDINATORS</span>
               </div>
 
               {FACULTY_COORDINATORS.map((faculty, idx) => (
-                <div key={idx} className="mb-4 last:mb-0">
+                <div key={idx} className="mb-4 last:mb-0 bg-[#0a0a14] p-3 border-2 border-black">
                   <h4 className="font-pixel text-xs text-white uppercase mb-1">{faculty.name}</h4>
                   <p className="text-[11px] font-mono text-[#ffe600] mb-2">{faculty.role}</p>
 
@@ -46,14 +46,6 @@ export const Contact: React.FC = () => {
                     >
                       <Phone className="w-3.5 h-3.5 text-[#39ff14]" />
                       <span>{faculty.phone}</span>
-                    </a>
-
-                    <a
-                      href={`mailto:${faculty.email}`}
-                      className="flex items-center gap-2 hover:text-[#00f0ff] transition-colors py-1 break-all"
-                    >
-                      <Mail className="w-3.5 h-3.5 text-[#ff007f]" />
-                      <span>{faculty.email}</span>
                     </a>
                   </div>
                 </div>
@@ -89,16 +81,16 @@ export const Contact: React.FC = () => {
             </div>
           </PixelCard>
 
-          {/* GET IN TOUCH */}
+          {/* GET IN TOUCH - INSTAGRAM ONLY */}
           <PixelCard variant="yellow" className="flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4 text-[#ffe600] font-pixel text-xs border-b border-slate-800 pb-2">
-                <Mail className="w-4 h-4" />
-                <span>GET IN TOUCH</span>
+                <Instagram className="w-4 h-4" />
+                <span>FOLLOW US</span>
               </div>
 
               <p className="text-slate-300 font-mono text-xs mb-4">
-                Follow our official social handles for instant announcements, event photos, and results.
+                Follow our official Instagram page for announcements, event updates, and queries.
               </p>
 
               <div className="space-y-2.5 font-mono text-xs">
@@ -106,30 +98,15 @@ export const Contact: React.FC = () => {
                   href={SOCIAL_LINKS.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 p-2 bg-[#0a0a14] border border-black hover:border-[#ff007f] text-slate-300 hover:text-[#ff007f] transition-all"
+                  className="flex items-center gap-3 p-3 bg-[#0a0a14] border-2 border-black hover:border-[#ff007f] text-slate-300 hover:text-[#ff007f] shadow-[2px_2px_0_#000] transition-all group"
                 >
-                  <Instagram className="w-4 h-4 text-[#ff007f]" />
-                  <span>Instagram @techfest2026</span>
-                </a>
-
-                <a
-                  href={SOCIAL_LINKS.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 p-2 bg-[#0a0a14] border border-black hover:border-[#00f0ff] text-slate-300 hover:text-[#00f0ff] transition-all"
-                >
-                  <Linkedin className="w-4 h-4 text-[#00f0ff]" />
-                  <span>LinkedIn /techfest2026</span>
-                </a>
-
-                <a
-                  href={SOCIAL_LINKS.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 p-2 bg-[#0a0a14] border border-black hover:border-[#39ff14] text-slate-300 hover:text-[#39ff14] transition-all"
-                >
-                  <Github className="w-4 h-4 text-[#39ff14]" />
-                  <span>GitHub /techfest2026</span>
+                  <div className="p-2 bg-[#ff007f]/10 border border-[#ff007f] text-[#ff007f] group-hover:bg-[#ff007f] group-hover:text-white transition-colors">
+                    <Instagram className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] text-slate-400">INSTAGRAM</span>
+                    <span className="font-pixel text-xs text-white group-hover:text-[#ff007f]">@{SOCIAL_LINKS.instagramHandle}</span>
+                  </div>
                 </a>
               </div>
             </div>
