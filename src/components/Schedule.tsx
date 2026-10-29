@@ -2,202 +2,215 @@ import React, { useState, useRef } from 'react';
 import {
   Clock, MapPin, Sparkles, UserCheck, Radio, Cpu, Wrench, Gamepad2,
   Flame, Code2, Bot, Trophy, Music, HelpCircle, Presentation, Award, Camera,
-  ChevronLeft, ChevronRight
+  CalendarDays
 } from 'lucide-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { SCHEDULE_DATA } from '../data/schedule';
-import { PixelHeading } from './PixelHeading';
-import { PixelBadge } from './PixelBadge';
-import { playSelectSound } from '../utils/sound';
+import { playCyberClick } from '../utils/sound';
 
 export const Schedule: React.FC = () => {
   const [activeDay, setActiveDay] = useState<number>(1);
-  const timelineRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll Progress Laser Animation for the Schedule Section
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start center', 'end center'],
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   const dayTabs = [
-    { day: 1, label: 'DAY 1 — AUG 29' },
-    { day: 2, label: 'DAY 2 — AUG 30' },
-    { day: 3, label: 'DAY 3 — AUG 31' },
+    { day: 1, label: 'DAY 1', date: 'AUG 29', desc: 'Inauguration & Kickoffs' },
+    { day: 2, label: 'DAY 2', date: 'AUG 30', desc: 'Sprints & Tournaments' },
+    { day: 3, label: 'DAY 3', date: 'AUG 31', desc: 'Finals & Grand Awards' },
   ];
 
   const currentSchedule = SCHEDULE_DATA.filter((item) => item.day === activeDay);
 
-  const handleScrollLeft = () => {
-    playSelectSound();
-    if (timelineRef.current) {
-      timelineRef.current.scrollBy({ left: -320, behavior: 'smooth' });
-    }
-  };
-
-  const handleScrollRight = () => {
-    playSelectSound();
-    if (timelineRef.current) {
-      timelineRef.current.scrollBy({ left: 320, behavior: 'smooth' });
-    }
-  };
-
   const renderIcon = (iconName: string) => {
-    const iconClass = "w-5 h-5 text-[#00f0ff]";
+    const iconClass = "w-5 h-5";
     switch (iconName) {
-      case 'UserCheck': return <UserCheck className={iconClass} />;
-      case 'Sparkles': return <Sparkles className="w-5 h-5 text-[#ffe600]" />;
-      case 'Radio': return <Radio className="w-5 h-5 text-[#39ff14]" />;
-      case 'Cpu': return <Cpu className="w-5 h-5 text-[#ff007f]" />;
-      case 'Wrench': return <Wrench className={iconClass} />;
-      case 'Gamepad2': return <Gamepad2 className="w-5 h-5 text-[#ffe600]" />;
-      case 'Flame': return <Flame className="w-5 h-5 text-[#ff5500]" />;
-      case 'Code2': return <Code2 className={iconClass} />;
-      case 'Bot': return <Bot className="w-5 h-5 text-[#39ff14]" />;
-      case 'Trophy': return <Trophy className="w-5 h-5 text-[#ffe600]" />;
-      case 'Music': return <Music className="w-5 h-5 text-[#ff007f]" />;
-      case 'HelpCircle': return <HelpCircle className="w-5 h-5 text-[#9d4edd]" />;
-      case 'Presentation': return <Presentation className={iconClass} />;
-      case 'Award': return <Award className="w-5 h-5 text-[#ffe600]" />;
-      case 'Camera': return <Camera className="w-5 h-5 text-[#39ff14]" />;
-      default: return <Clock className={iconClass} />;
+      case 'UserCheck': return <UserCheck className={`${iconClass} text-cyber-cyan`} />;
+      case 'Sparkles': return <Sparkles className={`${iconClass} text-amber-300`} />;
+      case 'Radio': return <Radio className={`${iconClass} text-emerald-400`} />;
+      case 'Cpu': return <Cpu className={`${iconClass} text-cyber-purple`} />;
+      case 'Wrench': return <Wrench className={`${iconClass} text-cyber-cyan`} />;
+      case 'Gamepad2': return <Gamepad2 className={`${iconClass} text-cyber-pink`} />;
+      case 'Flame': return <Flame className={`${iconClass} text-rose-500`} />;
+      case 'Code2': return <Code2 className={`${iconClass} text-cyber-cyan`} />;
+      case 'Bot': return <Bot className={`${iconClass} text-emerald-400`} />;
+      case 'Trophy': return <Trophy className={`${iconClass} text-amber-300`} />;
+      case 'Music': return <Music className={`${iconClass} text-cyber-pink`} />;
+      case 'HelpCircle': return <HelpCircle className={`${iconClass} text-cyber-purple`} />;
+      case 'Presentation': return <Presentation className={`${iconClass} text-cyber-cyan`} />;
+      case 'Award': return <Award className={`${iconClass} text-amber-300`} />;
+      case 'Camera': return <Camera className={`${iconClass} text-emerald-400`} />;
+      default: return <Clock className={`${iconClass} text-cyber-cyan`} />;
     }
   };
 
   return (
-    <section id="schedule" className="py-16 sm:py-24 bg-[#0a0a14] border-b-4 border-black relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* SECTION HEADING */}
-        <PixelHeading
-          title="SCHEDULE TIMELINE"
-          subtitle="Plan your itinerary. Track sessions, competitions, and keynotes."
-          icon="⏱"
-          accentColor="yellow"
-        />
+    <section id="schedule" ref={containerRef} className="py-20 sm:py-28 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-        {/* DAY SELECTOR TABS & SLIDE ARROW CONTROLS */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          
-          {/* Day Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mx-auto md:mx-0">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* SECTION HEADER */}
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyber-cyan text-xs font-mono mb-4"
+          >
+            <CalendarDays className="w-3.5 h-3.5 animate-pulse" />
+            <span>FESTIVAL ITINERARY</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-5xl font-cyber font-black tracking-tight text-white uppercase mb-4"
+          >
+            MISSION <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-cyber-pink to-cyber-cyan glow-yellow">TIMELINE</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-slate-400 text-sm sm:text-base font-sans"
+          >
+            Scroll to follow the live event progression across all 3 days of high-octane technical events.
+          </motion.p>
+        </div>
+
+        {/* DAY SELECTOR TABS */}
+        <div className="flex justify-center mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-2 rounded-2xl glass-panel border border-slate-700/60 max-w-2xl w-full">
             {dayTabs.map((tab) => {
               const isActive = activeDay === tab.day;
               return (
                 <button
                   key={tab.day}
                   onClick={() => {
-                    playSelectSound();
+                    playCyberClick();
                     setActiveDay(tab.day);
                   }}
-                  className={`font-pixel text-xs sm:text-sm uppercase px-3 sm:px-4 py-2.5 sm:py-3 border-4 border-black transition-all ${
-                    isActive
-                      ? 'bg-[#ffe600] text-slate-950 shadow-[4px_4px_0_#000] scale-105 font-bold'
-                      : 'bg-[#121226] text-slate-300 hover:text-[#ffe600] hover:bg-[#1a1a36]'
+                  className={`relative p-3.5 rounded-xl text-left transition-all duration-300 ${
+                    isActive ? 'text-black' : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
                   }`}
                 >
-                  {tab.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeDayPill"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyber-cyan via-[#67e8f9] to-cyber-pink shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between font-cyber font-bold text-xs">
+                      <span>{tab.label}</span>
+                      <span className={`text-[10px] font-mono ${isActive ? 'text-black font-semibold' : 'text-cyan-400'}`}>
+                        {tab.date}
+                      </span>
+                    </div>
+                    <div className={`text-[11px] font-sans mt-0.5 truncate ${isActive ? 'text-slate-900 font-medium' : 'text-slate-400'}`}>
+                      {tab.desc}
+                    </div>
+                  </div>
                 </button>
               );
             })}
           </div>
-
-          {/* Slide Arrow Navigation Buttons */}
-          <div className="flex items-center gap-3 mx-auto md:mx-0">
-            <button
-              onClick={handleScrollLeft}
-              className="p-2.5 bg-[#121226] border-4 border-black text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[4px_4px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-              title="Slide Left"
-              aria-label="Slide timeline left"
-            >
-              <ChevronLeft className="w-6 h-6 stroke-[3]" />
-            </button>
-
-            <span className="font-pixel text-[10px] text-[#ffe600] uppercase tracking-wider hidden sm:inline-block">
-              SLIDE
-            </span>
-
-            <button
-              onClick={handleScrollRight}
-              className="p-2.5 bg-[#121226] border-4 border-black text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[4px_4px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-              title="Slide Right"
-              aria-label="Slide timeline right"
-            >
-              <ChevronRight className="w-6 h-6 stroke-[3]" />
-            </button>
-          </div>
-
         </div>
 
-        {/* TIMELINE CONTAINER WITH SLIDE ARROWS WRAPPER */}
-        <div className="relative group">
+        {/* SCROLL-ANIMATED TIMELINE */}
+        <div className="relative max-w-4xl mx-auto">
           
-          {/* Floating Slide Arrow Overlay Buttons */}
-          <button
-            onClick={handleScrollLeft}
-            className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-[#121226] border-4 border-black items-center justify-center text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[4px_4px_0_#000] transition-all"
-            aria-label="Slide left"
-          >
-            <ChevronLeft className="w-6 h-6 stroke-[3]" />
-          </button>
+          {/* STATIC BASE CIRCUIT LINE */}
+          <div className="absolute top-0 bottom-0 left-6 md:left-1/2 -translate-x-1/2 w-[2px] bg-slate-800" />
 
-          <button
-            onClick={handleScrollRight}
-            className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-[#121226] border-4 border-black items-center justify-center text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[4px_4px_0_#000] transition-all"
-            aria-label="Slide right"
-          >
-            <ChevronRight className="w-6 h-6 stroke-[3]" />
-          </button>
+          {/* DYNAMIC SCROLL-DRIVEN LASER LINE */}
+          <motion.div
+            style={{ scaleY }}
+            className="absolute top-0 bottom-0 left-6 md:left-1/2 -translate-x-1/2 w-[3px] bg-gradient-to-b from-cyber-cyan via-cyber-pink to-cyber-purple shadow-[0_0_15px_rgba(0,240,255,0.8)] origin-top z-10"
+          />
 
-          {/* DESKTOP & TABLET HORIZONTAL STAGE TIMELINE */}
-          <div
-            ref={timelineRef}
-            className="overflow-x-auto pb-6 scrollbar-thin scroll-smooth px-1"
-          >
-            <div className="relative flex gap-6 min-w-max pt-6 pb-2">
-              
-              {/* CONNECTING TIMELINE LINE */}
-              <div className="absolute top-1/2 left-0 right-0 h-2 bg-[#1f1f3a] border-y border-black -translate-y-1/2 z-0"></div>
+          {/* TIMELINE ITEMS */}
+          <div className="space-y-8 sm:space-y-12">
+            {currentSchedule.map((item, index) => {
+              const isEven = index % 2 === 0;
 
-              {currentSchedule.map((item, index) => (
-                <div
+              return (
+                <motion.div
                   key={item.id}
-                  className="relative z-10 w-72 bg-[#121226] border-4 border-black p-4 shadow-[4px_4px_0_#000] flex flex-col justify-between hover:-translate-y-1 transition-transform"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: 0.05 }}
+                  className={`relative flex items-center ${
+                    isEven ? 'md:flex-row' : 'md:flex-row-reverse'
+                  } flex-row`}
                 >
-                  {/* TIME BADGE */}
-                  <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-800">
-                    <div className="flex items-center gap-1.5 font-pixel text-xs text-[#ffe600]">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>{item.time}</span>
-                    </div>
-                    <PixelBadge color={index % 2 === 0 ? 'cyan' : 'pink'} size="sm">
-                      {item.category}
-                    </PixelBadge>
+                  {/* TIMELINE NODE DOT */}
+                  <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full glass-panel bg-[#070e24] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.6)] z-20">
+                    <span className="w-3 h-3 rounded-full bg-cyber-pink animate-pulse" />
                   </div>
 
-                  {/* CONTENT */}
-                  <div className="flex items-start gap-2.5 mb-3">
-                    <div className="p-2 bg-[#0a0a14] border border-black shrink-0">
-                      {renderIcon(item.icon)}
-                    </div>
-                    <div>
-                      <h4 className="font-pixel text-xs uppercase text-white mb-1 leading-snug">
+                  {/* CONTENT CARD */}
+                  <div className="w-full pl-16 md:pl-0 md:w-1/2">
+                    <div
+                      className={`glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/60 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 ${
+                        isEven ? 'md:mr-10' : 'md:ml-10'
+                      }`}
+                    >
+                      {/* CARD TOP META */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-700/60 flex items-center justify-center">
+                            {renderIcon(item.icon)}
+                          </div>
+                          <span className="text-xs font-cyber font-bold text-cyber-cyan">
+                            {item.time}
+                          </span>
+                        </div>
+
+                        <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300">
+                          {item.category}
+                        </span>
+                      </div>
+
+                      {/* TITLE & DESCRIPTION */}
+                      <h4 className="font-cyber font-bold text-base text-white mb-2">
                         {item.title}
                       </h4>
-                      <p className="text-slate-400 font-mono text-[11px] line-clamp-2">
+
+                      <p className="text-slate-300 text-xs leading-relaxed mb-4 font-sans">
                         {item.description}
                       </p>
+
+                      {/* VENUE PILL */}
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400 pt-3 border-t border-slate-800/80">
+                        <MapPin className="w-3.5 h-3.5 text-cyber-pink" />
+                        <span>{item.venue}</span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* VENUE */}
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 pt-2 border-t border-slate-800">
-                    <MapPin className="w-3 h-3 text-[#39ff14]" />
-                    <span>{item.venue}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
-
-        <p className="text-center text-[10px] font-pixel text-slate-400 mt-2">
-          ◀ USE ARROWS OR SWIPE TO SLIDE THROUGH SCHEDULE TIMELINE ▶
-        </p>
 
       </div>
     </section>

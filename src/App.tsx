@@ -7,6 +7,9 @@ import { Registration } from './components/Registration';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { BottomNav } from './components/BottomNav';
+import { CyberBackground } from './components/CyberBackground';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -14,7 +17,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'events', 'schedule', 'register', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 250;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -29,20 +32,26 @@ export const App: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a14] text-slate-100 font-mono relative selection:bg-[#ff007f] selection:text-white">
-      {/* CRT SCANLINE OVERLAY EFFECT */}
-      <div className="fixed inset-0 scanlines pointer-events-none z-30 opacity-40"></div>
+    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans relative selection:bg-cyber-cyan selection:text-black">
+      {/* AMBIENT INTERACTIVE CANVAS & PARTICLES */}
+      <CyberBackground />
 
-      {/* TOP NAVBAR */}
+      {/* TOP SCROLL PROGRESS LASER BEAM */}
+      <ScrollProgressBar />
+
+      {/* SCI-FI CRT SCANLINE OVERLAY */}
+      <div className="fixed inset-0 scanlines pointer-events-none z-30 opacity-20" />
+
+      {/* TOP FLOATING NAVBAR */}
       <Navbar activeSection={activeSection} />
 
       {/* MAIN CONTENT SECTIONS */}
-      <main>
+      <main className="relative z-10">
         <Hero />
         <EventGrid />
         <Schedule />
@@ -53,7 +62,10 @@ export const App: React.FC = () => {
       {/* FOOTER */}
       <Footer />
 
-      {/* MOBILE STICKY BOTTOM NAVIGATION BAR */}
+      {/* CIRCULAR PROGRESS SCROLL-TO-TOP BUTTON */}
+      <ScrollToTop />
+
+      {/* MOBILE FLOATING GLASS NAVIGATION BAR */}
       <BottomNav activeSection={activeSection} />
     </div>
   );

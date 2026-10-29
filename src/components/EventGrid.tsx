@@ -1,19 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Filter, Layers } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Event, EventCategory } from '../types';
 import { EVENTS_DATA } from '../data/events';
 import { EventCard } from './EventCard';
 import { EventModal } from './EventModal';
-import { PixelHeading } from './PixelHeading';
-import { PixelButton } from './PixelButton';
-import { playSelectSound } from '../utils/sound';
+import { playCyberClick } from '../utils/sound';
 
 export const EventGrid: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<EventCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalEvent, setActiveModalEvent] = useState<Event | null>(null);
-  const [showAll, setShowAll] = useState(false);
-  const mobileCarouselRef = useRef<HTMLDivElement>(null);
 
   const categories: EventCategory[] = ['All', 'Coding', 'Development', 'Robotics', 'Gaming', 'Quiz'];
 
@@ -21,165 +18,120 @@ export const EventGrid: React.FC = () => {
     const matchesCategory = selectedCategory === 'All' || event.category === selectedCategory;
     const matchesSearch =
       event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase());
+      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (event.tagline && event.tagline.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
-  const displayedEvents = showAll ? filteredEvents : filteredEvents.slice(0, 6);
-
-  const handleMobileScrollLeft = () => {
-    playSelectSound();
-    if (mobileCarouselRef.current) {
-      mobileCarouselRef.current.scrollBy({ left: -280, behavior: 'smooth' });
-    }
-  };
-
-  const handleMobileScrollRight = () => {
-    playSelectSound();
-    if (mobileCarouselRef.current) {
-      mobileCarouselRef.current.scrollBy({ left: 280, behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section id="events" className="py-16 sm:py-24 bg-[#0d0d24] border-b-4 border-black relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* SECTION HEADING */}
-        <PixelHeading
-          title="EVENTS / COMPETITIONS"
-          subtitle="Choose your quest. Show your skills. Win cash prizes & trophies."
-          icon="🎮"
-          accentColor="cyan"
-        />
+    <section id="events" className="py-20 sm:py-28 relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* CONTROLS: CATEGORY TABS & SEARCH BAR */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* SECTION HEADER */}
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyber-cyan text-xs font-mono mb-4"
+          >
+            <Layers className="w-3.5 h-3.5 text-cyber-cyan animate-pulse" />
+            <span>FESTIVAL ARENA</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-5xl font-cyber font-black tracking-tight text-white uppercase mb-4"
+          >
+            FLAGSHIP <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-white to-cyber-pink glow-cyan">COMPETITIONS</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-slate-400 text-sm sm:text-base font-sans"
+          >
+            Choose your challenge arena. Demonstrate technical mastery. Compete for trophies, cash prizes, and industry recognition.
+          </motion.p>
+        </div>
+
+        {/* CONTROLS: CATEGORY TABS & SEARCH */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
           
           {/* CATEGORY TABS */}
-          <div className="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto">
+          <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl glass-panel border border-slate-700/60 w-full md:w-auto">
             {categories.map((cat) => {
               const isActive = selectedCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => {
-                    playSelectSound();
+                    playCyberClick();
                     setSelectedCategory(cat);
                   }}
-                  className={`font-pixel text-[10px] sm:text-xs uppercase px-3 py-2 border-2 border-black transition-all ${
-                    isActive
-                      ? 'bg-[#00f0ff] text-slate-950 shadow-[3px_3px_0_#000] font-bold'
-                      : 'bg-[#121226] text-slate-300 hover:text-[#00f0ff] hover:bg-[#1a1a36]'
+                  className={`relative font-cyber text-xs tracking-wider px-3.5 py-2 rounded-xl transition-all duration-200 ${
+                    isActive ? 'text-black font-bold' : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  {cat}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeCategoryPill"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyber-cyan to-blue-500 shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{cat}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* SEARCH BAR */}
-          <div className="relative w-full md:w-64">
+          {/* SEARCH INPUT */}
+          <div className="relative w-full md:w-72">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              placeholder="Search challenges..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search competitions..."
-              className="w-full bg-[#121226] border-2 border-black px-3 py-2 pl-9 text-xs font-mono text-white placeholder-slate-500 shadow-[2px_2px_0_#000] focus:outline-none focus:border-[#00f0ff]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl glass-card border border-slate-700/60 focus:border-cyan-400 focus:outline-none text-xs font-mono text-white placeholder-slate-500 transition-colors"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
           </div>
+
         </div>
 
-        {/* EVENTS DISPLAY */}
-        {displayedEvents.length > 0 ? (
-          <>
-            {/* Desktop & Tablet Grid (hidden on small mobile screens) */}
-            <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-              {displayedEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  onSelect={(ev) => setActiveModalEvent(ev)}
-                />
-              ))}
-            </div>
-
-            {/* Mobile Carousel with SLIDE ARROWS */}
-            <div className="sm:hidden mb-8">
-              {/* Mobile Slide Arrow Buttons Controls */}
-              <div className="flex items-center justify-between mb-3 px-1">
-                <span className="font-pixel text-[10px] text-[#00f0ff] uppercase tracking-wider">
-                  QUEST CAROUSEL
-                </span>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleMobileScrollLeft}
-                    className="p-2 bg-[#121226] border-2 border-black text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-                    title="Slide Left"
-                    aria-label="Slide events left"
-                  >
-                    <ChevronLeft className="w-4 h-4 stroke-[3]" />
-                  </button>
-                  <button
-                    onClick={handleMobileScrollRight}
-                    className="p-2 bg-[#121226] border-2 border-black text-[#00f0ff] hover:bg-[#00f0ff] hover:text-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
-                    title="Slide Right"
-                    aria-label="Slide events right"
-                  >
-                    <ChevronRight className="w-4 h-4 stroke-[3]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Scrollable Container */}
-              <div
-                ref={mobileCarouselRef}
-                className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth px-1 scrollbar-none"
-              >
-                {displayedEvents.map((event) => (
-                  <div key={event.id} className="min-w-[85vw] snap-center">
-                    <EventCard
-                      event={event}
-                      onSelect={(ev) => setActiveModalEvent(ev)}
-                    />
-                  </div>
-                ))}
-              </div>
-              <p className="text-center text-[10px] font-pixel text-slate-400 mt-2">
-                ◀ USE ARROWS OR SWIPE TO SLIDE THROUGH EVENTS ▶
-              </p>
-            </div>
-
-            {/* VIEW ALL EVENTS BUTTON */}
-            {!showAll && filteredEvents.length > 6 && (
-              <div className="text-center mt-6">
-                <PixelButton
-                  variant="yellow"
-                  size="md"
-                  onClick={() => {
-                    playSelectSound();
-                    setShowAll(true);
-                  }}
-                >
-                  VIEW ALL EVENTS ({filteredEvents.length}) ↗
-                </PixelButton>
-              </div>
-            )}
-          </>
+        {/* EVENTS GRID */}
+        {filteredEvents.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredEvents.map((event, index) => (
+              <EventCard
+                key={event.id}
+                event={event}
+                index={index}
+                onSelect={(evt) => setActiveModalEvent(evt)}
+              />
+            ))}
+          </div>
         ) : (
-          <div className="text-center py-12 bg-[#121226] border-2 border-black p-8">
-            <p className="font-pixel text-sm text-[#ff007f] mb-2">NO QUESTS FOUND</p>
-            <p className="text-xs font-mono text-slate-400">
-              Try adjusting your category filter or search terms.
+          <div className="glass-panel rounded-2xl p-12 text-center border border-slate-800">
+            <Filter className="w-10 h-10 text-slate-500 mx-auto mb-3 animate-bounce" />
+            <h3 className="font-cyber text-lg text-white mb-1">NO EVENTS FOUND</h3>
+            <p className="text-slate-400 text-xs font-mono">
+              Try adjusting your filter or search keywords.
             </p>
           </div>
         )}
 
       </div>
 
-      {/* EVENT MODAL */}
+      {/* EVENT DETAILS POPUP MODAL */}
       <EventModal
         event={activeModalEvent}
         onClose={() => setActiveModalEvent(null)}

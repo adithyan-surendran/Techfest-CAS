@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { X, Calendar, Clock, Users, MapPin, Award, Phone, UserCheck, ExternalLink } from 'lucide-react';
+import { X, Calendar, Clock, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { Event } from '../types';
-import { PixelButton } from './PixelButton';
-import { PixelBadge } from './PixelBadge';
-import { playSelectSound } from '../utils/sound';
+import { playCyberClick, playStartSound } from '../utils/sound';
 
 interface EventModalProps {
   event: Event | null;
@@ -28,159 +28,196 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
   if (!event) return null;
 
   const handleRegisterClick = () => {
-    playSelectSound();
+    playStartSound();
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#00f0ff', '#ff007f', '#a855f7', '#39ff14'],
+    });
     window.open(event.registrationUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div
-        className="relative w-full max-w-2xl bg-[#121226] border-4 border-black p-6 sm:p-8 shadow-[8px_8px_0_#000] max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* CLOSE BUTTON */}
-        <button
-          onClick={() => {
-            playSelectSound();
-            onClose();
-          }}
-          className="absolute top-4 right-4 p-2 bg-[#0a0a14] border-2 border-black text-slate-300 hover:text-[#ff007f] shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5"
-          aria-label="Close modal"
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        {/* Backdrop overlay */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="fixed inset-0 bg-black/80 backdrop-blur-md"
+        />
+
+        {/* Modal Window */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="relative w-full max-w-2xl glass-panel bg-[#070e24]/95 border border-cyan-500/40 rounded-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(0,240,255,0.2)] max-h-[90vh] overflow-y-auto z-10"
+          onClick={(e) => e.stopPropagation()}
         >
-          <X className="w-5 h-5" />
-        </button>
-
-        {/* HEADER */}
-        <div className="mb-6 border-b-2 border-slate-800 pb-4 pr-8">
-          <div className="mb-2">
-            <PixelBadge color="pink" size="sm">
-              {event.category}
-            </PixelBadge>
-          </div>
-          <h2 className="text-xl sm:text-3xl font-pixel uppercase text-[#00f0ff] glow-cyan">
-            {event.title}
-          </h2>
-          {event.tagline && (
-            <p className="text-xs sm:text-sm font-mono text-[#ffe600] mt-1">{event.tagline}</p>
-          )}
-        </div>
-
-        {/* DETAILS GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-xs sm:text-sm font-mono">
-          <div className="flex items-center gap-2 bg-[#0a0a14] p-3 border-2 border-black">
-            <Calendar className="w-4 h-4 text-[#ff007f]" />
-            <div>
-              <span className="text-slate-400 block text-[10px]">DATE</span>
-              <span className="text-white font-bold">{event.date}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 bg-[#0a0a14] p-3 border-2 border-black">
-            <Clock className="w-4 h-4 text-[#00f0ff]" />
-            <div>
-              <span className="text-slate-400 block text-[10px]">TIME</span>
-              <span className="text-white font-bold">{event.time}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 bg-[#0a0a14] p-3 border-2 border-black">
-            <Users className="w-4 h-4 text-[#39ff14]" />
-            <div>
-              <span className="text-slate-400 block text-[10px]">TEAM SIZE</span>
-              <span className="text-white font-bold">{event.teamSize}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 bg-[#0a0a14] p-3 border-2 border-black">
-            <MapPin className="w-4 h-4 text-[#ffe600]" />
-            <div>
-              <span className="text-slate-400 block text-[10px]">VENUE</span>
-              <span className="text-white font-bold">{event.venue || 'Main Campus'}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* DESCRIPTION */}
-        <div className="mb-6 bg-[#0a0a14] p-4 border-2 border-black">
-          <h3 className="font-pixel text-xs text-[#00f0ff] uppercase mb-2">ABOUT THE EVENT</h3>
-          <p className="text-slate-300 font-mono text-xs leading-relaxed">{event.description}</p>
-        </div>
-
-        {/* PRIZES & ELIGIBILITY */}
-        {(event.prizes || event.eligibility) && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            {event.prizes && (
-              <div className="bg-[#0a0a14] p-3 border-2 border-[#ffe600]/40">
-                <div className="flex items-center gap-1.5 text-[#ffe600] font-pixel text-xs mb-1">
-                  <Award className="w-4 h-4" />
-                  <span>PRIZES</span>
-                </div>
-                <p className="text-xs font-mono text-slate-200">{event.prizes}</p>
-              </div>
-            )}
-            {event.eligibility && (
-              <div className="bg-[#0a0a14] p-3 border-2 border-[#39ff14]/40">
-                <div className="flex items-center gap-1.5 text-[#39ff14] font-pixel text-xs mb-1">
-                  <UserCheck className="w-4 h-4" />
-                  <span>ELIGIBILITY</span>
-                </div>
-                <p className="text-xs font-mono text-slate-200">{event.eligibility}</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* RULES */}
-        {event.rules && event.rules.length > 0 && (
-          <div className="mb-6 bg-[#0a0a14] p-4 border-2 border-black">
-            <h3 className="font-pixel text-xs text-[#ff007f] uppercase mb-3">RULES & GUIDELINES</h3>
-            <ul className="list-disc list-inside space-y-1.5 text-xs font-mono text-slate-300">
-              {event.rules.map((rule, index) => (
-                <li key={index} className="leading-relaxed">{rule}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* CONTACT PERSON */}
-        {event.contactPerson && (
-          <div className="mb-6 flex items-center justify-between text-xs font-mono bg-[#0a0a14] p-3 border-2 border-black text-slate-300">
-            <div>
-              <span className="text-slate-500 block text-[10px]">EVENT COORDINATOR</span>
-              <span className="text-white font-bold">{event.contactPerson}</span>
-            </div>
-            {event.contactPhone && (
-              <a
-                href={`tel:${event.contactPhone.replace(/\s+/g, '')}`}
-                className="flex items-center gap-1 text-[#00f0ff] hover:underline"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>{event.contactPhone}</span>
-              </a>
-            )}
-          </div>
-        )}
-
-        {/* FOOTER ACTIONS */}
-        <div className="pt-4 border-t-2 border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Close Button */}
           <button
-            onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2 font-pixel text-xs text-slate-400 hover:text-white"
+            onClick={() => {
+              playCyberClick();
+              onClose();
+            }}
+            className="absolute top-5 right-5 p-2 rounded-lg bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-cyan-400 transition-colors"
+            aria-label="Close modal"
           >
-            [ CLOSE ]
+            <X className="w-5 h-5" />
           </button>
 
-          <PixelButton
-            variant="pink"
-            size="lg"
-            onClick={handleRegisterClick}
-            className="w-full sm:w-auto"
-          >
-            REGISTER FOR THIS EVENT <ExternalLink className="w-4 h-4 ml-1" />
-          </PixelButton>
-        </div>
+          {/* Modal Header */}
+          <div className="mb-6 border-b border-slate-800 pb-5 pr-8">
+            <div className="inline-block px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/40 text-cyber-cyan text-xs font-mono mb-2">
+              MISSION BRIEF // {event.category.toUpperCase()}
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl font-cyber font-bold uppercase text-white glow-cyan">
+              {event.title}
+            </h2>
 
+            {event.tagline && (
+              <p className="text-xs sm:text-sm font-mono text-cyan-300/90 mt-1 italic">
+                "{event.tagline}"
+              </p>
+            )}
+          </div>
+
+          {/* Key Event Details Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+              <div className="flex items-center gap-1.5 text-cyber-pink text-xs font-mono mb-1">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>DATE</span>
+              </div>
+              <div className="text-white font-bold text-xs font-mono">{event.date}</div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+              <div className="flex items-center gap-1.5 text-cyber-cyan text-xs font-mono mb-1">
+                <Clock className="w-3.5 h-3.5" />
+                <span>TIME</span>
+              </div>
+              <div className="text-white font-bold text-xs font-mono">{event.time}</div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+              <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-mono mb-1">
+                <Users className="w-3.5 h-3.5" />
+                <span>TEAM</span>
+              </div>
+              <div className="text-white font-bold text-xs font-mono">{event.teamSize}</div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+              <div className="flex items-center gap-1.5 text-amber-400 text-xs font-mono mb-1">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>VENUE</span>
+              </div>
+              <div className="text-white font-bold text-xs font-mono truncate">{event.venue || 'Main Campus'}</div>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="mb-6">
+            <h4 className="text-xs font-cyber text-slate-400 uppercase tracking-wider mb-2">
+              OVERVIEW
+            </h4>
+            <p className="text-slate-300 text-sm leading-relaxed bg-slate-900/40 p-4 rounded-xl border border-slate-800/80">
+              {event.description}
+            </p>
+          </div>
+
+          {/* Prizes & Deadlines */}
+          {(event.prizes || event.deadline) && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+              {event.prizes && (
+                <div className="bg-gradient-to-br from-amber-500/10 to-yellow-600/5 border border-amber-500/30 rounded-xl p-4">
+                  <div className="flex items-center gap-2 text-amber-400 text-xs font-cyber font-bold mb-1">
+                    <Trophy className="w-4 h-4" />
+                    <span>PRIZE POOL & REWARDS</span>
+                  </div>
+                  <p className="text-amber-200/90 text-xs font-mono">{event.prizes}</p>
+                </div>
+              )}
+
+              {event.deadline && (
+                <div className="bg-gradient-to-br from-red-500/10 to-rose-600/5 border border-red-500/30 rounded-xl p-4">
+                  <div className="flex items-center gap-2 text-rose-400 text-xs font-cyber font-bold mb-1">
+                    <AlertTriangle className="w-4 h-4" />
+                    <span>REGISTRATION DEADLINE</span>
+                  </div>
+                  <p className="text-rose-200/90 text-xs font-mono">{event.deadline}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Rules & Guidelines */}
+          {event.rules && event.rules.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-xs font-cyber text-slate-400 uppercase tracking-wider mb-3">
+                MISSION PROTOCOLS & RULES
+              </h4>
+              <ul className="space-y-2">
+                {event.rules.map((rule, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 font-mono">
+                    <CheckCircle2 className="w-4 h-4 text-cyber-cyan flex-shrink-0 mt-0.5" />
+                    <span>{rule}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Coordinator Intel */}
+          {(event.contactPerson || event.contactPhone) && (
+            <div className="mb-6 p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs font-mono">
+              <div className="flex items-center gap-2">
+                <UserCheck className="w-4 h-4 text-cyber-cyan" />
+                <span className="text-slate-400">LEAD:</span>
+                <span className="text-white font-medium">{event.contactPerson}</span>
+              </div>
+              {event.contactPhone && (
+                <a
+                  href={`tel:${event.contactPhone}`}
+                  className="flex items-center gap-1.5 text-cyan-300 hover:text-white transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{event.contactPhone}</span>
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* Modal Actions */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-800">
+            <button
+              onClick={handleRegisterClick}
+              className="w-full sm:flex-1 cyber-btn cyber-btn-cyan text-xs py-3.5 shadow-neon-cyan flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>OFFICIAL REGISTRATION PORTAL</span>
+              <ExternalLink className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => {
+                playCyberClick();
+                onClose();
+              }}
+              className="w-full sm:w-auto px-6 py-3 rounded-lg border border-slate-700 text-xs font-mono text-slate-300 hover:bg-slate-800 transition-colors"
+            >
+              CLOSE
+            </button>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 };

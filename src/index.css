@@ -3,14 +3,27 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    background-color: #0a0a14;
-    color: #e2e8f0;
-    font-family: 'JetBrains Mono', monospace;
-    image-rendering: pixelated;
+  :root {
+    color-scheme: dark;
   }
 
-  h1, h2, h3, .font-pixel {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #030712;
+    color: #e2e8f0;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-cyber {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  .font-pixel {
     font-family: 'Press Start 2P', cursive, monospace;
     letter-spacing: -0.05em;
   }
@@ -20,144 +33,163 @@
   }
 }
 
-/* 8-Bit Pixelated Borders & UI Utility Classes */
-.pixel-box {
-  background: #121226;
-  border: 4px solid #000;
-  box-shadow: 
-    inset -4px -4px 0px 0px rgba(0, 0, 0, 0.5),
-    inset 4px 4px 0px 0px rgba(255, 255, 255, 0.15),
-    4px 4px 0px 0px #000;
-  position: relative;
+/* Glassmorphism Cyber Panels */
+.glass-panel {
+  background: rgba(11, 18, 36, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 }
 
-.pixel-box-cyan {
-  background: #121226;
-  border: 4px solid #000;
-  box-shadow: 
-    inset -4px -4px 0px 0px rgba(0, 240, 255, 0.2),
-    inset 4px 4px 0px 0px rgba(0, 240, 255, 0.4),
-    4px 4px 0px 0px #000,
-    0 0 15px rgba(0, 240, 255, 0.3);
+.glass-panel-cyan {
+  background: rgba(8, 20, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.08), inset 0 0 15px rgba(0, 240, 255, 0.04);
 }
 
-.pixel-box-pink {
-  background: #121226;
-  border: 4px solid #000;
-  box-shadow: 
-    inset -4px -4px 0px 0px rgba(255, 0, 127, 0.2),
-    inset 4px 4px 0px 0px rgba(255, 0, 127, 0.4),
-    4px 4px 0px 0px #000,
-    0 0 15px rgba(255, 0, 127, 0.3);
+.glass-panel-pink {
+  background: rgba(30, 10, 28, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 0, 127, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(255, 0, 127, 0.08), inset 0 0 15px rgba(255, 0, 127, 0.04);
 }
 
-.pixel-box-green {
-  background: #121226;
-  border: 4px solid #000;
-  box-shadow: 
-    inset -4px -4px 0px 0px rgba(57, 255, 20, 0.2),
-    inset 4px 4px 0px 0px rgba(57, 255, 20, 0.4),
-    4px 4px 0px 0px #000,
-    0 0 15px rgba(57, 255, 20, 0.3);
+.glass-card {
+  background: rgba(13, 22, 45, 0.6);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.pixel-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Press Start 2P', cursive, monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  padding: 0.75rem 1.25rem;
-  border: 4px solid #000;
-  background-color: #00f0ff;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  box-shadow: 4px 4px 0px #000, inset -2px -2px 0px rgba(0, 0, 0, 0.4), inset 2px 2px 0px rgba(255, 255, 255, 0.7);
-  transition: all 0.1s ease;
+.glass-card:hover {
+  background: rgba(18, 32, 64, 0.75);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 12px 40px -10px rgba(0, 240, 255, 0.25);
 }
 
-.pixel-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #000, inset -2px -2px 0px rgba(0, 0, 0, 0.4), inset 2px 2px 0px rgba(255, 255, 255, 0.9);
-  filter: brightness(1.1);
+/* Cyber Glow Text Effects */
+.glow-cyan {
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.75), 0 0 25px rgba(0, 240, 255, 0.4);
 }
 
-.pixel-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #000, inset 2px 2px 0px rgba(0, 0, 0, 0.6);
+.glow-pink {
+  text-shadow: 0 0 12px rgba(255, 0, 127, 0.75), 0 0 25px rgba(255, 0, 127, 0.4);
 }
 
-.pixel-btn-pink {
-  background-color: #ff007f;
-  color: #fff;
-  text-shadow: 1px 1px 0px #000;
+.glow-purple {
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.75), 0 0 25px rgba(168, 85, 247, 0.4);
 }
 
-.pixel-btn-yellow {
-  background-color: #ffe600;
-  color: #000;
+.glow-yellow {
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.75);
 }
 
-.pixel-btn-green {
-  background-color: #39ff14;
-  color: #000;
+/* Cyber Matrix Grid Background */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
 }
 
-.pixel-btn-purple {
-  background-color: #9d4edd;
-  color: #fff;
+.cyber-grid-dense {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(168, 85, 247, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(168, 85, 247, 0.06) 1px, transparent 1px);
 }
 
-.pixel-btn-outline {
-  background-color: #121226;
-  color: #00f0ff;
-  border-color: #00f0ff;
-  box-shadow: 4px 4px 0px #000, 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-.pixel-btn-outline:hover {
-  background-color: #00f0ff;
-  color: #000;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #0a0a14;
-  border-left: 2px solid #2a2a4e;
-}
-::-webkit-scrollbar-thumb {
-  background: #ff007f;
-  border: 2px solid #000;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
-}
-
-/* Subtle CRT Scanline Filter */
+/* Subtle Sci-Fi Scanlines */
 .scanlines {
   background: linear-gradient(
     rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
+    rgba(0, 0, 0, 0.3) 50%
   );
   background-size: 100% 4px;
   pointer-events: none;
 }
 
-/* Glowing text effects */
-.glow-cyan {
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 2px 2px 0px #000;
+/* Sleek Cyber Neon Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-.glow-pink {
-  text-shadow: 0 0 8px rgba(255, 0, 127, 0.8), 2px 2px 0px #000;
+::-webkit-scrollbar-track {
+  background: #030712;
 }
-.glow-yellow {
-  text-shadow: 0 0 8px rgba(255, 230, 0, 0.8), 2px 2px 0px #000;
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00f0ff, #a855f7);
+  border-radius: 4px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff007f, #00f0ff);
+}
+
+/* Cyber Button Styles */
+.cyber-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.cyber-btn-cyan {
+  background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
+  color: #030712;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.cyber-btn-cyan:hover {
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+  transform: translateY(-2px);
+}
+
+.cyber-btn-pink {
+  background: linear-gradient(135deg, #ff007f 0%, #be185d 100%);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+}
+
+.cyber-btn-pink:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.7);
+  transform: translateY(-2px);
+}
+
+.cyber-btn-outline {
+  background: rgba(11, 18, 36, 0.6);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+  backdrop-filter: blur(12px);
+}
+
+.cyber-btn-outline:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: #00f0ff;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Equalizer Bars Animation */
+@keyframes eqBar {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+.animate-eq-1 { animation: eqBar 0.8s ease-in-out infinite; }
+.animate-eq-2 { animation: eqBar 0.6s ease-in-out 0.2s infinite; }
+.animate-eq-3 { animation: eqBar 0.9s ease-in-out 0.4s infinite; }
+.animate-eq-4 { animation: eqBar 0.7s ease-in-out 0.1s infinite; }

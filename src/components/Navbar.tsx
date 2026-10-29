@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Bot, Volume2, VolumeX, Menu, X } from 'lucide-react';
-import { PixelButton } from './PixelButton';
-import { isSoundMuted, setSoundMuted, playSelectSound, playStartSound } from '../utils/sound';
+import { Bot, Volume2, VolumeX, Menu, X, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { setSoundMuted, playSelectSound, playStartSound, playCyberClick } from '../utils/sound';
 
 interface NavbarProps {
   activeSection: string;
@@ -14,9 +14,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   };
 
   const handleNavClick = (href: string) => {
-    playSelectSound();
+    playCyberClick();
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     }
   };
 
-  const handlePressStart = () => {
+  const handleRegisterCTA = () => {
     playStartSound();
     const regSection = document.querySelector('#register') || document.querySelector('#events');
     if (regSection) {
@@ -55,36 +55,47 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b-4 border-black ${
-          scrolled ? 'bg-[#0a0a14]/95 backdrop-blur-md shadow-[0_4px_0_#000]' : 'bg-[#0a0a14]/80'
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          scrolled
+            ? 'glass-panel bg-[#030712]/85 border-b border-cyan-500/20 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.8)]'
+            : 'bg-transparent border-b border-white/5 py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          
-          {/* LOGO */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* BRAND LOGO */}
           <a
             href="#home"
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#home');
             }}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-3 group relative cursor-pointer"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#00f0ff] border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#000] group-hover:scale-105 transition-transform">
-              <Bot className="w-6 h-6 text-black" />
+            <div className="relative">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 border border-cyan-500/40 flex items-center justify-center group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all">
+                <Bot className="w-5 h-5 text-cyber-cyan group-hover:scale-110 transition-transform" />
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400" />
             </div>
+
             <div className="flex flex-col">
-              <span className="font-pixel text-xs sm:text-sm tracking-wider text-white group-hover:text-[#00f0ff] transition-colors">
-                YUGA<span className="text-[#ff007f]">'26</span>
-              </span>
-              <span className="text-[9px] font-mono text-[#39ff14] tracking-widest hidden sm:inline-block">
-                SYS.ONLINE v8.0
+              <div className="flex items-center gap-1.5">
+                <span className="font-cyber font-bold text-lg sm:text-xl tracking-wider text-white group-hover:text-cyber-cyan transition-colors">
+                  YUGA<span className="text-cyber-pink">'26</span>
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyber-cyan hidden sm:inline-block">
+                  CAS VAZHAKKAD
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 tracking-wider">
+                AUG 29 – 31, 2026
               </span>
             </div>
           </a>
 
           {/* DESKTOP NAV LINKS */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+          <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 border border-slate-700/40 rounded-full px-3 py-1.5 backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -95,79 +106,114 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className={`font-pixel text-xs tracking-wider transition-all relative py-1 ${
-                    isActive
-                      ? 'text-[#00f0ff] glow-cyan border-b-2 border-[#00f0ff]'
-                      : 'text-slate-300 hover:text-[#ff007f]'
+                  className={`relative font-cyber text-xs tracking-wider px-4 py-1.5 rounded-full transition-all duration-200 ${
+                    isActive ? 'text-cyber-cyan' : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  {link.name}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavIndicator"
+                      className="absolute inset-0 rounded-full bg-cyan-500/15 border border-cyan-400/40 shadow-[0_0_12px_rgba(0,240,255,0.25)]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{link.name}</span>
                 </a>
               );
             })}
           </nav>
 
-          {/* RIGHT ACTION CONTROLS */}
+          {/* RIGHT ACTION BUTTONS */}
           <div className="flex items-center gap-3">
-            {/* Audio Synth Toggle */}
+            {/* AUDIO SYNTH TOGGLE */}
             <button
               onClick={toggleSound}
-              title={muted ? 'Unmute Arcade Audio' : 'Mute Arcade Audio'}
-              className="p-2 bg-[#121226] border-2 border-black text-[#ffe600] hover:text-[#00f0ff] shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 transition-transform"
-              aria-label="Toggle retro audio synth"
+              aria-label={muted ? 'Unmute audio' : 'Mute audio'}
+              className="relative p-2 rounded-lg glass-card border border-slate-700/60 hover:border-cyan-500/50 text-slate-300 hover:text-cyber-cyan transition-all flex items-center gap-2 group"
+              title={muted ? 'Turn sound ON' : 'Turn sound OFF'}
             >
-              {muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5 animate-pulse" />}
+              {muted ? (
+                <VolumeX className="w-4 h-4 text-slate-500" />
+              ) : (
+                <Volume2 className="w-4 h-4 text-cyber-cyan group-hover:scale-110 transition-transform" />
+              )}
+              {/* Equalizer waves */}
+              {!muted && (
+                <div className="flex items-end gap-0.5 h-3">
+                  <span className="w-0.5 bg-cyber-cyan animate-eq-1 rounded-full"></span>
+                  <span className="w-0.5 bg-cyber-cyan animate-eq-2 rounded-full"></span>
+                  <span className="w-0.5 bg-cyber-cyan animate-eq-3 rounded-full"></span>
+                </div>
+              )}
             </button>
 
-            {/* Desktop PRESS START button */}
-            <div className="hidden sm:block">
-              <PixelButton variant="pink" size="sm" onClick={handlePressStart}>
-                PRESS START 🎮
-              </PixelButton>
-            </div>
+            {/* REGISTER NOW CTA BUTTON */}
+            <button
+              onClick={handleRegisterCTA}
+              className="hidden sm:inline-flex cyber-btn cyber-btn-cyan text-xs py-2 px-4 shadow-neon-cyan"
+            >
+              <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '4s' }} />
+              REGISTER NOW
+            </button>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* MOBILE MENU TOGGLE */}
             <button
               onClick={() => {
-                playSelectSound();
+                playCyberClick();
                 setMobileMenuOpen(!mobileMenuOpen);
               }}
-              className="md:hidden p-2 bg-[#121226] border-2 border-black text-[#00f0ff] hover:text-white shadow-[2px_2px_0px_#000]"
-              aria-label="Toggle navigation menu"
+              aria-label="Toggle Mobile Menu"
+              className="md:hidden p-2 rounded-lg glass-card border border-slate-700/60 text-slate-200 hover:text-cyber-cyan transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* MOBILE RETRO FULLSCREEN/DROPDOWN OVERLAY MENU */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-[#0a0a14]/98 backdrop-blur-lg md:hidden border-b-4 border-[#00f0ff] flex flex-col p-6 animate-in slide-in-from-top duration-200">
-          <div className="flex-1 flex flex-col justify-center gap-6 text-center">
-            {navLinks.map((link, idx) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.href);
-                }}
-                className="font-pixel text-base sm:text-lg tracking-widest text-slate-100 hover:text-[#00f0ff] py-2 border-b border-slate-800/80 active:text-[#ff007f]"
-              >
-                <span className="text-[#ffe600] text-xs mr-2">0{idx + 1}.</span>
-                {link.name}
-              </a>
-            ))}
-          </div>
+      {/* MOBILE SLIDE-DOWN DRAWER */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed inset-x-0 top-16 z-30 glass-panel bg-[#030712]/95 border-b border-cyan-500/20 px-6 py-6 shadow-2xl backdrop-blur-2xl"
+          >
+            <div className="flex flex-col gap-3">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`w-full text-left font-cyber text-sm tracking-wider px-4 py-3 rounded-lg transition-all flex items-center justify-between ${
+                      isActive
+                        ? 'bg-cyan-500/15 border border-cyan-500/40 text-cyber-cyan font-bold shadow-[0_0_15px_rgba(0,240,255,0.15)]'
+                        : 'text-slate-300 hover:bg-slate-800/40 hover:text-white'
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    {isActive && <span className="text-xs text-cyber-cyan">●</span>}
+                  </button>
+                );
+              })}
 
-          <div className="mt-8 text-center pb-6">
-            <PixelButton variant="pink" size="lg" className="w-full" onClick={handlePressStart}>
-              PRESS START 🎮
-            </PixelButton>
-          </div>
-        </div>
-      )}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleRegisterCTA();
+                }}
+                className="w-full mt-2 cyber-btn cyber-btn-cyan text-xs py-3.5 shadow-neon-cyan"
+              >
+                <Sparkles className="w-4 h-4" />
+                REGISTER NOW
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

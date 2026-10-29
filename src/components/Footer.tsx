@@ -1,7 +1,7 @@
 import React from 'react';
-import { Trophy, Instagram, Bot } from 'lucide-react';
+import { Bot, Instagram, ChevronUp, Sparkles } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data/contacts';
-import { playSelectSound } from '../utils/sound';
+import { playCyberClick } from '../utils/sound';
 
 export const Footer: React.FC = () => {
   const quickLinks = [
@@ -13,50 +13,54 @@ export const Footer: React.FC = () => {
   ];
 
   const handleNavClick = (href: string) => {
-    playSelectSound();
+    playCyberClick();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
-    <footer className="bg-[#05050e] text-slate-300 relative border-t-4 border-black pt-12 pb-24 md:pb-12 overflow-hidden">
-      
-      {/* 8-BIT MARIO STYLE BRICK & GRASS PLATFORM GROUND DECORATION */}
-      <div className="absolute top-0 left-0 right-0 h-4 bg-[#39ff14]/30 border-b-2 border-black flex">
-        {Array.from({ length: 30 }).map((_, i) => (
-          <div key={i} className="flex-1 h-full border-r border-black bg-[#1a1a36]">
-            <div className="w-full h-1 bg-[#39ff14]"></div>
-          </div>
-        ))}
-      </div>
+  const scrollToTop = () => {
+    playCyberClick();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10 pb-8 border-b border-slate-800">
+  return (
+    <footer className="relative bg-[#02040a] text-slate-300 border-t border-cyan-500/20 pt-16 pb-24 md:pb-12 overflow-hidden">
+      {/* Top Cyber Circuit Accent Line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_rgba(0,240,255,0.7)]" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 pb-10 border-b border-slate-800/80">
           
-          {/* LEFT: BRANDING */}
+          {/* BRANDING */}
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-8 h-8 bg-[#00f0ff] border-2 border-black flex items-center justify-center shadow-[2px_2px_0_#000]">
-                <Trophy className="w-5 h-5 text-black" />
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 border border-cyan-500/40 flex items-center justify-center">
+                <Bot className="w-5 h-5 text-cyber-cyan" />
               </div>
-              <h3 className="font-pixel text-sm sm:text-base text-white tracking-wider">
-                YUGA <span className="text-[#ff007f]">'26</span>
+              <h3 className="font-cyber font-bold text-xl text-white tracking-wider">
+                YUGA <span className="text-cyber-pink">'26</span>
               </h3>
             </div>
-            <p className="font-pixel text-xs text-[#39ff14] tracking-widest mb-4">
+            
+            <p className="font-mono text-xs text-cyber-cyan tracking-widest mb-3 uppercase">
               CODE. INNOVATE. ELEVATE.
             </p>
-            <p className="font-mono text-xs text-slate-400 max-w-sm leading-relaxed">
-              The annual flagship technology festival bringing together brilliant coders, hackers, robotics enthusiasts, and gamers.
+            
+            <p className="text-slate-400 text-xs font-sans max-w-sm leading-relaxed mb-4">
+              Annual Flagship Technical Festival hosted by College of Applied Science (IHRD), Vazhakkad. Unleashing next-generation technical innovators, hackers, and creators.
             </p>
+
+            <div className="text-[11px] font-mono text-slate-500">
+              MALAPPURAM, KERALA • AUGUST 29 – 31, 2026
+            </div>
           </div>
 
-          {/* MIDDLE: QUICK LINKS */}
+          {/* QUICK LINKS */}
           <div className="md:col-span-3">
-            <h4 className="font-pixel text-xs text-[#00f0ff] uppercase mb-4 tracking-wider">
-              QUICK LINKS
+            <h4 className="font-cyber font-bold text-xs text-cyber-cyan uppercase mb-4 tracking-wider">
+              NAVIGATION
             </h4>
-            <ul className="space-y-2 font-pixel text-[11px]">
+            <ul className="space-y-2.5 font-cyber text-xs">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
@@ -65,45 +69,60 @@ export const Footer: React.FC = () => {
                       e.preventDefault();
                       handleNavClick(link.href);
                     }}
-                    className="hover:text-[#ff007f] transition-colors text-slate-300 flex items-center gap-1.5"
+                    className="text-slate-300 hover:text-cyber-cyan transition-colors flex items-center gap-2 group"
                   >
-                    <span className="text-[#ffe600] text-[9px]">&gt;</span> {link.name}
+                    <span className="text-cyber-pink opacity-0 group-hover:opacity-100 transition-opacity">►</span>
+                    <span>{link.name}</span>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* RIGHT: FOLLOW US */}
-          <div className="md:col-span-4">
-            <h4 className="font-pixel text-xs text-[#ffe600] uppercase mb-4 tracking-wider">
-              FOLLOW US
-            </h4>
-            <div className="flex flex-wrap gap-3 mb-4">
+          {/* CONNECT & SOCIAL */}
+          <div className="md:col-span-4 flex flex-col justify-between">
+            <div>
+              <h4 className="font-cyber font-bold text-xs text-amber-300 uppercase mb-4 tracking-wider">
+                JOIN THE COMMUNITY
+              </h4>
+              <p className="text-xs font-sans text-slate-400 mb-4">
+                Follow our official social stream for live updates, behind the scenes, and contest announcements.
+              </p>
+              
               <a
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 bg-[#121226] border-2 border-black text-[#ff007f] hover:bg-[#ff007f] hover:text-white shadow-[2px_2px_0_#000] transition-colors"
-                aria-label="Instagram"
+                onClick={playCyberClick}
+                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl glass-card border border-pink-500/40 text-cyber-pink hover:bg-pink-500/10 hover:border-pink-400 transition-all font-cyber text-xs"
               >
                 <Instagram className="w-4 h-4" />
-                <span className="font-pixel text-[10px]">@{SOCIAL_LINKS.instagramHandle}</span>
+                <span>@{SOCIAL_LINKS.instagramHandle}</span>
               </a>
             </div>
-            <p className="text-[11px] font-mono text-slate-500">
-              Stay connected for real-time announcements & updates.
-            </p>
+
+            <div className="mt-6">
+              <button
+                onClick={scrollToTop}
+                className="inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyber-cyan transition-colors"
+              >
+                <ChevronUp className="w-4 h-4 text-cyber-cyan animate-bounce" />
+                <span>RETURN TO TOP</span>
+              </button>
+            </div>
           </div>
 
         </div>
 
-        {/* BOTTOM COPYRIGHT */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
-          <p>© 2026 YUGA'26. All Rights Reserved.</p>
-          <p className="flex items-center gap-1.5 text-slate-400">
-            Made with <Bot className="w-4 h-4 text-[#00f0ff]" /> 8-Bit Arcade Passion
-          </p>
+        {/* COPYRIGHT & CREDITS */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+          <div>
+            © 2026 YUGA'26 CAS Vazhakkad. All rights reserved.
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span>Crafted for tech enthusiasts</span>
+            <Sparkles className="w-3.5 h-3.5 text-cyber-cyan inline" />
+          </div>
         </div>
 
       </div>
