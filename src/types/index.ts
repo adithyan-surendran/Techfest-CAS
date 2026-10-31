@@ -1,29 +1,30 @@
-export type EventCategory = 'All' | 'Coding' | 'Development' | 'Robotics' | 'Gaming' | 'Quiz';
+export type EventCategory = 'All' | 'Gaming' | 'Technical' | 'Cultural' | 'Other';
 
 export interface Event {
   id: string;
   title: string;
-  category: EventCategory;
+  category: 'Gaming' | 'Technical' | 'Cultural' | 'Other';
+  tagline: string;
   description: string;
   date: string;
   time: string;
   teamSize: string;
-  icon: string; // Lucide icon name or emoji fallback
+  icon: string;
   registrationUrl: string;
-  rules?: string[];
-  eligibility?: string;
-  venue?: string;
-  deadline?: string;
-  prizes?: string;
-  contactPerson?: string;
-  contactPhone?: string;
-  tagline?: string;
+  venue: string;
+  deadline: string;
+  prizes: string;
+  eligibility: string;
+  contactPerson: string;
+  contactPhone: string;
+  rules: string[];
+  registrationFee?: string;
 }
 
 export interface ScheduleItem {
   id: string;
-  day: number; // 1, 2, 3
-  dayTitle: string; // "DAY 1 — AUG 29"
+  day: number; // 1, 2
+  dayTitle: string; // "DAY 1 — JAN 07"
   time: string;
   title: string;
   description: string;

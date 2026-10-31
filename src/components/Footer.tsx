@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bot, Instagram, ChevronUp, Sparkles } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data/contacts';
-import { playCyberClick } from '../utils/sound';
 
 export const Footer: React.FC = () => {
   const quickLinks = [
@@ -13,13 +12,11 @@ export const Footer: React.FC = () => {
   ];
 
   const handleNavClick = (href: string) => {
-    playCyberClick();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
-    playCyberClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -51,7 +48,7 @@ export const Footer: React.FC = () => {
             </p>
 
             <div className="text-[11px] font-mono text-slate-500">
-              MALAPPURAM, KERALA • AUGUST 29 – 31, 2026
+              MALAPPURAM, KERALA • JANUARY 7 – 8, 2027
             </div>
           </div>
 
@@ -93,7 +90,6 @@ export const Footer: React.FC = () => {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={playCyberClick}
                 className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl glass-card border border-pink-500/40 text-cyber-pink hover:bg-pink-500/10 hover:border-pink-400 transition-all font-cyber text-xs"
               >
                 <Instagram className="w-4 h-4" />
@@ -117,7 +113,7 @@ export const Footer: React.FC = () => {
         {/* COPYRIGHT & CREDITS */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <div>
-            © 2026 YUGA'26 CAS Vazhakkad. All rights reserved.
+            © 2027 YUGA'26 CAS Vazhakkad. All rights reserved.
           </div>
           <div className="flex items-center gap-1.5">
             <span>Crafted for tech enthusiasts</span>

@@ -1,11 +1,11 @@
 import { ScheduleItem } from '../types';
 
 export const SCHEDULE_DATA: ScheduleItem[] = [
-  // DAY 1 - AUG 29
+  // DAY 1 - JAN 07
   {
     id: 's1-1',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
+    dayTitle: 'DAY 1 — JAN 07',
     time: '09:00 AM',
     title: 'Registration & Welcome Desk',
     description: 'Check-in, badge collection, event kit distribution, and team desk allocation.',
@@ -16,10 +16,10 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
   {
     id: 's1-2',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
+    dayTitle: 'DAY 1 — JAN 07',
     time: '10:00 AM',
     title: 'Grand Inauguration Ceremony',
-    description: 'Keynote by Chief Guest, torch lighting, and official kickoff of YUGA\'26.',
+    description: 'Keynote by Chief Guest, torch lighting, and official kickoff of YUGA.',
     venue: 'Main Auditorium',
     category: 'Ceremony',
     icon: 'Sparkles'
@@ -27,7 +27,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
   {
     id: 's1-3',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
+    dayTitle: 'DAY 1 — JAN 07',
     time: '11:00 AM',
     title: 'Tech Keynote Session',
     description: 'Special guest presentation: "The Future of Web3, AI, and Quantum Computing".',
@@ -38,19 +38,41 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
   {
     id: 's1-4',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
-    time: '01:00 PM',
-    title: 'Hackathon & Cyber Siege Kickoff',
-    description: '36-Hour Hackathon problem statements released & Cyber Siege CTF portal opens.',
-    venue: 'Innovation Hub',
+    dayTitle: 'DAY 1 — JAN 07',
+    time: '12:00 PM',
+    title: 'Cyber Siege CTF Portal Opens',
+    description: 'Flag challenge starts! Ethical hacking, cryptography, and vulnerability exploits.',
+    venue: 'Cyber Security Lab',
     category: 'Competition',
     icon: 'Cpu'
   },
   {
     id: 's1-5',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
-    time: '03:00 PM',
+    dayTitle: 'DAY 1 — JAN 07',
+    time: '01:00 PM',
+    title: '24-Hour Hackathon Kickoff',
+    description: 'Problem statements revealed! 24-hour sprint begins across hardware & software tracks.',
+    venue: 'Innovation Hub',
+    category: 'Competition',
+    icon: 'Cpu'
+  },
+  {
+    id: 's1-6',
+    day: 1,
+    dayTitle: 'DAY 1 — JAN 07',
+    time: '02:00 PM',
+    title: 'Code Sprint Competition',
+    description: '2-Hour algorithmic speed programming contest in Lab 3.',
+    venue: 'Computer Lab 3',
+    category: 'Competition',
+    icon: 'Code2'
+  },
+  {
+    id: 's1-7',
+    day: 1,
+    dayTitle: 'DAY 1 — JAN 07',
+    time: '03:30 PM',
     title: 'Workshop: Hands-on GenAI & Web3',
     description: 'Interactive workshop on building AI agents and deploying smart contracts.',
     venue: 'Seminar Hall 1',
@@ -58,25 +80,25 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     icon: 'Wrench'
   },
   {
-    id: 's1-6',
+    id: 's1-8',
     day: 1,
-    dayTitle: 'DAY 1 — AUG 29',
+    dayTitle: 'DAY 1 — JAN 07',
     time: '05:00 PM',
-    title: 'Retro Gaming Expo & Chill Zone',
-    description: '8-bit arcade machines, VR booths, cosplay arena, and live music jam.',
-    venue: 'Student Lounge Plaza',
+    title: 'Retro Gaming Expo & Esports Prelims',
+    description: 'Arcade machines, VR booths, cosplay arena, and Esports preliminary brackets.',
+    venue: 'Student Lounge Plaza & Esports Lounge',
     category: 'Gaming',
     icon: 'Gamepad2'
   },
 
-  // DAY 2 - AUG 30
+  // DAY 2 - JAN 08
   {
     id: 's2-1',
     day: 2,
-    dayTitle: 'DAY 2 — AUG 30',
+    dayTitle: 'DAY 2 — JAN 08',
     time: '09:00 AM',
-    title: 'Hackathon Day 2 Check-in',
-    description: 'Midway mentor evaluations, pitch feedback, and coffee break.',
+    title: 'Hackathon Submission & Code Freeze',
+    description: '24-Hour Hackathon concludes. Final GitHub repositories submitted to evaluation jury.',
     venue: 'Innovation Hub',
     category: 'Competition',
     icon: 'Flame'
@@ -84,102 +106,67 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
   {
     id: 's2-2',
     day: 2,
-    dayTitle: 'DAY 2 — AUG 30',
-    time: '10:00 AM',
-    title: 'Code Sprint Competition',
-    description: '2-Hour algorithmic speed programming contest.',
-    venue: 'Computer Lab 3',
-    category: 'Competition',
-    icon: 'Code2'
-  },
-  {
-    id: 's2-3',
-    day: 2,
-    dayTitle: 'DAY 2 — AUG 30',
-    time: '01:00 PM',
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '09:30 AM',
     title: 'Robotics Arena Tournament',
-    description: 'Bot racing, maze navigation, and combat bot showdown.',
+    description: 'Bot racing, obstacle maze navigation, and combat bot showdown.',
     venue: 'Outdoor Arena',
     category: 'Competition',
     icon: 'Bot'
   },
   {
-    id: 's2-4',
+    id: 's2-3',
     day: 2,
-    dayTitle: 'DAY 2 — AUG 30',
-    time: '02:00 PM',
-    title: 'Game On Esports Tournament',
-    description: 'Arcade fighting & FPS tournament finals live stream.',
-    venue: 'Esports Lounge',
-    category: 'Gaming',
-    icon: 'Trophy'
-  },
-  {
-    id: 's2-5',
-    day: 2,
-    dayTitle: 'DAY 2 — AUG 30',
-    time: '05:00 PM',
-    title: '8-Bit Cultural Night',
-    description: 'Retro synthwave concert, laser show, and neon dance performances.',
-    venue: 'Open Air Theatre',
-    category: 'Ceremony',
-    icon: 'Music'
-  },
-
-  // DAY 3 - AUG 31
-  {
-    id: 's3-1',
-    day: 3,
-    dayTitle: 'DAY 3 — AUG 31',
-    time: '10:00 AM',
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '11:00 AM',
     title: 'Grand Tech Quiz Finals',
-    description: 'Live buzzer round quiz on technology, science, and computer history.',
+    description: 'Live buzzer round quiz on technology, computer science, and gadgets.',
     venue: 'Auditorium Hall B',
     category: 'Competition',
     icon: 'HelpCircle'
   },
   {
-    id: 's3-2',
-    day: 3,
-    dayTitle: 'DAY 3 — AUG 31',
-    time: '11:00 AM',
-    title: 'AI Odyssey Pitch Presentations',
-    description: 'Final project demonstrations and jury evaluation for AI projects.',
+    id: 's2-4',
+    day: 2,
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '01:00 PM',
+    title: 'AI Odyssey Pitches & Demos',
+    description: 'Live project demonstrations and jury evaluation for Generative AI and ML projects.',
     venue: 'AI Research Center',
     category: 'Competition',
     icon: 'Sparkles'
   },
   {
-    id: 's3-3',
-    day: 3,
-    dayTitle: 'DAY 3 — AUG 31',
-    time: '01:00 PM',
-    title: 'Hackathon Final Pitches',
-    description: 'Top 10 hackathon finalist teams pitch live to venture capital judges.',
-    venue: 'Main Auditorium',
-    category: 'Competition',
-    icon: 'Presentation'
+    id: 's2-5',
+    day: 2,
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '02:30 PM',
+    title: 'Game On Esports Tournament Finals',
+    description: 'Live fighting game and FPS finals projected on main stadium screens.',
+    venue: 'Esports Lounge',
+    category: 'Gaming',
+    icon: 'Trophy'
   },
   {
-    id: 's3-4',
-    day: 3,
-    dayTitle: 'DAY 3 — AUG 31',
-    time: '03:00 PM',
-    title: 'Prize Distribution & Valedictory',
-    description: 'Awarding cash prizes, trophies, certificates, and hall of fame honors.',
+    id: 's2-6',
+    day: 2,
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '04:00 PM',
+    title: 'Grand Prize Distribution & Valedictory',
+    description: 'Awarding $5,000+ cash prizes, trophies, champion medals, and certificates.',
     venue: 'Main Auditorium',
     category: 'Ceremony',
     icon: 'Award'
   },
   {
-    id: 's3-5',
-    day: 3,
-    dayTitle: 'DAY 3 — AUG 31',
-    time: '04:30 PM',
-    title: 'Closing Ceremony & Photo Session',
-    description: 'Vote of thanks, group photo session, and celebratory farewell.',
+    id: 's2-7',
+    day: 2,
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '05:30 PM',
+    title: 'Closing Ceremony & Cultural Night',
+    description: 'Vote of thanks, group photography, synthwave live music, and festival celebration.',
     venue: 'Main Auditorium',
     category: 'Ceremony',
-    icon: 'Camera'
+    icon: 'Music'
   }
 ];

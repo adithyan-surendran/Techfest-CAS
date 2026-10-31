@@ -2,11 +2,9 @@ import React from 'react';
 import { Phone, MapPin, ExternalLink, Instagram, User, ShieldCheck, MessageSquare, Navigation } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FACULTY_COORDINATORS, STUDENT_COORDINATORS, VENUE_INFO, SOCIAL_LINKS } from '../data/contacts';
-import { playCyberClick } from '../utils/sound';
 
 export const Contact: React.FC = () => {
   const handleOpenMap = () => {
-    playCyberClick();
     window.open(VENUE_INFO.mapsUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -54,11 +52,12 @@ export const Contact: React.FC = () => {
           
           {/* 1. FACULTY COORDINATORS */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/50 flex flex-col justify-between"
+            whileHover={{ y: -6, scale: 1.015 }}
+            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(0,240,255,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
               <div className="flex items-center gap-2 text-cyber-cyan font-cyber font-bold text-xs uppercase tracking-wider mb-5 pb-3 border-b border-slate-800">
@@ -90,11 +89,12 @@ export const Contact: React.FC = () => {
 
           {/* 2. STUDENT COORDINATORS */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-pink-400/50 flex flex-col justify-between"
+            whileHover={{ y: -6, scale: 1.015 }}
+            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-pink-400/60 hover:shadow-[0_0_25px_rgba(255,0,127,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
               <div className="flex items-center gap-2 text-cyber-pink font-cyber font-bold text-xs uppercase tracking-wider mb-5 pb-3 border-b border-slate-800">
@@ -128,11 +128,12 @@ export const Contact: React.FC = () => {
 
           {/* 3. INSTAGRAM & SOCIAL CHANNELS */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-amber-400/50 flex flex-col justify-between"
+            whileHover={{ y: -6, scale: 1.015 }}
+            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(251,191,36,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
               <div className="flex items-center gap-2 text-amber-300 font-cyber font-bold text-xs uppercase tracking-wider mb-5 pb-3 border-b border-slate-800">
@@ -148,7 +149,6 @@ export const Contact: React.FC = () => {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={playCyberClick}
                 className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-pink-500/50 group transition-all"
               >
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-500 to-pink-500 flex items-center justify-center text-white flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -170,11 +170,12 @@ export const Contact: React.FC = () => {
 
           {/* 4. VENUE LOCATION */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-emerald-400/50 flex flex-col justify-between"
+            whileHover={{ y: -6, scale: 1.015 }}
+            className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-emerald-400/60 hover:shadow-[0_0_25px_rgba(52,211,153,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
               <div className="flex items-center gap-2 text-emerald-400 font-cyber font-bold text-xs uppercase tracking-wider mb-5 pb-3 border-b border-slate-800">

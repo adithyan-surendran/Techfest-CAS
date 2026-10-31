@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Bot, Volume2, VolumeX, Menu, X, Sparkles } from 'lucide-react';
+import { Bot, Menu, X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { setSoundMuted, playSelectSound, playStartSound, playCyberClick } from '../utils/sound';
 
 interface NavbarProps {
   activeSection: string;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
-  const [muted, setMuted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,15 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     { name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  const toggleSound = () => {
-    const nextState = !muted;
-    setMuted(nextState);
-    setSoundMuted(nextState);
-    if (!nextState) playSelectSound();
-  };
-
   const handleNavClick = (href: string) => {
-    playCyberClick();
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
@@ -45,7 +35,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   };
 
   const handleRegisterCTA = () => {
-    playStartSound();
     const regSection = document.querySelector('#register') || document.querySelector('#events');
     if (regSection) {
       regSection.scrollIntoView({ behavior: 'smooth' });
@@ -89,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 </span>
               </div>
               <span className="text-[10px] font-mono text-slate-400 tracking-wider">
-                AUG 29 – 31, 2026
+                JAN 7 – 8, 2027
               </span>
             </div>
           </a>
@@ -125,28 +114,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
           {/* RIGHT ACTION BUTTONS */}
           <div className="flex items-center gap-3">
-            {/* AUDIO SYNTH TOGGLE */}
-            <button
-              onClick={toggleSound}
-              aria-label={muted ? 'Unmute audio' : 'Mute audio'}
-              className="relative p-2 rounded-lg glass-card border border-slate-700/60 hover:border-cyan-500/50 text-slate-300 hover:text-cyber-cyan transition-all flex items-center gap-2 group"
-              title={muted ? 'Turn sound ON' : 'Turn sound OFF'}
-            >
-              {muted ? (
-                <VolumeX className="w-4 h-4 text-slate-500" />
-              ) : (
-                <Volume2 className="w-4 h-4 text-cyber-cyan group-hover:scale-110 transition-transform" />
-              )}
-              {/* Equalizer waves */}
-              {!muted && (
-                <div className="flex items-end gap-0.5 h-3">
-                  <span className="w-0.5 bg-cyber-cyan animate-eq-1 rounded-full"></span>
-                  <span className="w-0.5 bg-cyber-cyan animate-eq-2 rounded-full"></span>
-                  <span className="w-0.5 bg-cyber-cyan animate-eq-3 rounded-full"></span>
-                </div>
-              )}
-            </button>
-
             {/* REGISTER NOW CTA BUTTON */}
             <button
               onClick={handleRegisterCTA}
@@ -158,10 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
             {/* MOBILE MENU TOGGLE */}
             <button
-              onClick={() => {
-                playCyberClick();
-                setMobileMenuOpen(!mobileMenuOpen);
-              }}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Mobile Menu"
               className="md:hidden p-2 rounded-lg glass-card border border-slate-700/60 text-slate-200 hover:text-cyber-cyan transition-colors"
             >

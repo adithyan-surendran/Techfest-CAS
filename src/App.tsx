@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { CyberMarquee } from './components/CyberMarquee';
 import { EventGrid } from './components/EventGrid';
 import { Schedule } from './components/Schedule';
 import { Registration } from './components/Registration';
@@ -10,9 +12,23 @@ import { BottomNav } from './components/BottomNav';
 import { CyberBackground } from './components/CyberBackground';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { ScrollToTop } from './components/ScrollToTop';
+import { LoadingScreen } from './components/LoadingScreen';
 
 export const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
+
+  // Prevent background scrolling while initial loading screen is active
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLoading]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +54,13 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 font-sans relative selection:bg-cyber-cyan selection:text-black">
+      {/* INITIAL RETRO CYBER BOOT LOADING SCREEN */}
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <LoadingScreen onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
       {/* AMBIENT INTERACTIVE CANVAS & PARTICLES */}
       <CyberBackground />
 
@@ -53,6 +76,7 @@ export const App: React.FC = () => {
       {/* MAIN CONTENT SECTIONS */}
       <main className="relative z-10">
         <Hero />
+        <CyberMarquee />
         <EventGrid />
         <Schedule />
         <Registration />

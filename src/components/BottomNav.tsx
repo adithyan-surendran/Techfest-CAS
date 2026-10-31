@@ -1,7 +1,6 @@
 import React from 'react';
 import { Home, Gamepad2, Calendar, UserPlus, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { playCyberClick } from '../utils/sound';
 
 interface BottomNavProps {
   activeSection: string;
@@ -17,7 +16,6 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeSection }) => {
   ];
 
   const handleScroll = (href: string) => {
-    playCyberClick();
     const el = document.querySelector(href);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });

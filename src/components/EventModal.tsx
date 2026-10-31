@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { X, Calendar, Clock, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { X, Calendar, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles, Coins } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Event } from '../types';
-import { playCyberClick, playStartSound } from '../utils/sound';
 
 interface EventModalProps {
   event: Event | null;
@@ -28,7 +27,6 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
   if (!event) return null;
 
   const handleRegisterClick = () => {
-    playStartSound();
     confetti({
       particleCount: 80,
       spread: 70,
@@ -40,7 +38,7 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
         {/* Backdrop overlay */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -61,10 +59,7 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
         >
           {/* Close Button */}
           <button
-            onClick={() => {
-              playCyberClick();
-              onClose();
-            }}
+            onClick={onClose}
             className="absolute top-5 right-5 p-2 rounded-lg bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-cyan-400 transition-colors"
             aria-label="Close modal"
           >
@@ -99,14 +94,6 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
             </div>
 
             <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
-              <div className="flex items-center gap-1.5 text-cyber-cyan text-xs font-mono mb-1">
-                <Clock className="w-3.5 h-3.5" />
-                <span>TIME</span>
-              </div>
-              <div className="text-white font-bold text-xs font-mono">{event.time}</div>
-            </div>
-
-            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
               <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-mono mb-1">
                 <Users className="w-3.5 h-3.5" />
                 <span>TEAM</span>
@@ -115,11 +102,19 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
             </div>
 
             <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
-              <div className="flex items-center gap-1.5 text-amber-400 text-xs font-mono mb-1">
+              <div className="flex items-center gap-1.5 text-amber-300 text-xs font-mono mb-1">
+                <Coins className="w-3.5 h-3.5" />
+                <span>ENTRY FEE</span>
+              </div>
+              <div className="text-amber-300 font-bold text-xs font-mono">{event.registrationFee || '₹50 / Head'}</div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+              <div className="flex items-center gap-1.5 text-cyber-cyan text-xs font-mono mb-1">
                 <MapPin className="w-3.5 h-3.5" />
                 <span>VENUE</span>
               </div>
-              <div className="text-white font-bold text-xs font-mono truncate">{event.venue || 'Main Campus'}</div>
+              <div className="text-white font-bold text-xs font-mono truncate">{event.venue || 'Main Stage / Campus'}</div>
             </div>
           </div>
 
@@ -207,10 +202,7 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
             </button>
 
             <button
-              onClick={() => {
-                playCyberClick();
-                onClose();
-              }}
+              onClick={onClose}
               className="w-full sm:w-auto px-6 py-3 rounded-lg border border-slate-700 text-xs font-mono text-slate-300 hover:bg-slate-800 transition-colors"
             >
               CLOSE

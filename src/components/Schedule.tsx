@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SCHEDULE_DATA } from '../data/schedule';
-import { playCyberClick } from '../utils/sound';
 
 export const Schedule: React.FC = () => {
   const [activeDay, setActiveDay] = useState<number>(1);
@@ -25,9 +24,8 @@ export const Schedule: React.FC = () => {
   });
 
   const dayTabs = [
-    { day: 1, label: 'DAY 1', date: 'AUG 29', desc: 'Inauguration & Kickoffs' },
-    { day: 2, label: 'DAY 2', date: 'AUG 30', desc: 'Sprints & Tournaments' },
-    { day: 3, label: 'DAY 3', date: 'AUG 31', desc: 'Finals & Grand Awards' },
+    { day: 1, label: 'DAY 1', date: 'JAN 07', desc: 'Inauguration & Competitions' },
+    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Finals, Tournaments & Awards' },
   ];
 
   const currentSchedule = SCHEDULE_DATA.filter((item) => item.day === activeDay);
@@ -89,22 +87,19 @@ export const Schedule: React.FC = () => {
             viewport={{ once: true }}
             className="text-slate-400 text-sm sm:text-base font-sans"
           >
-            Scroll to follow the live event progression across all 3 days of high-octane technical events.
+            Scroll to follow the live event progression across 2 days of high-octane technical events.
           </motion.p>
         </div>
 
         {/* DAY SELECTOR TABS */}
         <div className="flex justify-center mb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-2 rounded-2xl glass-panel border border-slate-700/60 max-w-2xl w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-2 rounded-2xl glass-panel border border-slate-700/60 max-w-xl w-full">
             {dayTabs.map((tab) => {
               const isActive = activeDay === tab.day;
               return (
                 <button
                   key={tab.day}
-                  onClick={() => {
-                    playCyberClick();
-                    setActiveDay(tab.day);
-                  }}
+                  onClick={() => setActiveDay(tab.day)}
                   className={`relative p-3.5 rounded-xl text-left transition-all duration-300 ${
                     isActive ? 'text-black' : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
                   }`}
@@ -153,23 +148,29 @@ export const Schedule: React.FC = () => {
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.5, delay: 0.05 }}
+                  initial={{ opacity: 0, x: isEven ? -40 : 40, y: 25 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.55, ease: 'easeOut' }}
                   className={`relative flex items-center ${
                     isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                   } flex-row`}
                 >
                   {/* TIMELINE NODE DOT */}
-                  <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full glass-panel bg-[#070e24] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.6)] z-20">
+                  <motion.div
+                    whileHover={{ scale: 1.25 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                    className="absolute left-6 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full glass-panel bg-[#070e24] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.6)] z-20"
+                  >
                     <span className="w-3 h-3 rounded-full bg-cyber-pink animate-pulse" />
-                  </div>
+                  </motion.div>
 
                   {/* CONTENT CARD */}
                   <div className="w-full pl-16 md:pl-0 md:w-1/2">
-                    <div
-                      className={`glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/60 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 ${
+                    <motion.div
+                      whileHover={{ y: -6, scale: 1.015 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className={`glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/70 hover:shadow-[0_0_30px_rgba(0,240,255,0.25)] transition-colors duration-300 ${
                         isEven ? 'md:mr-10' : 'md:ml-10'
                       }`}
                     >
@@ -203,7 +204,7 @@ export const Schedule: React.FC = () => {
                         <MapPin className="w-3.5 h-3.5 text-cyber-pink" />
                         <span>{item.venue}</span>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               );

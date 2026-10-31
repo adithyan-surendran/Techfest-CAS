@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Calendar, Users, Sparkles, CheckCircle2, Trophy, Maximize2, X, ExternalLink, QrCode, ShieldCheck, Zap } from 'lucide-react';
+import { Calendar, Users, Sparkles, CheckCircle2, Trophy, Maximize2, X, ExternalLink, QrCode, ShieldCheck, Zap, AlertTriangle, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { playCyberClick, playStartSound } from '../utils/sound';
 
 export const Registration: React.FC = () => {
   const [qrModalOpen, setQrModalOpen] = useState(false);
 
   const handleRegisterClick = () => {
-    playStartSound();
     confetti({
       particleCount: 100,
       spread: 80,
@@ -19,187 +17,230 @@ export const Registration: React.FC = () => {
   };
 
   return (
-    <section id="register" className="py-20 sm:py-28 relative overflow-hidden">
+    <section id="register" className="py-12 sm:py-16 relative overflow-hidden">
       {/* Ambient background glows */}
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 w-80 h-80 bg-pink-600/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-cyan-600/10 rounded-full blur-[130px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* SECTION HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-950/40 border border-pink-500/30 text-cyber-pink text-xs font-mono mb-4"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-950/40 border border-pink-500/30 text-cyber-pink text-xs font-mono mb-3"
           >
             <ShieldCheck className="w-3.5 h-3.5 text-cyber-pink animate-pulse" />
             <span>ENROLLMENT PORTAL</span>
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-5xl font-cyber font-black tracking-tight text-white uppercase mb-4"
+            className="text-2xl sm:text-4xl font-cyber font-black tracking-tight text-white uppercase mb-2"
           >
             SECURE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink via-purple-400 to-cyber-cyan glow-pink">ACCESS</span>
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-slate-400 text-sm sm:text-base font-sans"
+            className="text-slate-400 text-xs sm:text-sm font-sans"
           >
-            Register individually or assemble your squad before portals lock. Early registrations receive priority lab access & kits.
+            Register individually or assemble your squad. Entry fee is ₹50 per head for each competition.
           </motion.p>
         </div>
 
-        {/* REGISTRATION MAIN CARD & QR CODE CONTAINER */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto">
+        {/* REGISTRATION MAIN CARDS (COMPACT EQUAL 2-COLUMN GRID) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
           
-          {/* LEFT CARDS: EVENT DETAILS & PERKS */}
+          {/* LEFT COLUMN: EVENT DETAILS & PERKS */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/60 shadow-2xl relative overflow-hidden"
+            initial={{ opacity: 0, x: -25, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="h-full glass-panel rounded-2xl p-5 sm:p-6 border border-slate-700/60 shadow-xl relative overflow-hidden hover:border-cyan-500/40 transition-colors flex flex-col justify-between"
           >
             {/* Top glowing edge line */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyber-cyan via-cyber-pink to-cyber-purple" />
 
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 uppercase tracking-widest mb-2">
-              <Zap className="w-4 h-4 text-cyber-cyan" />
-              <span>REGISTRATION SYSTEM // V8.0</span>
+            <div>
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-cyan-300 uppercase tracking-wider mb-1.5">
+                <Zap className="w-3.5 h-3.5 text-cyber-cyan" />
+                <span>REGISTRATION SYSTEM // V8.0</span>
+              </div>
+
+              <h3 className="font-cyber font-bold text-xl sm:text-2xl text-white uppercase mb-2">
+                READY TO COMPETE?
+              </h3>
+
+              <p className="text-slate-300 text-xs leading-relaxed mb-3 font-sans">
+                Enter your challenges across Gaming, Technical, Cultural competitions, and robotics showcases.
+              </p>
+
+              {/* COMPACT EVENT SPECIFIC NOTICE */}
+              <div className="mb-4 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2.5 text-left">
+                <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span className="text-[11px] font-mono text-amber-200">
+                  <strong className="text-amber-400 font-bold uppercase">₹50 / Head per event:</strong> Separate form required for each competition.
+                </span>
+              </div>
+
+              {/* COMPACT METRICS GRID */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 text-cyber-pink text-[10px] font-mono mb-0.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>DEADLINE</span>
+                  </div>
+                  <div className="text-white font-cyber font-bold text-xs">Jan 5, 2027</div>
+                </div>
+
+                <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 text-cyber-cyan text-[10px] font-mono mb-0.5">
+                    <Users className="w-3.5 h-3.5" />
+                    <span>ENTRY FEE</span>
+                  </div>
+                  <div className="text-white font-cyber font-bold text-xs">₹50 / Head</div>
+                </div>
+
+                <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono mb-0.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>FORMAT</span>
+                  </div>
+                  <div className="text-white font-cyber font-bold text-xs">Per Event</div>
+                </div>
+
+                <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
+                  <div className="flex items-center gap-1.5 text-amber-400 text-[10px] font-mono mb-0.5">
+                    <Trophy className="w-3.5 h-3.5" />
+                    <span>PRIZE POOL</span>
+                  </div>
+                  <div className="text-white font-cyber font-bold text-xs">₹33,000+</div>
+                </div>
+              </div>
+
+              {/* COMPACT REQUIREMENTS LIST */}
+              <div className="space-y-1.5 mb-4 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-[11px] font-mono text-slate-300">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                  <span>Verified certificates for all participants</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <span>Open to all college students across institutions</span>
+                </div>
+              </div>
             </div>
 
-            <h3 className="font-cyber font-bold text-2xl sm:text-3xl text-white uppercase mb-3">
-              READY TO COMPETE?
-            </h3>
+            {/* ACTION BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-2 pt-2">
+              <button
+                onClick={handleRegisterClick}
+                className="cyber-btn cyber-btn-cyan text-xs py-2.5 px-4 shadow-neon-cyan flex-1 flex items-center justify-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>OFFICIAL FORM</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </button>
 
-            <p className="text-slate-300 text-sm leading-relaxed mb-6 font-sans">
-              Choose your events across competitive programming, hackathons, robotics, CTF security, or gaming tournaments. All accredited college students are eligible!
-            </p>
-
-            {/* METRICS GRID */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5">
-                <div className="flex items-center gap-2 text-cyber-pink text-xs font-mono mb-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>DEADLINE</span>
-                </div>
-                <div className="text-white font-cyber font-bold text-xs sm:text-sm">August 25, 2026</div>
-              </div>
-
-              <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5">
-                <div className="flex items-center gap-2 text-cyber-cyan text-xs font-mono mb-1">
-                  <Users className="w-4 h-4" />
-                  <span>ELIGIBILITY</span>
-                </div>
-                <div className="text-white font-cyber font-bold text-xs sm:text-sm">Undergrad & Postgrad</div>
-              </div>
-
-              <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5">
-                <div className="flex items-center gap-2 text-emerald-400 text-xs font-mono mb-1">
-                  <Sparkles className="w-4 h-4" />
-                  <span>ENTRY FORMAT</span>
-                </div>
-                <div className="text-white font-cyber font-bold text-xs sm:text-sm">Solo & Team Entries</div>
-              </div>
-
-              <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5">
-                <div className="flex items-center gap-2 text-amber-400 text-xs font-mono mb-1">
-                  <Trophy className="w-4 h-4" />
-                  <span>REWARDS</span>
-                </div>
-                <div className="text-white font-cyber font-bold text-xs sm:text-sm">₹50K+ & Certificates</div>
-              </div>
+              <a
+                href="#events"
+                className="cyber-btn cyber-btn-outline text-xs py-2.5 px-4 flex-1 flex items-center justify-center gap-1.5"
+              >
+                <span>CHOOSE EVENTS</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
-
-            {/* PERKS LIST */}
-            <div className="space-y-2.5 mb-8 bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80 text-xs font-mono text-slate-300">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Official YUGA'26 participant kits & digital badges</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Access to all tech keynotes, gaming expo & masterclasses</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Verified participation certificates for all registered attendees</span>
-              </div>
-            </div>
-
-            {/* ACTION BUTTON */}
-            <button
-              onClick={handleRegisterClick}
-              className="w-full sm:w-auto cyber-btn cyber-btn-cyan text-xs sm:text-sm py-4 px-8 shadow-neon-cyan flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>OFFICIAL REGISTRATION FORM</span>
-              <ExternalLink className="w-4 h-4" />
-            </button>
           </motion.div>
 
           {/* RIGHT COLUMN: CYBER SCANNER QR CODE */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-5 flex flex-col items-center"
+            initial={{ opacity: 0, x: 25, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+            className="h-full glass-panel rounded-2xl p-5 sm:p-6 border border-cyan-500/30 text-center shadow-xl relative overflow-hidden hover:border-cyan-400/50 transition-all flex flex-col justify-between"
           >
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-cyan-500/30 text-center w-full max-w-sm shadow-[0_15px_40px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.15)] relative">
-              
-              <div className="flex items-center justify-center gap-2 text-xs font-mono text-cyber-cyan uppercase tracking-wider mb-4">
-                <QrCode className="w-4 h-4 text-cyber-cyan" />
+            {/* Top glowing edge line */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyber-pink via-purple-500 to-cyber-cyan" />
+
+            <div>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-cyber-cyan uppercase tracking-wider mb-1.5">
+                <QrCode className="w-3.5 h-3.5 text-cyber-cyan" />
                 <span>MOBILE SCANNER MATRIX</span>
               </div>
 
-              {/* QR CODE CONTAINER WITH HUD RETICLE */}
+              <h3 className="font-cyber font-bold text-xl sm:text-2xl text-white uppercase mb-2">
+                INSTANT ENROLLMENT
+              </h3>
+
+              <p className="text-slate-300 text-xs leading-relaxed mb-3.5 font-sans">
+                Scan the QR code with any camera or UPI app to access the registration form.
+              </p>
+
+              {/* COMPACT QR CODE CONTAINER WITH HUD RETICLE */}
               <div
-                onClick={() => {
-                  playCyberClick();
-                  setQrModalOpen(true);
-                }}
-                className="relative bg-white p-4 rounded-2xl border-2 border-cyan-400/80 inline-block shadow-[0_0_25px_rgba(0,240,255,0.3)] cursor-pointer group mb-4 overflow-hidden"
+                onClick={() => setQrModalOpen(true)}
+                className="relative bg-white p-3 rounded-xl border-2 border-cyan-400/80 inline-block shadow-[0_0_20px_rgba(0,240,255,0.25)] cursor-pointer group mb-3.5 overflow-hidden"
                 title="Click to expand QR Code"
               >
                 {/* HUD Scan Reticle Corners */}
-                <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-cyber-pink z-10" />
-                <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-cyber-pink z-10" />
-                <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-cyber-pink z-10" />
-                <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-cyber-pink z-10" />
+                <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 border-cyber-pink z-10" />
+                <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 border-cyber-pink z-10" />
+                <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 border-cyber-pink z-10" />
+                <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 border-cyber-pink z-10" />
 
                 {/* Animated Laser Scanline */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/25 to-transparent h-6 w-full animate-scanline pointer-events-none z-10" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/25 to-transparent h-5 w-full animate-scanline pointer-events-none z-10" />
 
                 <img
                   src="/registration-qr.png"
                   alt="YUGA'26 Registration QR Code"
-                  className="w-48 h-48 sm:w-52 sm:h-52 object-contain relative z-0"
+                  className="w-36 h-36 sm:w-40 sm:h-40 object-contain relative z-0"
                 />
 
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity z-20">
-                  <Maximize2 className="w-8 h-8 text-cyber-cyan" />
+                  <Maximize2 className="w-6 h-6 text-cyber-cyan" />
                 </div>
               </div>
 
+              {/* COMPACT 3 QUICK STEPS BADGE */}
+              <div className="grid grid-cols-3 gap-1.5 mb-3 text-left font-mono text-[10px] bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
+                <div className="p-1">
+                  <span className="text-cyber-cyan font-bold block mb-0.5">01. SCAN</span>
+                  <span className="text-slate-400">QR / Form link</span>
+                </div>
+                <div className="p-1 border-x border-slate-800 px-2">
+                  <span className="text-cyber-pink font-bold block mb-0.5">02. FILL</span>
+                  <span className="text-slate-400">Enter details</span>
+                </div>
+                <div className="p-1">
+                  <span className="text-emerald-400 font-bold block mb-0.5">03. PAY</span>
+                  <span className="text-slate-400">₹50 / head</span>
+                </div>
+              </div>
+            </div>
+
+            {/* ACTION BUTTON & FOOTNOTE */}
+            <div className="pt-2">
               <button
                 onClick={handleRegisterClick}
-                className="w-full cyber-btn cyber-btn-pink text-xs py-3.5 shadow-neon-pink mb-3"
+                className="w-full cyber-btn cyber-btn-pink text-xs py-2.5 px-4 shadow-neon-pink flex items-center justify-center gap-1.5 mb-2"
               >
-                <span>OPEN FORM LINK</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>OPEN REGISTRATION FORM</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </button>
 
-              <p className="text-[11px] font-mono text-slate-400">
-                Point your mobile camera or Google Lens at the code to register immediately.
+              <p className="text-[10px] font-mono text-slate-400">
+                Point your mobile camera or Google Lens to register immediately.
               </p>
             </div>
           </motion.div>

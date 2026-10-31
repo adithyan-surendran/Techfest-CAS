@@ -193,3 +193,28 @@
 .animate-eq-2 { animation: eqBar 0.6s ease-in-out 0.2s infinite; }
 .animate-eq-3 { animation: eqBar 0.9s ease-in-out 0.4s infinite; }
 .animate-eq-4 { animation: eqBar 0.7s ease-in-out 0.1s infinite; }
+
+/* Cyber Marquee Animation */
+@keyframes cyberMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: cyberMarquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Hide scrollbar for horizontal carousels while keeping scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
