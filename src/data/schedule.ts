@@ -107,12 +107,12 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     id: 's2-2',
     day: 2,
     dayTitle: 'DAY 2 — JAN 08',
-    time: '09:30 AM',
-    title: 'Robotics Arena Tournament',
-    description: 'Bot racing, obstacle maze navigation, and combat bot showdown.',
-    venue: 'Outdoor Arena',
+    time: '10:00 AM',
+    title: 'Tech Project Expo',
+    description: 'Demonstrations of innovative engineering projects, hardware models, and software prototypes.',
+    venue: 'Project Exhibition Hall',
     category: 'Competition',
-    icon: 'Bot'
+    icon: 'Rocket'
   },
   {
     id: 's2-3',

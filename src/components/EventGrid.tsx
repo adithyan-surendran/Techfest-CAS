@@ -24,7 +24,7 @@ export const EventGrid: React.FC = () => {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const categories: EventCategory[] = ['All', 'Gaming', 'Technical', 'Cultural', 'Other'];
+  const categories: EventCategory[] = ['All', 'Technical', 'Cultural', 'Gaming', 'Other'];
 
   // Filtered list for the main sideways scroll carousel
   const carouselEvents = EVENTS_DATA.filter((event) => {

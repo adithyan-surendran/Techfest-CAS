@@ -80,7 +80,7 @@ export const Registration: React.FC = () => {
               </h3>
 
               <p className="text-slate-300 text-xs leading-relaxed mb-3 font-sans">
-                Enter your challenges across Gaming, Technical, Cultural competitions, and robotics showcases.
+                Enter your challenges across Technical, Cultural, Gaming, and Other competitions.
               </p>
 
               {/* COMPACT EVENT SPECIFIC NOTICE */}

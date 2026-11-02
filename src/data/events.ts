@@ -1,86 +1,6 @@
 import { Event } from '../types';
 
 export const events: Event[] = [
-  // GAMING EVENTS
-  {
-    id: 'bgmi',
-    title: 'BGMI',
-    category: 'Gaming',
-    tagline: 'Drop in. Survive. Conquer.',
-    description: 'Battle it out in an intense BGMI tournament. Form your squad, develop your strategy, survive the battleground and compete for the ultimate victory.',
-    date: 'Day 2 — Jan 08',
-    time: '11:00 AM – 02:00 PM',
-    teamSize: '4 Members',
-    icon: 'Crosshair',
-    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
-    venue: 'Esports Arena (Room 104)',
-    deadline: 'January 5, 2027, 11:59 PM',
-    prizes: '₹1,000',
-    eligibility: 'Open to college students.',
-    contactPerson: 'Student Coordinator',
-    contactPhone: '+91 79073 81377',
-    registrationFee: '₹50 / Head',
-    rules: [
-      'Each squad must consist of 4 players.',
-      'All participants must complete registration.',
-      'Use of hacks, cheats or unfair tools is prohibited.',
-      'Players must follow the tournament organizer\'s instructions.',
-      'The organizer\'s decision will be final.'
-    ]
-  },
-  {
-    id: 'pes',
-    title: 'PES / eFootball',
-    category: 'Gaming',
-    tagline: 'Build your team. Own the pitch.',
-    description: 'Compete against other players in an exciting football gaming tournament. Show your skills, tactics and game strategy to become the champion.',
-    date: 'Day 2 — Jan 08',
-    time: '02:00 PM – 05:00 PM',
-    teamSize: 'Individual',
-    icon: 'Trophy',
-    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
-    venue: 'Esports Arena (Room 105)',
-    deadline: 'January 5, 2027, 11:59 PM',
-    prizes: '₹1,000',
-    eligibility: 'Open to college students.',
-    contactPerson: 'Student Coordinator',
-    contactPhone: '+91 79073 81377',
-    registrationFee: '₹50 / Head',
-    rules: [
-      'Individual participation only.',
-      'Knockout format or tournament format as decided by organizers.',
-      'Match settings will be announced before the competition.',
-      'Unfair gameplay or cheating is prohibited.',
-      'Organizer decisions will be final.'
-    ]
-  },
-  {
-    id: 'mini-militia',
-    title: 'Mini Militia',
-    category: 'Gaming',
-    tagline: 'Aim sharp. Fight hard. Win big.',
-    description: 'Enter the multiplayer battlefield and compete against other players in an exciting Mini Militia tournament. Test your shooting skills and survival strategy.',
-    date: 'Day 2 — Jan 08',
-    time: '03:00 PM – 05:30 PM',
-    teamSize: 'Individual / Team',
-    icon: 'Swords',
-    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
-    venue: 'Student Lounge Plaza',
-    deadline: 'January 5, 2027, 11:59 PM',
-    prizes: '₹1,000',
-    eligibility: 'Open to college students.',
-    contactPerson: 'Student Coordinator',
-    contactPhone: '+91 79073 81377',
-    registrationFee: '₹50 / Head',
-    rules: [
-      'Participation format will be announced by organizers.',
-      'All players must complete registration.',
-      'Cheating or exploiting game glitches is prohibited.',
-      'Players must follow match instructions.',
-      'Organizer decisions will be final.'
-    ]
-  },
-
   // TECHNICAL EVENTS
   {
     id: 'hackathon',
@@ -345,6 +265,86 @@ export const events: Event[] = [
       'Performance duration will be announced.',
       'Music must be submitted to organizers in advance.',
       'Judging will consider technique, creativity, expression and coordination.'
+    ]
+  },
+
+  // GAMING EVENTS
+  {
+    id: 'bgmi',
+    title: 'BGMI',
+    category: 'Gaming',
+    tagline: 'Drop in. Survive. Conquer.',
+    description: 'Battle it out in an intense BGMI tournament. Form your squad, develop your strategy, survive the battleground and compete for the ultimate victory.',
+    date: 'Day 2 — Jan 08',
+    time: '11:00 AM – 02:00 PM',
+    teamSize: '4 Members',
+    icon: 'Crosshair',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Esports Arena (Room 104)',
+    deadline: 'January 5, 2027, 11:59 PM',
+    prizes: '₹1,000',
+    eligibility: 'Open to college students.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    rules: [
+      'Each squad must consist of 4 players.',
+      'All participants must complete registration.',
+      'Use of hacks, cheats or unfair tools is prohibited.',
+      'Players must follow the tournament organizer\'s instructions.',
+      'The organizer\'s decision will be final.'
+    ]
+  },
+  {
+    id: 'pes',
+    title: 'PES / eFootball',
+    category: 'Gaming',
+    tagline: 'Build your team. Own the pitch.',
+    description: 'Compete against other players in an exciting football gaming tournament. Show your skills, tactics and game strategy to become the champion.',
+    date: 'Day 2 — Jan 08',
+    time: '02:00 PM – 05:00 PM',
+    teamSize: 'Individual',
+    icon: 'Trophy',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Esports Arena (Room 105)',
+    deadline: 'January 5, 2027, 11:59 PM',
+    prizes: '₹1,000',
+    eligibility: 'Open to college students.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    rules: [
+      'Individual participation only.',
+      'Knockout format or tournament format as decided by organizers.',
+      'Match settings will be announced before the competition.',
+      'Unfair gameplay or cheating is prohibited.',
+      'Organizer decisions will be final.'
+    ]
+  },
+  {
+    id: 'mini-militia',
+    title: 'Mini Militia',
+    category: 'Gaming',
+    tagline: 'Aim sharp. Fight hard. Win big.',
+    description: 'Enter the multiplayer battlefield and compete against other players in an exciting Mini Militia tournament. Test your shooting skills and survival strategy.',
+    date: 'Day 2 — Jan 08',
+    time: '03:00 PM – 05:30 PM',
+    teamSize: 'Individual / Team',
+    icon: 'Swords',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Student Lounge Plaza',
+    deadline: 'January 5, 2027, 11:59 PM',
+    prizes: '₹1,000',
+    eligibility: 'Open to college students.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    rules: [
+      'Participation format will be announced by organizers.',
+      'All players must complete registration.',
+      'Cheating or exploiting game glitches is prohibited.',
+      'Players must follow match instructions.',
+      'Organizer decisions will be final.'
     ]
   },
 
