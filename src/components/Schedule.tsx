@@ -18,14 +18,14 @@ export const Schedule: React.FC = () => {
   });
 
   const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
+    stiffness: 80,
+    damping: 25,
+    restDelta: 0.01,
   });
 
   const dayTabs = [
     { day: 1, label: 'DAY 1', date: 'JAN 07', desc: 'Inauguration, Sessions & Workshops' },
-    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Competitions, Band & Pro Show' },
+    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Competitions & Pro Show' },
   ];
 
   const currentSchedule = SCHEDULE_DATA.filter((item) => item.day === activeDay);
@@ -152,10 +152,10 @@ export const Schedule: React.FC = () => {
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, x: isEven ? -40 : 40, y: 25 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 0.55, ease: 'easeOut' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
                   className={`relative flex items-center ${
                     isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                   } flex-row`}

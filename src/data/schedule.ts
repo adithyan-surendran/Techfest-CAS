@@ -223,6 +223,8 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     category: 'Competition',
     icon: 'Code2'
   },
+  // Temporarily commented out: College Band
+  /*
   {
     id: 's2-band',
     day: 2,
@@ -234,6 +236,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     category: 'Ceremony',
     icon: 'Music'
   },
+  */
   {
     id: 's2-ws-uiux',
     day: 2,

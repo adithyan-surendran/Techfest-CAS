@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
             </p>
             
             <p className="text-slate-400 text-xs font-sans max-w-sm leading-relaxed mb-4">
-              Annual Flagship Technical Festival hosted by College of Applied Science (IHRD), Vazhakkad. Unleashing next-generation technical innovators, hackers, and creators.
+              Tech Fest hosted by College of Applied Science (IHRD), Vazhakkad. Unleashing next-generation technical innovators, hackers, and creators.
             </p>
 
             <div className="text-[11px] font-mono text-slate-500">

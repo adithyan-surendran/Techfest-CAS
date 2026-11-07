@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Sparkles, ArrowRight, Zap, Trophy, Users, Terminal } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { FORMATTED_PRIZE_POOL } from '../data/events';
 
 export const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -40,8 +41,19 @@ export const Hero: React.FC = () => {
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      if (!document.hidden) updateCountdown();
+    }, 1000);
+
+    const handleVisibility = () => {
+      if (!document.hidden) updateCountdown();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -63,7 +75,7 @@ export const Hero: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-cyan border border-cyan-500/40 text-cyber-cyan text-xs font-mono mb-8 shadow-[0_0_20px_rgba(0,240,255,0.25)]"
           >
             <span className="w-2 h-2 rounded-full bg-cyber-cyan animate-ping" />
-            <span className="font-semibold tracking-wider">ANNUAL NATIONAL TECH FESTIVAL</span>
+            <span className="font-semibold tracking-wider">TECH FEST</span>
             <span className="text-slate-500">|</span>
             <span className="text-slate-300">CAS VAZHAKKAD</span>
           </motion.div>
@@ -179,10 +191,10 @@ export const Hero: React.FC = () => {
 
         {/* BOTTOM FESTIVAL STATS RIBBON (DOES NOT FADE EARLY! Stays crisp & highlights on scroll) */}
         <motion.div
-          initial={{ opacity: 0, y: 35, scale: 0.95 }}
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
           className="pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 w-full max-w-4xl"
         >
           <motion.div whileHover={{ y: -6, scale: 1.03 }} className="flex items-center justify-center gap-3 glass-card p-4 rounded-xl border border-slate-800 hover:border-cyan-400/50 transition-all shadow-lg">
@@ -190,7 +202,7 @@ export const Hero: React.FC = () => {
               <Trophy className="w-5 h-5" />
             </div>
             <div className="text-left">
-              <div className="font-cyber font-bold text-base text-white">₹33,000+</div>
+              <div className="font-cyber font-bold text-base text-white">{FORMATTED_PRIZE_POOL}</div>
               <div className="text-[11px] font-mono text-slate-400">Total Cash Pool</div>
             </div>
           </motion.div>

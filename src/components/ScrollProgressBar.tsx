@@ -4,15 +4,15 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 export const ScrollProgressBar: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
+    stiffness: 90,
+    damping: 28,
+    restDelta: 0.01,
   });
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-slate-900/60 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-slate-900/60 pointer-events-none transform-gpu">
       <motion.div
-        className="h-full bg-gradient-to-r from-cyber-cyan via-cyber-pink to-cyber-purple shadow-[0_0_12px_rgba(0,240,255,0.8)] origin-left relative"
+        className="h-full bg-gradient-to-r from-cyber-cyan via-cyber-pink to-cyber-purple shadow-[0_0_12px_rgba(0,240,255,0.8)] origin-left relative will-change-transform"
         style={{ scaleX }}
       >
         {/* Leading Laser Spark */}

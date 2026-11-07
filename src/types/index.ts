@@ -20,6 +20,7 @@ export interface Event {
   rules: string[];
   registrationFee?: string;
   slots?: string;
+  bringLaptop?: boolean;
 }
 
 export interface ScheduleItem {

@@ -26,7 +26,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeSection, hidden }) =
   };
 
   return (
-    <div className="md:hidden fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] left-3 right-3 z-40">
+    <div className="md:hidden fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] left-3 right-3 z-40 transform-gpu">
       <div className="glass-panel bg-[#030712]/90 border border-cyan-500/30 rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(0,240,255,0.15)] flex items-center justify-around">
         {items.map((item) => {
           const Icon = item.icon;
@@ -35,7 +35,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeSection, hidden }) =
             <button
               key={item.id}
               onClick={() => handleScroll(item.href)}
-              className={`relative flex flex-col items-center justify-center py-1.5 px-3 rounded-xl transition-all ${
+              className={`relative flex flex-col items-center justify-center py-1.5 px-3 rounded-xl transition-all touch-manipulation ${
                 isActive ? 'text-cyber-cyan font-bold' : 'text-slate-400 hover:text-white'
               }`}
             >

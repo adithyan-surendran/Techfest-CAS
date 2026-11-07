@@ -10,18 +10,38 @@ export const ScrollToTop: React.FC<ScrollToTopProps> = ({ hidden }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+    let cachedMaxScroll = 0;
+
+    const updateMaxScroll = () => {
+      cachedMaxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    };
+    updateMaxScroll();
+
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        const currentProgress = (window.scrollY / totalScroll) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, currentProgress)));
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+          if (cachedMaxScroll > 0) {
+            const currentProgress = Math.min(100, Math.max(0, (currentY / cachedMaxScroll) * 100));
+            setScrollProgress((prev) => (Math.abs(prev - currentProgress) >= 1.5 ? currentProgress : prev));
+          }
+          setIsVisible((prev) => {
+            const shouldBeVisible = currentY > 400;
+            return prev !== shouldBeVisible ? shouldBeVisible : prev;
+          });
+          ticking = false;
+        });
+        ticking = true;
       }
-      setIsVisible(window.scrollY > 400);
     };
 
-    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', updateMaxScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateMaxScroll);
+    };
   }, []);
 
   const scrollToTop = () => {

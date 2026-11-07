@@ -23,9 +23,11 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '10 Slots',
+    bringLaptop: true,
     rules: [
       'Each team must have 2–4 members.',
       'Teams must develop solutions based on the given theme or problem statement.',
+      'Try to bring your laptop.',
       'Plagiarism and copying existing projects without acknowledgment are prohibited.',
       'Teams must present their project within the allotted time.',
       'Judging will be based on innovation, functionality and presentation.',
@@ -51,9 +53,11 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '10 Slots',
+    bringLaptop: true,
     rules: [
       'Participants may compete individually or in teams of 2.',
       'Designs must follow the given theme.',
+      'Try to bring your laptop.',
       'All work must be original.',
       'Participants must submit their designs before the deadline.',
       'Judging will consider creativity, usability and presentation.'
@@ -159,9 +163,11 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '10 Slots',
+    bringLaptop: true,
     rules: [
       'Individual participation only.',
       'Participants must identify and correct the given errors.',
+      'Try to bring your laptop.',
       'Solutions must be submitted within the allotted time.',
       'External assistance is prohibited.',
       'The fastest correct solutions will receive priority.'
@@ -219,8 +225,9 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '50 Slots',
+    bringLaptop: true,
     rules: [
-      'Participants are advised to bring their own laptops with Git installed.',
+      'Try to bring your laptop (with Git installed if possible).',
       'Reporting at the venue 15 minutes before the session is required.',
       'Active participation in hands-on exercises is encouraged.',
       'Workshop materials and completion guidance will be provided.'
@@ -245,7 +252,9 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '50 Slots',
+    bringLaptop: true,
     rules: [
+      'Try to bring your laptop for hands-on prompt engineering exercises.',
       'Participants should have access to a device with internet connectivity.',
       'Learn practical techniques for structured AI prompting.',
       'Attendance for the full duration is required for certificate eligibility.'
@@ -295,7 +304,9 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '50 Slots',
+    bringLaptop: true,
     rules: [
+      'Try to bring your laptop for interactive cybersecurity demonstrations.',
       'Demonstrations are strictly for educational and defense awareness purposes.',
       'Unauthorized penetration testing or exploitation on campus network is strictly prohibited.',
       'Follow the cyber safety code of conduct.'
@@ -320,8 +331,9 @@ export const events: Event[] = [
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
     slots: '50 Slots',
+    bringLaptop: true,
     rules: [
-      'Participants are recommended to bring laptops with a browser/Figma account.',
+      'Try to bring your laptop (with browser / Figma account ready).',
       'Step-by-step guidance will be provided throughout the design sprints.',
       'Submission of prototype work at the end of the session.'
     ]
@@ -357,6 +369,8 @@ export const events: Event[] = [
       'Judging will consider creativity, styling, confidence and presentation.'
     ]
   },
+  // Temporarily commented out: College Band
+  /*
   {
     id: 'college-bands',
     title: 'College Band',
@@ -384,6 +398,7 @@ export const events: Event[] = [
       'Judging will consider musical skill, coordination and stage presence.'
     ]
   },
+  */
 
   // ==========================================
   // GAMING EVENTS
@@ -588,3 +603,11 @@ export const events: Event[] = [
 
 // Backwards compatibility alias
 export const EVENTS_DATA = events;
+
+// Dynamically calculated prize pool based on active events
+export const TOTAL_PRIZE_POOL = events.reduce((sum, event) => {
+  const digits = event.prizes ? event.prizes.replace(/[^0-9]/g, '') : '';
+  return sum + (digits ? parseInt(digits, 10) : 0);
+}, 0);
+
+export const FORMATTED_PRIZE_POOL = `₹${TOTAL_PRIZE_POOL.toLocaleString('en-IN')}+`;

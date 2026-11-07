@@ -32,27 +32,59 @@ export const App: React.FC = () => {
     };
   }, [isLoading]);
 
+  // Smooth section tracking using IntersectionObserver (eliminates layout thrashing during iOS scroll)
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'events', 'schedule', 'register', 'contact'];
-      const scrollPosition = window.scrollY + 250;
+    if (isLoading) return;
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
+    const sections = ['home', 'events', 'schedule', 'register', 'contact'];
+    const elements = sections
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    if (elements.length === 0) return;
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
           }
+        },
+        {
+          rootMargin: '-20% 0px -60% 0px',
+          threshold: 0,
         }
-      }
-    };
+      );
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      elements.forEach((el) => observer.observe(el));
+      return () => observer.disconnect();
+    } else {
+      // Throttled RAF fallback for older environments
+      let ticking = false;
+      const handleScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const scrollPosition = window.scrollY + 250;
+            for (const el of elements) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPosition >= top && scrollPosition < top + height) {
+                setActiveSection(el.id);
+                break;
+              }
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [isLoading]);
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 font-sans relative selection:bg-cyber-cyan selection:text-black">

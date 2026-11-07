@@ -7,7 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Event, EventCategory } from '../types';
 import { EVENTS_DATA } from '../data/events';
 import { EventCard } from './EventCard';
-import { EventModal } from './EventModal';
+
+const EventModal = React.lazy(() => import('./EventModal').then((m) => ({ default: m.EventModal })));
 
 interface EventGridProps {
   onViewAllChange?: (isOpen: boolean) => void;
@@ -36,6 +37,7 @@ export const EventGrid: React.FC<EventGridProps> = ({
 
   // Horizontal carousel ref and scroll tracking
   const carouselRef = useRef<HTMLDivElement>(null);
+  const scrollTickingRef = useRef(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -57,15 +59,24 @@ export const EventGrid: React.FC<EventGridProps> = ({
     return matchesCat && matchesSearch;
   });
 
-  // Update carousel scroll buttons and progress indicator
+  // Update carousel scroll buttons and progress indicator (throttled with RAF to avoid jank)
   const handleCarouselScroll = () => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanScrollLeft(scrollLeft > 15);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 15);
-    const maxScroll = scrollWidth - clientWidth;
-    setScrollProgress(maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0);
+    if (scrollTickingRef.current) return;
+    scrollTickingRef.current = true;
+    window.requestAnimationFrame(() => {
+      const el = carouselRef.current;
+      if (el) {
+        const { scrollLeft, scrollWidth, clientWidth } = el;
+        const leftScrolled = scrollLeft > 15;
+        const rightScrolled = scrollLeft < scrollWidth - clientWidth - 15;
+        setCanScrollLeft((prev) => (prev !== leftScrolled ? leftScrolled : prev));
+        setCanScrollRight((prev) => (prev !== rightScrolled ? rightScrolled : prev));
+        const maxScroll = scrollWidth - clientWidth;
+        const nextProgress = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
+        setScrollProgress((prev) => (Math.abs(prev - nextProgress) >= 2 ? nextProgress : prev));
+      }
+      scrollTickingRef.current = false;
+    });
   };
 
   useEffect(() => {
@@ -458,11 +469,13 @@ export const EventGrid: React.FC<EventGridProps> = ({
         )}
       </AnimatePresence>
 
-      {/* EVENT DETAILS POPUP MODAL */}
-      <EventModal
-        event={activeModalEvent}
-        onClose={() => setActiveModalEvent(null)}
-      />
+      {/* EVENT DETAILS POPUP MODAL (Lazy-loaded for mobile performance) */}
+      <React.Suspense fallback={null}>
+        <EventModal
+          event={activeModalEvent}
+          onClose={() => setActiveModalEvent(null)}
+        />
+      </React.Suspense>
     </section>
   );
 };

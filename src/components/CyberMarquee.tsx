@@ -1,9 +1,10 @@
 import React from 'react';
 import { Sparkles, Trophy, Zap, Gamepad2, Code2, Music, Flame, Rocket /*, Car */ } from 'lucide-react';
+import { FORMATTED_PRIZE_POOL } from '../data/events';
 
 export const CyberMarquee: React.FC = () => {
   const marqueeItems = [
-    { text: '₹33,000+ CASH REWARDS', icon: Trophy, color: 'text-amber-400' },
+    { text: `${FORMATTED_PRIZE_POOL} CASH REWARDS`, icon: Trophy, color: 'text-amber-400' },
     { text: 'ONLINE REG ENDS JAN 6 • SPOT REGISTRATION AVAILABLE', icon: Zap, color: 'text-amber-300' },
     { text: 'ENTRY FEE: ₹50 / HEAD', icon: Zap, color: 'text-cyber-cyan' },
     { text: 'TECH PROJECT EXPO', icon: Rocket, color: 'text-cyan-400' },
@@ -23,13 +24,13 @@ export const CyberMarquee: React.FC = () => {
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-pink-400 to-transparent" />
 
-      {/* Infinite Scrolling Ticker Track */}
-      <div className="flex w-max animate-marquee space-x-8 select-none">
+      {/* Infinite Scrolling Ticker Track: hardware-accelerated for iOS */}
+      <div className="flex w-max animate-marquee space-x-8 select-none will-change-transform transform-gpu">
         {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, index) => {
           const Icon = item.icon;
           return (
             <div key={index} className="flex items-center gap-2.5 font-cyber text-xs uppercase tracking-wider text-slate-200">
-              <Icon className={`w-3.5 h-3.5 ${item.color} animate-pulse`} />
+              <Icon className={`w-3.5 h-3.5 ${item.color}`} />
               <span>{item.text}</span>
               <span className="text-slate-600 font-mono">•</span>
             </div>

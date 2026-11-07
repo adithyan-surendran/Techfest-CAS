@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Calendar, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles, Coins, Gauge } from 'lucide-react';
+import { X, Calendar, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles, Coins, Gauge, Laptop } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Event } from '../types';
@@ -137,6 +137,19 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
               <div className="text-white font-bold text-xs font-mono truncate">{event.venue || 'Main Stage / Campus'}</div>
             </div>
           </div>
+
+          {/* Bring Laptop Callout Banner */}
+          {event.bringLaptop && (
+            <div className="mb-6 flex items-center gap-3 p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 text-xs font-mono shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+              <div className="p-2 rounded-lg bg-cyan-500/20 text-cyber-cyan flex-shrink-0">
+                <Laptop className="w-4 h-4 animate-pulse" />
+              </div>
+              <div>
+                <span className="font-cyber font-bold text-cyber-cyan uppercase block mb-0.5">Device Note</span>
+                <span>Try to bring your laptop for hands-on participation.</span>
+              </div>
+            </div>
+          )}
 
           {/* Description */}
           <div className="mb-6">

@@ -23,11 +23,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       setStatusText(text);
     };
 
-    // Smooth progress ticker
+    // Smooth, performance-friendly progress ticker (40ms instead of 20ms to prevent main-thread saturation)
     const ticker = setInterval(() => {
       if (!mounted) return;
       if (currentProgress < targetProgress) {
-        currentProgress = Math.min(targetProgress, currentProgress + 2);
+        currentProgress = Math.min(targetProgress, currentProgress + 4);
         setProgress(currentProgress);
       }
 
@@ -38,9 +38,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         setIsFinishing(true);
         setTimeout(() => {
           if (mounted) onComplete();
-        }, 350);
+        }, 250);
       }
-    }, 20);
+    }, 35);
 
     // 1. DOM Readiness
     if (document.readyState === 'interactive' || document.readyState === 'complete') {
@@ -81,10 +81,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       window.addEventListener('load', handleLoad, { once: true });
     }
 
-    // Safety timeout cap
+    // Safety timeout cap: fast fallback for mobile / slow cellular network
     const safetyTimer = setTimeout(() => {
       if (mounted) setStage(100, 'SYSTEM ONLINE // READY');
-    }, 3200);
+    }, 1500);
 
     return () => {
       mounted = false;
@@ -98,18 +98,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     <motion.div
       initial={{ opacity: 1 }}
       animate={{ opacity: isFinishing ? 0 : 1 }}
-      exit={{ opacity: 0, scale: 1.03, filter: 'blur(8px)' }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#02040a] text-slate-100 select-none overflow-hidden p-4 sm:p-6"
     >
       {/* RICH ATMOSPHERIC BACKGROUND (ELIMINATES BLANK/EMPTY SPACE) */}
       <div className="absolute inset-0 cyber-grid opacity-35 pointer-events-none" />
       <div className="absolute inset-0 scanlines opacity-20 pointer-events-none" />
 
-      {/* Vibrant Atmospheric Neon Glow Orbs */}
-      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-cyan-500/15 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px] pointer-events-none" />
+      {/* Vibrant Atmospheric Neon Glow Orbs: mobile-optimized blur */}
+      <div className="absolute top-1/4 -left-20 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-cyan-500/10 sm:bg-cyan-500/15 rounded-full blur-[60px] sm:blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-pink-500/10 sm:bg-pink-500/15 rounded-full blur-[60px] sm:blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-purple-600/10 rounded-full blur-[70px] sm:blur-[150px] pointer-events-none" />
 
       {/* SUBTLE CORNER ACCENTS FOR BALANCE */}
       <div className="absolute top-6 left-6 pointer-events-none font-mono text-[10px] text-cyan-500/40 tracking-widest hidden sm:flex items-center gap-2">

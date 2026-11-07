@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Users, Sparkles, CheckCircle2, Trophy, Maximize2, X, ExternalLink, QrCode, ShieldCheck, Zap, AlertTriangle, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { FORMATTED_PRIZE_POOL } from '../data/events';
 
 export const Registration: React.FC = () => {
   const [qrModalOpen, setQrModalOpen] = useState(false);
@@ -60,10 +61,10 @@ export const Registration: React.FC = () => {
           
           {/* LEFT COLUMN: EVENT DETAILS & PERKS */}
           <motion.div
-            initial={{ opacity: 0, x: -25, y: 20 }}
+            initial={{ opacity: 0, x: -20, y: 15 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
             className="h-full glass-panel rounded-2xl p-5 sm:p-6 border border-slate-700/60 shadow-xl relative overflow-hidden hover:border-cyan-500/40 transition-colors flex flex-col justify-between"
           >
             {/* Top glowing edge line */}
@@ -131,7 +132,7 @@ export const Registration: React.FC = () => {
                     <Trophy className="w-3.5 h-3.5" />
                     <span>PRIZE POOL</span>
                   </div>
-                  <div className="text-white font-cyber font-bold text-xs">₹33,000+</div>
+                  <div className="text-white font-cyber font-bold text-xs">{FORMATTED_PRIZE_POOL}</div>
                 </div>
               </div>
 
@@ -175,10 +176,10 @@ export const Registration: React.FC = () => {
 
           {/* RIGHT COLUMN: CYBER SCANNER QR CODE */}
           <motion.div
-            initial={{ opacity: 0, x: 25, y: 20 }}
+            initial={{ opacity: 0, x: 20, y: 15 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, ease: 'easeOut', delay: 0.08 }}
             className="h-full glass-panel rounded-2xl p-5 sm:p-6 border border-cyan-500/30 text-center shadow-xl relative overflow-hidden hover:border-cyan-400/50 transition-all flex flex-col justify-between"
           >
             {/* Top glowing edge line */}
@@ -216,6 +217,10 @@ export const Registration: React.FC = () => {
                 <img
                   src="/registration-qr.png"
                   alt="YUGA'26 Registration QR Code"
+                  width="160"
+                  height="160"
+                  loading="lazy"
+                  decoding="async"
                   className="w-36 h-36 sm:w-40 sm:h-40 object-contain relative z-0"
                 />
 

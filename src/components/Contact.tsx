@@ -52,11 +52,10 @@ export const Contact: React.FC = () => {
           
           {/* 1. FACULTY COORDINATORS */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            whileHover={{ y: -6, scale: 1.015 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.05 }}
             className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(0,240,255,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
@@ -89,11 +88,10 @@ export const Contact: React.FC = () => {
 
           {/* 2. STUDENT COORDINATORS */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            whileHover={{ y: -6, scale: 1.015 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.08 }}
             className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-pink-400/60 hover:shadow-[0_0_25px_rgba(255,0,127,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
@@ -128,11 +126,10 @@ export const Contact: React.FC = () => {
 
           {/* 3. INSTAGRAM & SOCIAL CHANNELS */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            whileHover={{ y: -6, scale: 1.015 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.12 }}
             className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-amber-400/60 hover:shadow-[0_0_25px_rgba(251,191,36,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
@@ -170,11 +167,10 @@ export const Contact: React.FC = () => {
 
           {/* 4. VENUE LOCATION */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ y: -6, scale: 1.015 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.45, delay: 0.15 }}
             className="glass-card rounded-2xl p-6 border border-slate-700/60 hover:border-emerald-400/60 hover:shadow-[0_0_25px_rgba(52,211,153,0.15)] flex flex-col justify-between transition-colors"
           >
             <div>
