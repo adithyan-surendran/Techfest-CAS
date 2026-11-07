@@ -60,6 +60,12 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index, onSelect }) 
           glow: 'group-hover:border-cyan-400/60 group-hover:shadow-[0_0_25px_rgba(0,240,255,0.25)]',
           line: 'from-cyan-400 to-blue-500',
         };
+      case 'Workshop':
+        return {
+          badge: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40',
+          glow: 'group-hover:border-emerald-400/60 group-hover:shadow-[0_0_25px_rgba(52,211,153,0.25)]',
+          line: 'from-emerald-400 to-teal-500',
+        };
       case 'Cultural':
         return {
           badge: 'bg-purple-500/15 text-cyber-purple border-purple-500/40',
@@ -159,6 +165,15 @@ export const EventCard: React.FC<EventCardProps> = ({ event, index, onSelect }) 
             </span>
             <span className="text-amber-300 font-semibold">{event.registrationFee || '₹50 / Head'}</span>
           </div>
+
+          {event.slots && (
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-slate-400">
+                <Gauge className="w-3.5 h-3.5 text-purple-400" /> Slots:
+              </span>
+              <span className="text-purple-300 font-semibold">{event.slots}</span>
+            </div>
+          )}
 
           {event.venue && (
             <div className="flex items-center justify-between pt-1 border-t border-slate-800">

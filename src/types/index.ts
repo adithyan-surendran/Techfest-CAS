@@ -1,9 +1,9 @@
-export type EventCategory = 'All' | 'Technical' | 'Cultural' | 'Gaming' | 'Other';
+export type EventCategory = 'All' | 'Technical' | 'Workshop' | 'Cultural' | 'Gaming' | 'Other';
 
 export interface Event {
   id: string;
   title: string;
-  category: 'Technical' | 'Cultural' | 'Gaming' | 'Other';
+  category: 'Technical' | 'Workshop' | 'Cultural' | 'Gaming' | 'Other';
   tagline: string;
   description: string;
   date: string;
@@ -19,6 +19,7 @@ export interface Event {
   contactPhone: string;
   rules: string[];
   registrationFee?: string;
+  slots?: string;
 }
 
 export interface ScheduleItem {

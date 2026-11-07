@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import {
   Clock, MapPin, Sparkles, UserCheck, Radio, Cpu, Wrench, Gamepad2,
   Flame, Code2, Bot, Trophy, Music, HelpCircle, Presentation, Award, Camera,
-  CalendarDays
+  CalendarDays, Palette, Film, Compass, Rocket
 } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SCHEDULE_DATA } from '../data/schedule';
@@ -24,8 +24,8 @@ export const Schedule: React.FC = () => {
   });
 
   const dayTabs = [
-    { day: 1, label: 'DAY 1', date: 'JAN 07', desc: 'Inauguration & Competitions' },
-    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Finals, Tournaments & Awards' },
+    { day: 1, label: 'DAY 1', date: 'JAN 07', desc: 'Inauguration, Sessions & Workshops' },
+    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Competitions, Band & Pro Show' },
   ];
 
   const currentSchedule = SCHEDULE_DATA.filter((item) => item.day === activeDay);
@@ -48,6 +48,10 @@ export const Schedule: React.FC = () => {
       case 'Presentation': return <Presentation className={`${iconClass} text-cyber-cyan`} />;
       case 'Award': return <Award className={`${iconClass} text-amber-300`} />;
       case 'Camera': return <Camera className={`${iconClass} text-emerald-400`} />;
+      case 'Palette': return <Palette className={`${iconClass} text-purple-400`} />;
+      case 'Film': return <Film className={`${iconClass} text-amber-400`} />;
+      case 'Compass': return <Compass className={`${iconClass} text-emerald-400`} />;
+      case 'Rocket': return <Rocket className={`${iconClass} text-cyber-cyan`} />;
       default: return <Clock className={`${iconClass} text-cyber-cyan`} />;
     }
   };

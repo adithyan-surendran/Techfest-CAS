@@ -84,10 +84,18 @@ export const Registration: React.FC = () => {
               </p>
 
               {/* COMPACT EVENT SPECIFIC NOTICE */}
-              <div className="mb-4 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2.5 text-left">
+              <div className="mb-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2.5 text-left">
                 <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
                 <span className="text-[11px] font-mono text-amber-200">
-                  <strong className="text-amber-400 font-bold uppercase">₹50 / Head per event:</strong> Separate form required for each competition.
+                  <strong className="text-amber-400 font-bold uppercase">₹50 / Head per event:</strong> Separate form required for each competition (Pottery workshop: ₹100).
+                </span>
+              </div>
+
+              {/* ONLINE REGISTRATION DEADLINE & SPOT NOTICE */}
+              <div className="mb-4 p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center gap-2.5 text-left">
+                <Zap className="w-4 h-4 text-cyber-cyan flex-shrink-0 animate-pulse" />
+                <span className="text-[11px] font-mono text-cyan-200">
+                  <strong className="text-cyber-cyan font-bold uppercase">Online Reg Ends Jan 6:</strong> Spot registration available on campus thereafter!
                 </span>
               </div>
 
@@ -96,9 +104,10 @@ export const Registration: React.FC = () => {
                 <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
                   <div className="flex items-center gap-1.5 text-cyber-pink text-[10px] font-mono mb-0.5">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>DEADLINE</span>
+                    <span>ONLINE DEADLINE</span>
                   </div>
-                  <div className="text-white font-cyber font-bold text-xs">Jan 5, 2027</div>
+                  <div className="text-white font-cyber font-bold text-xs">Jan 6, 2027</div>
+                  <div className="text-[9px] font-mono text-emerald-400 mt-0.5 font-medium">Spot Reg Available</div>
                 </div>
 
                 <div className="bg-slate-900/70 border border-slate-800 rounded-lg p-2.5">
@@ -135,6 +144,10 @@ export const Registration: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                   <span>Open to all college students across institutions</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                  <span>Spot registration desk active on festival days</span>
                 </div>
               </div>
             </div>

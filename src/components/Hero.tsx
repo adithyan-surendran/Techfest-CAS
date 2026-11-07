@@ -200,8 +200,8 @@ export const Hero: React.FC = () => {
               <Zap className="w-5 h-5" />
             </div>
             <div className="text-left">
-              <div className="font-cyber font-bold text-base text-white">24 Hours</div>
-              <div className="text-[11px] font-mono text-slate-400">Hackathon Sprint</div>
+              <div className="font-cyber font-bold text-base text-white">2 Days</div>
+              <div className="text-[11px] font-mono text-slate-400">Tech Sprints</div>
             </div>
           </motion.div>
 

@@ -17,6 +17,8 @@ import { LoadingScreen } from './components/LoadingScreen';
 export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
+  const [isViewAllOpen, setIsViewAllOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Prevent background scrolling while initial loading screen is active
   useEffect(() => {
@@ -71,13 +73,16 @@ export const App: React.FC = () => {
       <div className="fixed inset-0 scanlines pointer-events-none z-30 opacity-20" />
 
       {/* TOP FLOATING NAVBAR */}
-      <Navbar activeSection={activeSection} />
+      <Navbar activeSection={activeSection} hidden={isViewAllOpen || isModalOpen} />
 
       {/* MAIN CONTENT SECTIONS */}
       <main className="relative z-10">
         <Hero />
         <CyberMarquee />
-        <EventGrid />
+        <EventGrid
+          onViewAllChange={setIsViewAllOpen}
+          onModalChange={setIsModalOpen}
+        />
         <Schedule />
         <Registration />
         <Contact />
@@ -87,10 +92,13 @@ export const App: React.FC = () => {
       <Footer />
 
       {/* CIRCULAR PROGRESS SCROLL-TO-TOP BUTTON */}
-      <ScrollToTop />
+      <ScrollToTop hidden={isViewAllOpen || isModalOpen} />
 
       {/* MOBILE FLOATING GLASS NAVIGATION BAR */}
-      <BottomNav activeSection={activeSection} />
+      <BottomNav
+        activeSection={activeSection}
+        hidden={isViewAllOpen || isModalOpen}
+      />
     </div>
   );
 };

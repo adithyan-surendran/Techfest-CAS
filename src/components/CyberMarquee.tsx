@@ -4,10 +4,11 @@ import { Sparkles, Trophy, Zap, Gamepad2, Code2, Music, Flame, Rocket /*, Car */
 export const CyberMarquee: React.FC = () => {
   const marqueeItems = [
     { text: '₹33,000+ CASH REWARDS', icon: Trophy, color: 'text-amber-400' },
+    { text: 'ONLINE REG ENDS JAN 6 • SPOT REGISTRATION AVAILABLE', icon: Zap, color: 'text-amber-300' },
     { text: 'ENTRY FEE: ₹50 / HEAD', icon: Zap, color: 'text-cyber-cyan' },
     { text: 'TECH PROJECT EXPO', icon: Rocket, color: 'text-cyan-400' },
     { text: 'BGMI • PES • MINI MILITIA', icon: Gamepad2, color: 'text-cyber-pink' },
-    { text: '24-HOUR HACKATHON', icon: Code2, color: 'text-emerald-400' },
+    { text: 'FLAGSHIP HACKATHON SPRINT', icon: Code2, color: 'text-emerald-400' },
     { text: 'FASHION SHOW & LIVE BANDS', icon: Music, color: 'text-purple-400' },
     // NOTE: Auto Show is currently not planned. Preserved below to re-enable later if needed:
     // { text: 'EXOTIC AUTO SHOW & PROSHOW', icon: Car, color: 'text-amber-300' },

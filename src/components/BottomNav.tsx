@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 
 interface BottomNavProps {
   activeSection: string;
+  hidden?: boolean;
 }
 
-export const BottomNav: React.FC<BottomNavProps> = ({ activeSection }) => {
+export const BottomNav: React.FC<BottomNavProps> = ({ activeSection, hidden }) => {
+  if (hidden) return null;
+
   const items = [
     { id: 'home', label: 'Home', href: '#home', icon: Home },
     { id: 'events', label: 'Events', href: '#events', icon: Gamepad2 },
@@ -23,7 +26,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeSection }) => {
   };
 
   return (
-    <div className="md:hidden fixed bottom-3 left-3 right-3 z-40">
+    <div className="md:hidden fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] left-3 right-3 z-40">
       <div className="glass-panel bg-[#030712]/90 border border-cyan-500/30 rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(0,240,255,0.15)] flex items-center justify-around">
         {items.map((item) => {
           const Icon = item.icon;

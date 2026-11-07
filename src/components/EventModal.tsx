@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Calendar, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles, Coins } from 'lucide-react';
+import { X, Calendar, Users, MapPin, Trophy, Phone, UserCheck, ExternalLink, CheckCircle2, AlertTriangle, Sparkles, Coins, Gauge } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Event } from '../types';
@@ -15,13 +15,14 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
       if (e.key === 'Escape') onClose();
     };
     if (event) {
+      const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
   }, [event, onClose]);
 
   if (!event) return null;
@@ -38,9 +39,10 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
+      <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6">
         {/* Backdrop overlay */}
         <motion.div
+          key="modal-backdrop"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -50,11 +52,12 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
 
         {/* Modal Window */}
         <motion.div
+          key="modal-window"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-2xl glass-panel bg-[#070e24]/95 border border-cyan-500/40 rounded-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(0,240,255,0.2)] max-h-[90vh] overflow-y-auto z-10"
+          className="relative w-full max-w-2xl glass-panel bg-[#070e24]/95 border border-cyan-500/40 rounded-2xl p-5 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(0,240,255,0.2)] max-h-[88vh] overflow-y-auto z-10"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
@@ -68,8 +71,15 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
 
           {/* Modal Header */}
           <div className="mb-6 border-b border-slate-800 pb-5 pr-8">
-            <div className="inline-block px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/40 text-cyber-cyan text-xs font-mono mb-2">
-              MISSION BRIEF // {event.category.toUpperCase()}
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/40 text-cyber-cyan text-xs font-mono">
+                MISSION BRIEF // {event.category.toUpperCase()}
+              </span>
+              {event.slots && (
+                <span className="inline-block px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/40 text-purple-300 text-xs font-mono font-bold">
+                  ⚡ {event.slots.toUpperCase()}
+                </span>
+              )}
             </div>
             
             <h2 className="text-2xl sm:text-3xl font-cyber font-bold uppercase text-white glow-cyan">
@@ -84,7 +94,7 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
           </div>
 
           {/* Key Event Details Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div className={`grid grid-cols-2 ${event.slots ? 'sm:grid-cols-3 md:grid-cols-5' : 'sm:grid-cols-4'} gap-3 mb-6`}>
             <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
               <div className="flex items-center gap-1.5 text-cyber-pink text-xs font-mono mb-1">
                 <Calendar className="w-3.5 h-3.5" />
@@ -109,7 +119,17 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
               <div className="text-amber-300 font-bold text-xs font-mono">{event.registrationFee || '₹50 / Head'}</div>
             </div>
 
-            <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
+            {event.slots && (
+              <div className="bg-slate-900/70 border border-purple-500/40 rounded-xl p-3">
+                <div className="flex items-center gap-1.5 text-purple-400 text-xs font-mono mb-1">
+                  <Gauge className="w-3.5 h-3.5" />
+                  <span>SLOTS</span>
+                </div>
+                <div className="text-purple-300 font-bold text-xs font-mono">{event.slots}</div>
+              </div>
+            )}
+
+            <div className={`bg-slate-900/70 border border-slate-800 rounded-xl p-3 ${event.slots ? 'col-span-2 sm:col-span-1' : ''}`}>
               <div className="flex items-center gap-1.5 text-cyber-cyan text-xs font-mono mb-1">
                 <MapPin className="w-3.5 h-3.5" />
                 <span>VENUE</span>
