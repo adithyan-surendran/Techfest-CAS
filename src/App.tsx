@@ -15,10 +15,28 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { LoadingScreen } from './components/LoadingScreen';
 
 export const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return sessionStorage.getItem('yuga_session_loaded') !== '1';
+      } catch (e) {
+        return true;
+      }
+    }
+    return true;
+  });
   const [activeSection, setActiveSection] = useState('home');
   const [isViewAllOpen, setIsViewAllOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLoadingComplete = () => {
+    try {
+      sessionStorage.setItem('yuga_session_loaded', '1');
+    } catch (e) {
+      // ignore
+    }
+    setIsLoading(false);
+  };
 
   // Prevent background scrolling while initial loading screen is active
   useEffect(() => {
@@ -91,7 +109,7 @@ export const App: React.FC = () => {
       {/* INITIAL RETRO CYBER BOOT LOADING SCREEN */}
       <AnimatePresence mode="wait">
         {isLoading && (
-          <LoadingScreen onComplete={() => setIsLoading(false)} />
+          <LoadingScreen onComplete={handleLoadingComplete} />
         )}
       </AnimatePresence>
 

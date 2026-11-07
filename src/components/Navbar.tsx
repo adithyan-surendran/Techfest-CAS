@@ -42,14 +42,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, hidden }) => {
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const top = element.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
   const handleRegisterCTA = () => {
     const regSection = document.querySelector('#register') || document.querySelector('#events');
     if (regSection) {
-      regSection.scrollIntoView({ behavior: 'smooth' });
+      const top = regSection.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 

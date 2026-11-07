@@ -4,14 +4,15 @@ export const CyberBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // Respect user's motion preferences
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    try {
+      // Respect user's motion preferences
+      const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      if (!ctx) return;
 
     let animationFrameId: number;
     let isVisible = !document.hidden;
@@ -57,6 +58,19 @@ export const CyberBackground: React.FC = () => {
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // On iOS/mobile, pause canvas draws while scrolling so touch gestures get 100% frame rate
+    let isScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    const handleScroll = () => {
+      if (!isMobile) return;
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 100);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Particle nodes: reduced on mobile for iOS Safari smoothness
     interface Particle {
@@ -106,6 +120,12 @@ export const CyberBackground: React.FC = () => {
 
     const render = () => {
       if (!isVisible) return;
+
+      // On mobile devices, pause rendering during active scroll touches to leave 100% frame budget to the compositor
+      if (isMobile && isScrolling) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
 
       ctx.clearRect(0, 0, width, height);
 
@@ -171,13 +191,18 @@ export const CyberBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (supportsHover) {
         window.removeEventListener('mousemove', handleMouseMove);
       }
       clearTimeout(resizeTimer);
+      clearTimeout(scrollTimeout);
       cancelAnimationFrame(animationFrameId);
     };
+  } catch {
+    // Graceful fallback if Brave Shields or strict privacy prevents canvas creation
+  }
   }, []);
 
   return (

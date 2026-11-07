@@ -37,12 +37,12 @@ export default {
         }
       },
       fontFamily: {
-        cyber: ['"Orbitron"', 'sans-serif'],
-        space: ['"Space Grotesk"', 'sans-serif'],
+        cyber: ['"Orbitron"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        space: ['"Space Grotesk"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
         pixel: ['"Press Start 2P"', 'monospace'],
         retro: ['"Silkscreen"', 'monospace'],
-        mono: ['"JetBrains Mono"', '"Courier New"', 'monospace'],
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'neon-cyan': '0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.15)',

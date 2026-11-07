@@ -84,23 +84,49 @@
 
 /* Mobile glass & compositor performance enhancements */
 @media (max-width: 768px) {
-  .glass-panel,
-  .glass-panel-cyan,
-  .glass-panel-pink {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    background: rgba(11, 18, 36, 0.85);
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(13, 22, 45, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .glass-card {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    background: rgba(13, 22, 45, 0.8);
+  .glass-panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(11, 18, 36, 0.94);
+  }
+
+  .glass-panel-cyan {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(8, 20, 42, 0.94);
+  }
+
+  .glass-panel-pink {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(30, 10, 28, 0.94);
+  }
+
+  header.glass-panel,
+  .bottom-nav-bar {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    background: rgba(3, 7, 18, 0.88) !important;
   }
 
   /* Scanlines overlay disabled on mobile to prevent full-screen tile redraw thrashing */
   .scanlines {
     display: none !important;
+  }
+
+  .glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+  }
+
+  .glow-pink {
+    text-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
   }
 }
 

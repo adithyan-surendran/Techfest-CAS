@@ -8,12 +8,16 @@ export const Registration: React.FC = () => {
   const [qrModalOpen, setQrModalOpen] = useState(false);
 
   const handleRegisterClick = () => {
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.6 },
-      colors: ['#00f0ff', '#ff007f', '#a855f7', '#39ff14'],
-    });
+    try {
+      confetti({
+        particleCount: 80,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#00f0ff', '#ff007f', '#a855f7', '#39ff14'],
+      });
+    } catch {
+      // Gracefully handled if blocked by Brave Shields or ad blockers
+    }
     window.open('https://forms.gle/uTT3CkMsFMK68Pve9', '_blank', 'noopener,noreferrer');
   };
 

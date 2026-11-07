@@ -28,13 +28,17 @@ export const EventModal: React.FC<EventModalProps> = ({ event, onClose }) => {
   if (!event) return null;
 
   const handleRegisterClick = () => {
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#00f0ff', '#ff007f', '#a855f7', '#39ff14'],
-    });
-    window.open(event.registrationUrl, '_blank', 'noopener,noreferrer');
+    try {
+      confetti({
+        particleCount: 60,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#00f0ff', '#ff007f', '#a855f7', '#39ff14'],
+      });
+    } catch {
+      // Gracefully ignored if canvas is restricted by Brave Shields or privacy extensions
+    }
+    window.open(event.registrationUrl || 'https://forms.gle/uTT3CkMsFMK68Pve9', '_blank', 'noopener,noreferrer');
   };
 
   return (

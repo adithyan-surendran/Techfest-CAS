@@ -7,27 +7,32 @@ interface LoadingScreenProps {
 }
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
-  const [progress, setProgress] = useState(15);
+  const [progress, setProgress] = useState(35);
   const [statusText, setStatusText] = useState('CONNECTING TO CAS NETWORK...');
   const [isFinishing, setIsFinishing] = useState(false);
   const hasFinishedRef = useRef(false);
 
+  const finishImmediately = () => {
+    if (hasFinishedRef.current) return;
+    hasFinishedRef.current = true;
+    setProgress(100);
+    setStatusText('INITIALIZATION COMPLETE // LAUNCHING...');
+    setIsFinishing(true);
+    setTimeout(() => {
+      onComplete();
+    }, 150);
+  };
+
   useEffect(() => {
     let mounted = true;
-    let targetProgress = 20;
-    let currentProgress = 20;
+    let targetProgress = 80;
+    let currentProgress = 35;
 
-    const setStage = (to: number, text: string) => {
-      if (!mounted) return;
-      targetProgress = Math.max(targetProgress, to);
-      setStatusText(text);
-    };
-
-    // Smooth, performance-friendly progress ticker (40ms instead of 20ms to prevent main-thread saturation)
+    // Fast, responsive progress ticker (snappy ~400ms transition instead of slow 2-3s delay)
     const ticker = setInterval(() => {
       if (!mounted) return;
       if (currentProgress < targetProgress) {
-        currentProgress = Math.min(targetProgress, currentProgress + 4);
+        currentProgress = Math.min(targetProgress, currentProgress + 10);
         setProgress(currentProgress);
       }
 
@@ -38,59 +43,28 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         setIsFinishing(true);
         setTimeout(() => {
           if (mounted) onComplete();
-        }, 250);
+        }, 150);
       }
-    }, 35);
+    }, 28);
 
-    // 1. DOM Readiness
-    if (document.readyState === 'interactive' || document.readyState === 'complete') {
-      setStage(40, 'PARSING DOM & EVENT SCHEMAS...');
-    } else {
-      document.addEventListener(
-        'DOMContentLoaded',
-        () => setStage(40, 'PARSING DOM & EVENT SCHEMAS...'),
-        { once: true }
-      );
-    }
+    // Promptly step forward
+    const t1 = setTimeout(() => {
+      if (mounted) {
+        targetProgress = 100;
+        setStatusText('SYNCHRONIZING GRAPHICS & ASSETS...');
+      }
+    }, 200);
 
-    // 2. Google WebFonts loading over the internet
-    if ('fonts' in document) {
-      document.fonts.ready
-        .then(() => setStage(75, 'DOWNLOADING TYPOGRAPHY & ASSETS...'))
-        .catch(() => setStage(75, 'TYPOGRAPHY ENGINE INITIALIZED'));
-    } else {
-      setStage(75, 'DOWNLOADING TYPOGRAPHY & ASSETS...');
-    }
-
-    // 3. Preload critical images over the network
-    const preloadImg = new Image();
-    preloadImg.src = '/registration-qr.png';
-    const handleImgDone = () => setStage(90, 'SYNCHRONIZING GRAPHICS & AUDIO...');
-    if (preloadImg.complete) {
-      handleImgDone();
-    } else {
-      preloadImg.onload = handleImgDone;
-      preloadImg.onerror = handleImgDone;
-    }
-
-    // 4. Window load complete
-    const handleLoad = () => setStage(100, 'SYSTEM ONLINE // READY');
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad, { once: true });
-    }
-
-    // Safety timeout cap: fast fallback for mobile / slow cellular network
+    // Hard safety timeout: finishes smoothly within 550ms max
     const safetyTimer = setTimeout(() => {
-      if (mounted) setStage(100, 'SYSTEM ONLINE // READY');
-    }, 1500);
+      if (mounted) finishImmediately();
+    }, 550);
 
     return () => {
       mounted = false;
       clearInterval(ticker);
+      clearTimeout(t1);
       clearTimeout(safetyTimer);
-      window.removeEventListener('load', handleLoad);
     };
   }, [onComplete]);
 
@@ -100,7 +74,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       animate={{ opacity: isFinishing ? 0 : 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#02040a] text-slate-100 select-none overflow-hidden p-4 sm:p-6"
+      onClick={finishImmediately}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#02040a] text-slate-100 select-none overflow-hidden p-4 sm:p-6 cursor-pointer"
     >
       {/* RICH ATMOSPHERIC BACKGROUND (ELIMINATES BLANK/EMPTY SPACE) */}
       <div className="absolute inset-0 cyber-grid opacity-35 pointer-events-none" />
@@ -222,6 +197,19 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               <span className="truncate text-cyan-200">{statusText}</span>
               <span className="inline-block w-1.5 h-3 bg-cyber-cyan animate-pulse ml-auto flex-shrink-0" />
             </div>
+
+            {/* FAST ENTRANCE BUTTON */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                finishImmediately();
+              }}
+              className="mt-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/60 text-cyber-cyan font-mono text-[10px] tracking-wider hover:bg-cyan-500/20 active:scale-95 transition-all"
+            >
+              <span>TAP TO ENTER</span>
+              <span className="font-bold">↵</span>
+            </button>
 
           </div>
         </div>

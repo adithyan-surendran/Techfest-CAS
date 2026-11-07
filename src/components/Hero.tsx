@@ -56,9 +56,14 @@ export const Hero: React.FC = () => {
     };
   }, []);
 
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+
   const scrollToSection = (id: string) => {
     const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -66,7 +71,7 @@ export const Hero: React.FC = () => {
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         
         {/* TOP HERO LAYER: BADGE, HEADLINE & TAGLINE (Fades gently on deeper scroll) */}
-        <motion.div style={{ opacity: headOpacity, y: headY }} className="flex flex-col items-center w-full">
+        <motion.div style={isMobile ? undefined : { opacity: headOpacity, y: headY }} className="flex flex-col items-center w-full">
           {/* FLOATING STATUS BADGE */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -110,7 +115,7 @@ export const Hero: React.FC = () => {
         </motion.div>
 
         {/* MID HERO LAYER: DATE, VENUE & COUNTDOWN (Fades much later) */}
-        <motion.div style={{ opacity: midOpacity, y: midY }} className="flex flex-col items-center w-full">
+        <motion.div style={isMobile ? undefined : { opacity: midOpacity, y: midY }} className="flex flex-col items-center w-full">
           {/* DATE & VENUE PILLS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -166,7 +171,7 @@ export const Hero: React.FC = () => {
 
         {/* ACTION CTA BUTTONS LAYER */}
         <motion.div
-          style={{ opacity: btnOpacity }}
+          style={isMobile ? undefined : { opacity: btnOpacity }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.36 }}

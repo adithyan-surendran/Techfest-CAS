@@ -21,13 +21,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeSection, hidden }) =
   const handleScroll = (href: string) => {
     const el = document.querySelector(href);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const top = el.getBoundingClientRect().top + window.pageYOffset - 65;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
   return (
     <div className="md:hidden fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] left-3 right-3 z-40 transform-gpu">
-      <div className="glass-panel bg-[#030712]/90 border border-cyan-500/30 rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(0,240,255,0.15)] flex items-center justify-around">
+      <div className="glass-panel bottom-nav-bar bg-[#030712]/90 border border-cyan-500/30 rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(0,240,255,0.15)] flex items-center justify-around">
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeSection === item.id;
