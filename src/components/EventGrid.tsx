@@ -7,8 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Event, EventCategory } from '../types';
 import { EVENTS_DATA } from '../data/events';
 import { EventCard } from './EventCard';
-
-const EventModal = React.lazy(() => import('./EventModal').then((m) => ({ default: m.EventModal })));
+import { EventModal } from './EventModal';
 
 interface EventGridProps {
   onViewAllChange?: (isOpen: boolean) => void;
@@ -469,13 +468,11 @@ export const EventGrid: React.FC<EventGridProps> = ({
         )}
       </AnimatePresence>
 
-      {/* EVENT DETAILS POPUP MODAL (Lazy-loaded for mobile performance) */}
-      <React.Suspense fallback={null}>
-        <EventModal
-          event={activeModalEvent}
-          onClose={() => setActiveModalEvent(null)}
-        />
-      </React.Suspense>
+      {/* EVENT DETAILS POPUP MODAL */}
+      <EventModal
+        event={activeModalEvent}
+        onClose={() => setActiveModalEvent(null)}
+      />
     </section>
   );
 };

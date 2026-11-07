@@ -18,7 +18,7 @@ export const CyberBackground: React.FC = () => {
     let isVisible = !document.hidden;
 
     // Detect mobile for particle scaling & optimization
-    const isMobile = window.innerWidth < 768 || (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0);
+    const isMobile = window.innerWidth < 768;
     // Cap devicePixelRatio to 2 max to prevent huge Retina memory allocations in WebKit
     const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
 
@@ -51,10 +51,9 @@ export const CyberBackground: React.FC = () => {
     // Pause canvas loop when browser tab is inactive to preserve battery & CPU
     const handleVisibilityChange = () => {
       isVisible = !document.hidden;
+      cancelAnimationFrame(animationFrameId);
       if (isVisible) {
         animationFrameId = requestAnimationFrame(render);
-      } else {
-        cancelAnimationFrame(animationFrameId);
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -129,58 +128,62 @@ export const CyberBackground: React.FC = () => {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Render connected lines & particle dots
+      // 1. Update particle positions
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+      }
+
+      // 2. Batch render connected lines (1 single stroke call for entire frame)
+      ctx.beginPath();
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
-
-        // Move particles
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-
-        // Bounce from boundaries
-        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
-
-        // Draw particle dot without expensive shadowBlur (which stalls WebKit CPU rasterizer)
-        ctx.beginPath();
-        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p1.color;
-        ctx.globalAlpha = p1.alpha;
-        ctx.fill();
-
-        // Connect nearby nodes
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-
           if (dist < maxDist) {
-            ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = p1.color;
-            ctx.globalAlpha = (1 - dist / maxDist) * 0.16;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
           }
         }
+      }
+      ctx.strokeStyle = '#00f0ff';
+      ctx.globalAlpha = 0.14;
+      ctx.lineWidth = 0.75;
+      ctx.stroke();
 
-        // Connect to desktop mouse pointer
-        if (supportsHover && mouseX > 0 && mouseY > 0) {
-          const mdx = p1.x - mouseX;
-          const mdy = p1.y - mouseY;
+      // 3. Batch render pointer interaction (desktop only)
+      if (supportsHover && mouseX > 0 && mouseY > 0) {
+        ctx.beginPath();
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const mdx = p.x - mouseX;
+          const mdy = p.y - mouseY;
           const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
           if (mDist < maxMouseDist) {
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
+            ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouseX, mouseY);
-            ctx.strokeStyle = '#00f0ff';
-            ctx.globalAlpha = (1 - mDist / maxMouseDist) * 0.25;
-            ctx.lineWidth = 1;
-            ctx.stroke();
           }
         }
+        ctx.strokeStyle = '#00f0ff';
+        ctx.globalAlpha = 0.22;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // 4. Batch render particle dots
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
       }
 
       ctx.globalAlpha = 1;

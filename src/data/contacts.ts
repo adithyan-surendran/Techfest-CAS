@@ -27,7 +27,7 @@ export const STUDENT_COORDINATORS = [
 export const VENUE_INFO = {
   name: 'College of Applied Science, Vazhakkad',
   address: 'Vazhakkad PO, Malappuram DT, PIN: 673640',
-  mapsUrl: 'https://maps.app.goo.gl/hYtuL6vqxxCz2Qx2A',
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=College+of+Applied+Science+Vazhakkad',
   landmark: 'College of Applied Science (IHRD), Vazhakkad'
 };
 

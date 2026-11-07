@@ -7,7 +7,7 @@ interface LoadingScreenProps {
 }
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
-  const [progress, setProgress] = useState(35);
+  const [progress, setProgress] = useState(15);
   const [statusText, setStatusText] = useState('CONNECTING TO CAS NETWORK...');
   const [isFinishing, setIsFinishing] = useState(false);
   const hasFinishedRef = useRef(false);
@@ -20,50 +20,45 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     setIsFinishing(true);
     setTimeout(() => {
       onComplete();
-    }, 150);
+    }, 180);
   };
 
   useEffect(() => {
     let mounted = true;
-    let targetProgress = 80;
-    let currentProgress = 35;
+    let currentProgress = 15;
 
-    // Fast, responsive progress ticker (snappy ~400ms transition instead of slow 2-3s delay)
+    // Smooth cyber progress ticker
     const ticker = setInterval(() => {
       if (!mounted) return;
-      if (currentProgress < targetProgress) {
-        currentProgress = Math.min(targetProgress, currentProgress + 10);
-        setProgress(currentProgress);
+      currentProgress = Math.min(100, currentProgress + 3);
+      setProgress(currentProgress);
+
+      if (currentProgress >= 35 && currentProgress < 68) {
+        setStatusText('PARSING EVENT SCHEMAS...');
+      } else if (currentProgress >= 68 && currentProgress < 95) {
+        setStatusText('SYNCHRONIZING GRAPHICS & ASSETS...');
+      } else if (currentProgress >= 95) {
+        setStatusText('SYSTEM ONLINE // READY');
       }
 
       if (currentProgress >= 100 && !hasFinishedRef.current) {
         hasFinishedRef.current = true;
         clearInterval(ticker);
-        setStatusText('INITIALIZATION COMPLETE // LAUNCHING...');
         setIsFinishing(true);
         setTimeout(() => {
           if (mounted) onComplete();
-        }, 150);
+        }, 180);
       }
     }, 28);
 
-    // Promptly step forward
-    const t1 = setTimeout(() => {
-      if (mounted) {
-        targetProgress = 100;
-        setStatusText('SYNCHRONIZING GRAPHICS & ASSETS...');
-      }
-    }, 200);
-
-    // Hard safety timeout: finishes smoothly within 550ms max
+    // Hard safety timeout: finishes smoothly within 1.3s max
     const safetyTimer = setTimeout(() => {
       if (mounted) finishImmediately();
-    }, 550);
+    }, 1300);
 
     return () => {
       mounted = false;
       clearInterval(ticker);
-      clearTimeout(t1);
       clearTimeout(safetyTimer);
     };
   }, [onComplete]);
@@ -73,9 +68,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isFinishing ? 0 : 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
       onClick={finishImmediately}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#02040a] text-slate-100 select-none overflow-hidden p-4 sm:p-6 cursor-pointer"
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#02040a] text-slate-100 select-none overflow-hidden p-4 sm:p-6 touch-none overscroll-contain ${
+        isFinishing ? 'pointer-events-none' : 'cursor-pointer'
+      }`}
     >
       {/* RICH ATMOSPHERIC BACKGROUND (ELIMINATES BLANK/EMPTY SPACE) */}
       <div className="absolute inset-0 cyber-grid opacity-35 pointer-events-none" />

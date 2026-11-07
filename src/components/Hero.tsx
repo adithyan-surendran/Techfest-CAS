@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Sparkles, ArrowRight, Zap, Trophy, Users, Terminal } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FORMATTED_PRIZE_POOL } from '../data/events';
+import { VENUE_INFO } from '../data/contacts';
 
 export const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -127,10 +128,15 @@ export const Hero: React.FC = () => {
               <Calendar className="w-4 h-4 text-cyber-pink" />
               <span>JANUARY 7 – 8, 2027</span>
             </div>
-            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-xl border border-slate-700/60">
-              <MapPin className="w-4 h-4 text-cyber-cyan" />
+            <a
+              href={VENUE_INFO.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 glass-card px-4 py-2 rounded-xl border border-slate-700/60 hover:border-cyan-400/60 hover:text-white transition-all cursor-pointer group"
+            >
+              <MapPin className="w-4 h-4 text-cyber-cyan group-hover:scale-110 transition-transform" />
               <span>CAS VAZHAKKAD, MALAPPURAM</span>
-            </div>
+            </a>
           </motion.div>
 
           {/* LIVE COUNTDOWN HUD */}

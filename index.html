@@ -9,20 +9,63 @@
     <meta name="theme-color" content="#030712" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
+
+    <style>
+      @keyframes yuga-spin-cw {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes yuga-spin-ccw {
+        to { transform: rotate(-360deg); }
+      }
+      @keyframes yuga-glow-pulse {
+        0%, 100% { opacity: 0.7; transform: scale(0.98); }
+        50% { opacity: 1; transform: scale(1.02); }
+      }
+    </style>
+
     <!-- DNS prefetch & Preconnect for Fast Font Delivery on Safari -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Non-render-blocking Google Fonts with instant local fallback -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" />
+    </noscript>
   </head>
-  <body class="bg-[#030712] text-slate-100 antialiased selection:bg-[#00f0ff] selection:text-black font-sans overflow-x-hidden">
+  <body class="bg-[#030712] text-slate-100 antialiased selection:bg-[#00f0ff] selection:text-black font-sans">
     <div id="root">
-      <div style="position:fixed;inset:0;background-color:#02040a;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#00f0ff;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;">
-        <div style="width:36px;height:36px;border-radius:50%;border:2px dashed #00f0ff;animation:spin 1.5s linear infinite;margin-bottom:16px;"></div>
-        <div style="text-shadow:0 0 10px rgba(0,240,255,0.7);">INITIALIZING YUGA'26...</div>
-        <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+      <!-- Visually Seamless Initial Cyber Shell (Eliminates jarring loader flash) -->
+      <div id="initial-boot-loader" style="position:fixed;inset:0;background-color:#02040a;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f8fafc;user-select:none;z-index:9999;padding:16px;">
+        <div style="position:relative;width:96px;height:96px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;">
+          <!-- Outer rotating cyan dashed ring -->
+          <div style="position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(0,240,255,0.6);box-shadow:0 0 20px rgba(0,240,255,0.25);animation:yuga-spin-cw 8s linear infinite;"></div>
+          <!-- Inner counter-rotating pink ring -->
+          <div style="position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(255,0,127,0.4);border-top-color:#ff007f;animation:yuga-spin-ccw 6s linear infinite;"></div>
+          <!-- Center glowing core -->
+          <div style="position:absolute;inset:16px;border-radius:50%;background:rgba(8,20,42,0.8);border:1px solid rgba(0,240,255,0.6);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 12px rgba(0,240,255,0.3);animation:yuga-glow-pulse 2s ease-in-out infinite;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px rgba(0,240,255,0.8));">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+        </div>
+        <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.18em;color:#00f0ff;margin-bottom:8px;text-shadow:0 0 10px rgba(0,240,255,0.6);">
+          CAS VAZHAKKAD // YUGA-OS
+        </div>
+        <div style="font-family:'Orbitron',-apple-system,sans-serif;font-size:26px;font-weight:900;letter-spacing:0.05em;color:#ffffff;text-shadow:0 0 15px rgba(0,240,255,0.4);margin-bottom:12px;">
+          YUGA<span style="color:#ff007f;text-shadow:0 0 12px rgba(255,0,127,0.7);">'26</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:rgba(148,163,184,0.9);letter-spacing:0.12em;">
+          INITIALIZING CAS NETWORK...
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>

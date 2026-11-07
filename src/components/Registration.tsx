@@ -219,7 +219,7 @@ export const Registration: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/25 to-transparent h-5 w-full animate-scanline pointer-events-none z-10" />
 
                 <img
-                  src="/registration-qr.png"
+                  src={`${import.meta.env.BASE_URL}registration-qr.png`}
                   alt="YUGA'26 Registration QR Code"
                   width="160"
                   height="160"
@@ -303,7 +303,7 @@ export const Registration: React.FC = () => {
 
               <div className="bg-white p-4 rounded-xl border-2 border-cyan-400 inline-block mb-4 shadow-[0_0_20px_rgba(0,240,255,0.4)]">
                 <img
-                  src="/registration-qr.png"
+                  src={`${import.meta.env.BASE_URL}registration-qr.png`}
                   alt="YUGA'26 Registration QR Code"
                   className="w-64 h-64 object-contain mx-auto"
                 />

@@ -15,40 +15,14 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { LoadingScreen } from './components/LoadingScreen';
 
 export const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        return sessionStorage.getItem('yuga_session_loaded') !== '1';
-      } catch (e) {
-        return true;
-      }
-    }
-    return true;
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isViewAllOpen, setIsViewAllOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLoadingComplete = () => {
-    try {
-      sessionStorage.setItem('yuga_session_loaded', '1');
-    } catch (e) {
-      // ignore
-    }
     setIsLoading(false);
   };
-
-  // Prevent background scrolling while initial loading screen is active
-  useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isLoading]);
 
   // Smooth section tracking using IntersectionObserver (eliminates layout thrashing during iOS scroll)
   useEffect(() => {
@@ -105,7 +79,7 @@ export const App: React.FC = () => {
   }, [isLoading]);
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans relative selection:bg-cyber-cyan selection:text-black">
+    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans relative selection:bg-cyber-cyan selection:text-black overflow-x-hidden">
       {/* INITIAL RETRO CYBER BOOT LOADING SCREEN */}
       <AnimatePresence mode="wait">
         {isLoading && (
