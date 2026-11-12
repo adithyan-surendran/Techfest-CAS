@@ -169,6 +169,17 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     icon: 'Cpu'
   },
   {
+    id: 's2-ws-mern',
+    day: 2,
+    dayTitle: 'DAY 2 — JAN 08',
+    time: '10:00 AM – 01:00 PM',
+    title: 'Workshop: MERN Stack',
+    description: 'Hands-on full-stack development covering MongoDB, Express.js, React, and Node.js.',
+    venue: 'Classroom',
+    category: 'Workshop',
+    icon: 'Cpu'
+  },
+  {
     id: 's2-hackathon',
     day: 2,
     dayTitle: 'DAY 2 — JAN 08',

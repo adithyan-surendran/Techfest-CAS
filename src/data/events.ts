@@ -313,6 +313,33 @@ export const events: Event[] = [
     ]
   },
   {
+    id: 'workshop-mern-stack',
+    title: 'Workshop: MERN Stack',
+    category: 'Workshop',
+    tagline: 'Build full-stack web apps with MongoDB, Express, React & Node.',
+    description: 'Hands-on workshop diving into full-stack web development using the MERN stack (MongoDB, Express.js, React, Node.js). Learn RESTful API design, database schemas, and modern frontend integration.',
+    date: 'Day 2 — Jan 08',
+    time: '10:00 AM – 01:00 PM',
+    teamSize: 'Individual',
+    icon: 'Cpu',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Classroom',
+    deadline: 'January 6, 2027 (Spot registration available on-campus)',
+    prizes: '',
+    eligibility: 'Open to all registered attendees.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    slots: '50 Slots',
+    bringLaptop: true,
+    rules: [
+      'Try to bring your laptop (with Node.js and code editor installed if possible).',
+      'Reporting at the venue 15 minutes before the session is required.',
+      'Active participation in hands-on exercises is encouraged.',
+      'Workshop materials and guided instructions will be provided.'
+    ]
+  },
+  {
     id: 'workshop-ui-ux-designing',
     title: 'Workshop: UI/UX Designing',
     category: 'Workshop',
