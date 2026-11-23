@@ -92,7 +92,7 @@ export const Registration: React.FC = () => {
               <div className="mb-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2.5 text-left">
                 <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
                 <span className="text-[11px] font-mono text-amber-200">
-                  <strong className="text-amber-400 font-bold uppercase">₹50 / Head per event:</strong> Separate form required for each competition (Pottery workshop: ₹100).
+                  <strong className="text-amber-400 font-bold uppercase">₹50 / Head per event:</strong> Separate form required for each competition (Pottery workshop: ₹600).
                 </span>
               </div>
 

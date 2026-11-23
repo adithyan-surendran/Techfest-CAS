@@ -25,7 +25,8 @@ export const Schedule: React.FC = () => {
 
   const dayTabs = [
     { day: 1, label: 'DAY 1', date: 'JAN 07', desc: 'Inauguration, Sessions & Workshops' },
-    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Competitions & Pro Show' },
+    // Temporarily disabled Pro Show (formerly: 'Competitions & Pro Show'):
+    { day: 2, label: 'DAY 2', date: 'JAN 08', desc: 'Competitions & Closing Ceremony' },
   ];
 
   const currentSchedule = SCHEDULE_DATA.filter((item) => item.day === activeDay);

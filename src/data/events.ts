@@ -277,8 +277,8 @@ export const events: Event[] = [
     eligibility: 'Open to all registered attendees.',
     contactPerson: 'Student Coordinator',
     contactPhone: '+91 79073 81377',
-    registrationFee: '₹100 / Head',
-    slots: '20 Slots',
+    registrationFee: '₹600 / Head',
+    slots: '25 Slots',
     rules: [
       'All pottery tools and clay materials will be supplied.',
       'Comfortable attire suitable for clay craft is recommended.',
@@ -541,7 +541,14 @@ export const events: Event[] = [
       'Teams must follow the time limit.',
       'The first eligible team to complete the challenge wins.'
     ]
-  },
+  }
+
+  /*
+  // =========================================================================================
+  // TEMPORARILY DISABLED EVENTS (PRO SHOW, TED TALK & MOVIE / MOVIE PROMOTION)
+  // Documented and preserved below for future reference or reuse:
+  // =========================================================================================
+  ,
   {
     id: 'proshow',
     title: 'Pro Show',
@@ -567,14 +574,7 @@ export const events: Event[] = [
       'Disruptive or unsafe behaviour is prohibited.',
       'Photography and recording follow event policies.'
     ]
-  }
-
-  /*
-  // =========================================================================================
-  // TEMPORARILY DISABLED EVENTS (TED TALK & MOVIE / MOVIE PROMOTION)
-  // Documented and preserved below for future reference or reuse:
-  // =========================================================================================
-  ,
+  },
   {
     id: 'ted-talk',
     title: 'TED Talk',

@@ -269,7 +269,11 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     venue: 'Main Stage',
     category: 'Ceremony',
     icon: 'Award'
-  },
+  }
+  // Temporarily commented out: Pro Show
+  // Preserved below to re-enable anytime if needed:
+  /*
+  ,
   {
     id: 's2-proshow',
     day: 2,
@@ -281,4 +285,5 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     category: 'Ceremony',
     icon: 'Sparkles'
   }
+  */
 ];

@@ -11,9 +11,9 @@ export const CyberMarquee: React.FC = () => {
     { text: 'BGMI • PES • MINI MILITIA', icon: Gamepad2, color: 'text-cyber-pink' },
     { text: 'FLAGSHIP HACKATHON SPRINT', icon: Code2, color: 'text-emerald-400' },
     { text: 'FASHION SHOW & LIVE BANDS', icon: Music, color: 'text-purple-400' },
-    // NOTE: Auto Show is currently not planned. Preserved below to re-enable later if needed:
+    // NOTE: Auto Show & Pro Show are currently not planned / temporarily disabled. Preserved below to re-enable later if needed:
     // { text: 'EXOTIC AUTO SHOW & PROSHOW', icon: Car, color: 'text-amber-300' },
-    { text: 'FLAGSHIP PROSHOW & LIVE NIGHT', icon: Music, color: 'text-amber-300' },
+    // { text: 'FLAGSHIP PROSHOW & LIVE NIGHT', icon: Music, color: 'text-amber-300' },
     { text: 'JANUARY 7 & 8, 2027', icon: Flame, color: 'text-rose-400' },
     { text: 'CAS VAZHAKKAD (IHRD)', icon: Sparkles, color: 'text-cyber-cyan' },
   ];
