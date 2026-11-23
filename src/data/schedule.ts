@@ -168,6 +168,8 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     category: 'Workshop',
     icon: 'Cpu'
   },
+  // Temporarily commented out: MERN Stack workshop (not in current 17-event list)
+  /*
   {
     id: 's2-ws-mern',
     day: 2,
@@ -179,6 +181,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     category: 'Workshop',
     icon: 'Cpu'
   },
+  */
   {
     id: 's2-hackathon',
     day: 2,

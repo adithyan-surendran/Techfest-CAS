@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Sparkles, ArrowRight, Zap, Trophy, Users, Terminal } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { FORMATTED_PRIZE_POOL } from '../data/events';
+import { FORMATTED_PRIZE_POOL, EVENTS_DATA } from '../data/events';
 import { VENUE_INFO } from '../data/contacts';
 
 export const Hero: React.FC = () => {
@@ -243,7 +243,7 @@ export const Hero: React.FC = () => {
               <Sparkles className="w-5 h-5" />
             </div>
             <div className="text-left">
-              <div className="font-cyber font-bold text-base text-white">18 Events</div>
+              <div className="font-cyber font-bold text-base text-white">{EVENTS_DATA.length} Events</div>
               <div className="text-[11px] font-mono text-slate-400">Competitions & Shows</div>
             </div>
           </motion.div>

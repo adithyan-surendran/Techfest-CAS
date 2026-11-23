@@ -312,6 +312,8 @@ export const events: Event[] = [
       'Follow the cyber safety code of conduct.'
     ]
   },
+  // Temporarily commented out: MERN Stack workshop (not in current 17-event list)
+  /*
   {
     id: 'workshop-mern-stack',
     title: 'Workshop: MERN Stack',
@@ -339,6 +341,7 @@ export const events: Event[] = [
       'Workshop materials and guided instructions will be provided.'
     ]
   },
+  */
   {
     id: 'workshop-ui-ux-designing',
     title: 'Workshop: UI/UX Designing',
@@ -365,67 +368,6 @@ export const events: Event[] = [
       'Submission of prototype work at the end of the session.'
     ]
   },
-
-  // ==========================================
-  // CULTURAL EVENTS
-  // ==========================================
-  {
-    id: 'fashion-show',
-    title: 'Fashion Show',
-    category: 'Cultural',
-    tagline: 'Walk the ramp. Own the spotlight.',
-    description: 'A vibrant fashion showcase where participants express creativity, style and confidence through themed costumes and captivating runway performances.',
-    date: 'Day 2 — Jan 08',
-    time: '10:00 AM – 01:00 PM',
-    teamSize: 'Group',
-    icon: 'Sparkles',
-    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
-    venue: 'Main Stage',
-    deadline: 'January 6, 2027 (Spot registration available on-campus)',
-    prizes: '₹5,000',
-    eligibility: 'Open to college students.',
-    contactPerson: 'Student Coordinator',
-    contactPhone: '+91 79073 81377',
-    registrationFee: '₹50 / Head',
-    slots: '10 Slots',
-    rules: [
-      'Participants must complete registration.',
-      'The performance must follow the approved theme.',
-      'Costumes and performances must be appropriate for a college event.',
-      'Performance duration will be announced by organizers.',
-      'Judging will consider creativity, styling, confidence and presentation.'
-    ]
-  },
-  // Temporarily commented out: College Band
-  /*
-  {
-    id: 'college-bands',
-    title: 'College Band',
-    category: 'Cultural',
-    tagline: 'Feel the rhythm. Own the stage.',
-    description: 'A live music competition where college bands showcase their musical talent through vocals, instruments and energetic performances.',
-    date: 'Day 2 — Jan 08',
-    time: '02:00 PM – 04:00 PM',
-    teamSize: 'Group',
-    icon: 'Music',
-    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
-    venue: 'Main Stage',
-    deadline: 'January 6, 2027 (Spot registration available on-campus)',
-    prizes: '₹5,000',
-    eligibility: 'Open to college students.',
-    contactPerson: 'Student Coordinator',
-    contactPhone: '+91 79073 81377',
-    registrationFee: '₹50 / Head',
-    slots: '5 Slots',
-    rules: [
-      'Each band must register in advance.',
-      'Performance duration will be announced.',
-      'Bands must arrange and coordinate their instruments with organizers.',
-      'Performances must follow event guidelines.',
-      'Judging will consider musical skill, coordination and stage presence.'
-    ]
-  },
-  */
 
   // ==========================================
   // GAMING EVENTS
@@ -513,6 +455,67 @@ export const events: Event[] = [
   },
 
   // ==========================================
+  // CULTURAL EVENTS
+  // ==========================================
+  {
+    id: 'fashion-show',
+    title: 'Fashion Show',
+    category: 'Cultural',
+    tagline: 'Walk the ramp. Own the spotlight.',
+    description: 'A vibrant fashion showcase where participants express creativity, style and confidence through themed costumes and captivating runway performances.',
+    date: 'Day 2 — Jan 08',
+    time: '10:00 AM – 01:00 PM',
+    teamSize: 'Group',
+    icon: 'Sparkles',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Main Stage',
+    deadline: 'January 6, 2027 (Spot registration available on-campus)',
+    prizes: '₹5,000',
+    eligibility: 'Open to college students.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    slots: '10 Slots',
+    rules: [
+      'Participants must complete registration.',
+      'The performance must follow the approved theme.',
+      'Costumes and performances must be appropriate for a college event.',
+      'Performance duration will be announced by organizers.',
+      'Judging will consider creativity, styling, confidence and presentation.'
+    ]
+  },
+  // Temporarily commented out: College Band
+  /*
+  {
+    id: 'college-bands',
+    title: 'College Band',
+    category: 'Cultural',
+    tagline: 'Feel the rhythm. Own the stage.',
+    description: 'A live music competition where college bands showcase their musical talent through vocals, instruments and energetic performances.',
+    date: 'Day 2 — Jan 08',
+    time: '02:00 PM – 04:00 PM',
+    teamSize: 'Group',
+    icon: 'Music',
+    registrationUrl: 'https://forms.gle/uTT3CkMsFMK68Pve9',
+    venue: 'Main Stage',
+    deadline: 'January 6, 2027 (Spot registration available on-campus)',
+    prizes: '₹5,000',
+    eligibility: 'Open to college students.',
+    contactPerson: 'Student Coordinator',
+    contactPhone: '+91 79073 81377',
+    registrationFee: '₹50 / Head',
+    slots: '5 Slots',
+    rules: [
+      'Each band must register in advance.',
+      'Performance duration will be announced.',
+      'Bands must arrange and coordinate their instruments with organizers.',
+      'Performances must follow event guidelines.',
+      'Judging will consider musical skill, coordination and stage presence.'
+    ]
+  },
+  */
+
+  // ==========================================
   // OTHER FESTIVAL EVENTS
   // ==========================================
   {
@@ -533,7 +536,7 @@ export const events: Event[] = [
     contactPerson: 'Student Coordinator',
     contactPhone: '+91 79073 81377',
     registrationFee: '₹50 / Head',
-    slots: '50 Slots',
+    slots: '20 Slots',
     rules: [
       'Each team must have 3–5 members.',
       'Teams must follow the given clues in order.',
